@@ -29,7 +29,7 @@ public class SessionUsageServlet extends HttpServlet {
 		// Actual logic goes here.
 		PrintWriter out = resp.getWriter();
 		out.println("<h1>" + "Hello World from Java!" + "</h1>");
-		out.println("Counrer = " + session.getAttribute("key"));
+		out.println("Counter = " + session.getAttribute("key"));
 	}
 
 }

@@ -1,21 +1,41 @@
 package lv.javaguru.java2.domain;
 
-/**
- * Created by Viktor on 01/07/2014.
- */
-public class User {
+public class User extends Generic {
 
-    private long userId;
+    private String login;
+    private String password;
+    private String userType;
     private String firstName;
     private String lastName;
+    private String email;
+    private String phone;
 
-
-    public long getUserId() {
-        return userId;
+    public User() {
+        super();
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getFirstName() {
@@ -32,5 +52,21 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

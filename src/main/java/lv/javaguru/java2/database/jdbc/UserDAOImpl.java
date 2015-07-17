@@ -10,9 +10,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Viktor on 01/07/2014.
- */
 public class UserDAOImpl extends DAOImpl implements UserDAO {
 
     public void create(User user) throws DBException {
@@ -25,14 +22,19 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("insert into USERS values (default, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, user.getFirstName());
-            preparedStatement.setString(2, user.getLastName());
+                    connection.prepareStatement("insert into users values (default, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getUserType());
+            preparedStatement.setString(4, user.getFirstName());
+            preparedStatement.setString(5, user.getLastName());
+            preparedStatement.setString(6, user.getEmail());
+            preparedStatement.setString(7, user.getPhone());
 
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if (rs.next()){
-                user.setUserId(rs.getLong(1));
+                user.setId(rs.getLong(1));
             }
         } catch (Throwable e) {
             System.out.println("Exception while execute UserDAOImpl.create()");
@@ -44,21 +46,26 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
 
     }
 
-    public User getById(Long id) throws DBException {
+    public User getById(long id) throws DBException {
         Connection connection = null;
 
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("select * from USERS where UserID = ?");
+                    .prepareStatement("select * from users where id = ?");
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             User user = null;
             if (resultSet.next()) {
                 user = new User();
-                user.setUserId(resultSet.getLong("UserID"));
-                user.setFirstName(resultSet.getString("FirstName"));
-                user.setLastName(resultSet.getString("LastName"));
+                user.setId(resultSet.getLong("id"));
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+                user.setUserType(resultSet.getString("userType"));
+                user.setFirstName(resultSet.getString("firstName"));
+                user.setLastName(resultSet.getString("lastName"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhone(resultSet.getString("phone"));
             }
             return user;
         } catch (Throwable e) {
@@ -75,14 +82,19 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
         Connection connection = null;
         try {
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select * from USERS");
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from users");
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 User user = new User();
-                user.setUserId(resultSet.getLong("UserID"));
-                user.setFirstName(resultSet.getString("FirstName"));
-                user.setLastName(resultSet.getString("LastName"));
+                user.setId(resultSet.getLong("id"));
+                user.setLogin(resultSet.getString("login"));
+                user.setPassword(resultSet.getString("password"));
+                user.setUserType(resultSet.getString("userType"));
+                user.setFirstName(resultSet.getString("firstName"));
+                user.setLastName(resultSet.getString("lastName"));
+                user.setEmail(resultSet.getString("email"));
+                user.setPhone(resultSet.getString("phone"));
                 users.add(user);
             }
         } catch (Throwable e) {
@@ -95,12 +107,12 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
         return users;
     }
 
-    public void delete(Long id) throws DBException {
+    public void delete(long id) throws DBException {
         Connection connection = null;
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from USERS where UserID = ?");
+                    .prepareStatement("delete from users where id = ?");
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
@@ -121,11 +133,17 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update USERS set FirstName = ?, LastName = ? " +
-                            "where UserID = ?");
-            preparedStatement.setString(1, user.getFirstName());
-            preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setLong(3, user.getUserId());
+                    .prepareStatement("update users set login = ?, password = ?, userType = ?, " +
+                            "firstName = ?, lastName = ?, email = ?, phone = ? "+
+                            "where id = ?");
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getUserType());
+            preparedStatement.setString(4, user.getFirstName());
+            preparedStatement.setString(5, user.getLastName());
+            preparedStatement.setString(6, user.getEmail());
+            preparedStatement.setString(7, user.getPhone());
+            preparedStatement.setLong(8, user.getId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
             System.out.println("Exception while execute UserDAOImpl.update()");
