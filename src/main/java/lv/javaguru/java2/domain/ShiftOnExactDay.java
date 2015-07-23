@@ -6,7 +6,7 @@ public class ShiftOnExactDay extends Generic{
 
     private long userId;
     private Date date;
-    private long ahiftId;
+    private long shiftId;
 
     public ShiftOnExactDay() {
         super();
@@ -29,10 +29,10 @@ public class ShiftOnExactDay extends Generic{
     }
 
     public long getShiftId() {
-        return ahiftId;
+        return shiftId;
     }
 
     public void setShiftId(long shiftId) {
-        this.ahiftId = shiftId;
+        this.shiftId = shiftId;
     }
 }
