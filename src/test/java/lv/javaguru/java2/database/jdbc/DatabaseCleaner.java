@@ -15,6 +15,8 @@ class DatabaseCleaner extends DAOImpl {
         tableNames.add("user_patterns");
         tableNames.add("shifts");
         tableNames.add("shifts_on_exact_day");
+        tableNames.add("patterns");
+        tableNames.add("shift_patterns");
         return tableNames;
     }
 

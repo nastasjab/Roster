@@ -68,6 +68,32 @@ CREATE TABLE IF NOT EXISTS `rosterdb`.`shifts` (
 )
   ENGINE = InnoDB ;
 
+
+ -- -----------------------------------------------------
+-- Table `rosterdb`.`patterns`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `rosterdb`.`patterns` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `rosterdb`.`shift_patterns`
+-- -----------------------------------------------------
+CREATE  TABLE IF NOT EXISTS `rosterdb`.`shift_patterns` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
+  `patternId` BIGINT(20) NULL DEFAULT NULL ,
+  `shiftId` BIGINT(20) NULL DEFAULT NULL ,
+  `seqNo` INT(11) NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
+ENGINE = InnoDB;
+
+
+
 USE `rosterdb` ;
 
 SET SQL_MODE=@OLD_SQL_MODE;
