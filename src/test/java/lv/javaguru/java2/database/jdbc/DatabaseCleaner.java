@@ -13,6 +13,8 @@ class DatabaseCleaner extends DAOImpl {
         List<String> tableNames = new ArrayList<String>();
         tableNames.add("users");
         tableNames.add("user_patterns");
+        tableNames.add("shifts");
+        tableNames.add("shifts_on_exact_day");
         return tableNames;
     }
 

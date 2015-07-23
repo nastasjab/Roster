@@ -38,8 +38,37 @@ CREATE  TABLE IF NOT EXISTS `rosterdb`.`user_patterns` (
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB;
 
-USE `rosterdb` ;
+-- -----------------------------------------------------
+-- Table `rosterdb`.`shifts_on_exact_day`
+-- -----------------------------------------------------
 
+DROP TABLE IF EXISTS `rosterdb`.`shifts_on_exact_day` ;
+
+CREATE TABLE IF NOT EXISTS `rosterdb`.`shifts_on_exact_day` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `userId` BIGINT(20) NOT NULL,
+  `date` DATE NOT NULL,
+  `shiftId` BIGINT(20) NOT NULL,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB ;
+
+-- -----------------------------------------------------
+-- Table `rosterdb`.`unique_shifts`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS `rosterdb`.`shifts` ;
+
+CREATE TABLE IF NOT EXISTS `rosterdb`.`shifts` (
+  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45),
+  `start` TIME,
+  `end` TIME,
+  PRIMARY KEY (`id`)
+)
+  ENGINE = InnoDB ;
+
+USE `rosterdb` ;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
