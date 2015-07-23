@@ -73,7 +73,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from shifts where id = ?");
+                    .prepareStatement("delete from shifts_on_exact_day where id = ?");
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
