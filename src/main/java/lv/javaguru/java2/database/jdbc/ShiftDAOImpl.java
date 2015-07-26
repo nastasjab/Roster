@@ -94,11 +94,12 @@ public class ShiftDAOImpl extends DAOImpl implements ShiftDAO{
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update shifts set name = ?, start = ?, " +
-                            "end = ?");
+                    .prepareStatement("update shifts set name = ?, start = ?, end = ? where id = ?");
             preparedStatement.setString(1, shift.getName());
             preparedStatement.setString(2, shift.getShiftStarts());
             preparedStatement.setString(3, shift.getShiftEnds());
+            preparedStatement.setLong(4, shift.getId());
+            System.out.println(preparedStatement.toString());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
             System.out.println("Exception while execute ShiftDAOImpl.update()");

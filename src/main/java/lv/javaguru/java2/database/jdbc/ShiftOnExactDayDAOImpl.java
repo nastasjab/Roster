@@ -95,10 +95,11 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
             connection = getConnection();
             PreparedStatement preparedStatement = connection
                     .prepareStatement("update shifts_on_exact_day set userId = ?, date = ?, " +
-                            "shiftId = ?");
+                            "shiftId = ? where id = ?");
             preparedStatement.setLong(1, shiftOnExactDay.getUserId());
             preparedStatement.setDate(2, shiftOnExactDay.getDate());
             preparedStatement.setLong(3, shiftOnExactDay.getShiftId());
+            preparedStatement.setLong(4, shiftOnExactDay.getId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
             System.out.println("Exception while execute ShiftOnExactDayDAOImpl.update()");
