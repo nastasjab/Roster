@@ -17,72 +17,22 @@ import java.util.List;
 
 public class UsersServlet extends HttpServlet {
 
+    UserDAO users = new UserDAOImpl();
+
     @Override
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse resp) throws ServletException, IOException {
 
-        UserDAO users = new UserDAOImpl();
-        List<User> userList = new ArrayList<User>();
-
         resp.setContentType("text/html");
         PrintWriter out = resp.getWriter();
 
-        if (req.getParameter("add") != null) {
-            User newUser = new User();
-            newUser.setLogin(req.getParameter("new_username"));
-            newUser.setPassword("empty");
-            newUser.setFirstName(req.getParameter("new_firstname"));
-            newUser.setLastName(req.getParameter("new_lastname"));
-            newUser.setUserType(req.getParameter("new_usertype"));
-            newUser.setEmail(req.getParameter("new_email"));
-            newUser.setPhone(req.getParameter("new_phone"));
-            try {
-                users.create(newUser);
-            } catch (DBException e) {
-                e.printStackTrace();
-            }
-        }
+        add(req);
 
-        if (req.getParameter("delete") != null) {
-            for (String v : req.getParameterValues("delete")) {
-                long id = 0;
-                try {
-                    id = Long.decode(v);
-                } catch (NumberFormatException e) { }
-                if (id != 0)
-                    try {
-                        users.delete(id);
-                    } catch (DBException e) {
-                        e.printStackTrace();
-                    }
-            }
-        }
+        delete(req);
 
-        if (req.getParameter("update") != null) {
-            for (String v : req.getParameterValues("update")) {
-                long id = 0;
-                try {
-                    id = Long.decode(v);
-                } catch (NumberFormatException e) { }
-                if (id != 0) {
-                    User updateUser = new User();
-                    updateUser.setId(id);
-                    updateUser.setLogin(req.getParameter("update_login_" + id));
-                    updateUser.setPassword("empty");
-                    updateUser.setFirstName(req.getParameter("update_firstname_" + id));
-                    updateUser.setLastName(req.getParameter("update_lastname_" + id));
-                    updateUser.setUserType(req.getParameter("update_usertype_" + id));
-                    updateUser.setEmail(req.getParameter("update_email_" + id));
-                    updateUser.setPhone(req.getParameter("update_phone_" + id));
-                    try {
-                       users.update(updateUser);
-                    } catch (DBException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
+        update(req);
 
+        List<User> userList = new ArrayList<User>();
         try {
             userList = users.getAll();
         } catch (Throwable e) {
@@ -90,7 +40,7 @@ public class UsersServlet extends HttpServlet {
         }
 
         out.println("<html><title>Users</title><body><center><h2>Users</h2>" +
-                "<form method = \"get\" name = \"users\">" +
+                "<form method = \"get\" name = \"shifts\">" +
                 "<table border = 1 cellpadding = 5><tr>" +
                 "<th>No</th>" +
                 "<th>Login</th>" +
@@ -134,6 +84,68 @@ public class UsersServlet extends HttpServlet {
                     "<td><input type = \"submit\" name = \"add\" value = \"Add\"></td>");
 
         out.println("</table></form></center></body></html>");
+    }
+
+    private void add(HttpServletRequest req) {
+        if (req.getParameter("add") != null) {
+            User newUser = new User();
+            newUser.setLogin(req.getParameter("new_username"));
+            newUser.setPassword("empty");
+            newUser.setFirstName(req.getParameter("new_firstname"));
+            newUser.setLastName(req.getParameter("new_lastname"));
+            newUser.setUserType(req.getParameter("new_usertype"));
+            newUser.setEmail(req.getParameter("new_email"));
+            newUser.setPhone(req.getParameter("new_phone"));
+            try {
+                users.create(newUser);
+            } catch (DBException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void delete(HttpServletRequest req) {
+        if (req.getParameter("delete") != null) {
+            for (String v : req.getParameterValues("delete")) {
+                long id = 0;
+                try {
+                    id = Long.decode(v);
+                } catch (NumberFormatException e) { }
+                if (id != 0)
+                    try {
+                        users.delete(id);
+                    } catch (DBException e) {
+                        e.printStackTrace();
+                    }
+            }
+        }
+    }
+
+    private void update(HttpServletRequest req) {
+        if (req.getParameter("update") != null) {
+            for (String v : req.getParameterValues("update")) {
+                long id = 0;
+                try {
+                    id = Long.decode(v);
+                } catch (NumberFormatException e) { }
+                if (id != 0) {
+                    User updateUser = new User();
+                    updateUser.setId(id);
+                    updateUser.setLogin(req.getParameter("update_login_" + id));
+                    updateUser.setPassword("empty");
+                    updateUser.setFirstName(req.getParameter("update_firstname_" + id));
+                    updateUser.setLastName(req.getParameter("update_lastname_" + id));
+                    updateUser.setUserType(req.getParameter("update_usertype_" + id));
+                    updateUser.setEmail(req.getParameter("update_email_" + id));
+                    updateUser.setPhone(req.getParameter("update_phone_" + id));
+                    try {
+                        users.update(updateUser);
+                    } catch (DBException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
     private String surroundByInputIfNeeded(String s, String fieldName, long rowId, String[] reqValues) {

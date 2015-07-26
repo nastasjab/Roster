@@ -55,4 +55,14 @@
         <url-pattern>/users</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ShiftServlet</servlet-name>
+        <servlet-class>lv.javaguru.java2.servlet.ShiftsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ShiftServlet</servlet-name>
+        <url-pattern>/shifts</url-pattern>
+    </servlet-mapping>
+
 </web-app>
