@@ -39,7 +39,8 @@ public class ShiftsServlet extends HttpServlet {
         }
 
         out.println("<html><title>Shifts</title><body><center><h2>Shifts</h2>" +
-                "<form method = \"get\" name = \"shifts\">" +
+                "<a href=\"/roster/\">Main Menu</a>" +
+                "<form method = \"get\" name = \"patterns\">" +
                 "<table border = 1 cellpadding = 5><tr>" +
                 "<th>No</th>" +
                 "<th>Shift</th>" +

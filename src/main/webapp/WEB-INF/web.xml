@@ -65,4 +65,24 @@
         <url-pattern>/shifts</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>MainMenuServlet</servlet-name>
+        <servlet-class>lv.javaguru.java2.servlet.MainMenuServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MainMenuServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PatternsServlet</servlet-name>
+        <servlet-class>lv.javaguru.java2.servlet.PatternsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>PatternsServlet</servlet-name>
+        <url-pattern>/patterns</url-pattern>
+    </servlet-mapping>
+
 </web-app>
