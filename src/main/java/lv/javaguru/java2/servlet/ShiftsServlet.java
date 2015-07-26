@@ -5,7 +5,6 @@ import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.ShiftDAO;
 import lv.javaguru.java2.database.jdbc.ShiftDAOImpl;
 import lv.javaguru.java2.domain.Shift;
-import lv.javaguru.java2.domain.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
