@@ -99,7 +99,6 @@ public class ShiftDAOImpl extends DAOImpl implements ShiftDAO{
             preparedStatement.setString(2, shift.getShiftStarts());
             preparedStatement.setString(3, shift.getShiftEnds());
             preparedStatement.setLong(4, shift.getId());
-            System.out.println(preparedStatement.toString());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
             System.out.println("Exception while execute ShiftDAOImpl.update()");

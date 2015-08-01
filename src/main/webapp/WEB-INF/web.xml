@@ -5,6 +5,16 @@
                       http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
+    <filter>
+        <filter-name>MVCFilter</filter-name>
+        <filter-class>lv.javaguru.java2.servlet.mvc.MVCFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>MVCFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>HelloWorldServlet</servlet-name>
         <servlet-class>lv.javaguru.java2.servlet.HelloWorldServlet</servlet-class>
@@ -83,6 +93,26 @@
     <servlet-mapping>
         <servlet-name>PatternsServlet</servlet-name>
         <url-pattern>/patterns</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ShiftPatternsServlet</servlet-name>
+        <servlet-class>lv.javaguru.java2.servlet.ShiftPatternServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ShiftPatternsServlet</servlet-name>
+        <url-pattern>/shiftpattern</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RosterServlet</servlet-name>
+        <servlet-class>lv.javaguru.java2.servlet.RosterServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RosterServlet</servlet-name>
+        <url-pattern>/roster</url-pattern>
     </servlet-mapping>
 
 </web-app>

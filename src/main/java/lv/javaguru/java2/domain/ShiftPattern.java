@@ -1,8 +1,10 @@
 package lv.javaguru.java2.domain;
 
 public class ShiftPattern  extends Generic{
+
     long patternId;
     long shiftId;
+    String shiftName;
     int seqNo;
 
     public ShiftPattern() {
@@ -30,5 +32,13 @@ public class ShiftPattern  extends Generic{
 
     public void setSeqNo(int seqNo) {
         this.seqNo = seqNo;
+    }
+
+    public String getShiftName() {
+        return shiftName;
+    }
+
+    public void setShiftName(String shiftName) {
+        this.shiftName = shiftName;
     }
 }

@@ -97,6 +97,10 @@ public class PatternDAOImpl extends DAOImpl implements PatternDAO {
                     .prepareStatement("delete from patterns where id = ?");
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
+            preparedStatement = connection
+                    .prepareStatement("delete from shift_patterns where patternId = ?");
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
         } catch (Throwable e) {
             System.out.println("Exception while execute PatternDAOImpl.delete()");
             e.printStackTrace();
