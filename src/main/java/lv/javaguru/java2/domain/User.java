@@ -2,13 +2,13 @@ package lv.javaguru.java2.domain;
 
 public class User extends Generic {
 
-    private String login;
-    private String password;
-    private String userType;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private String phone;
+    private String login = "";
+    private String password = "";
+    private String userType = "";
+    private String firstName = "";
+    private String lastName = "";
+    private String email = "";
+    private String phone = "";
 
     public User() {
         super();
