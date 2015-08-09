@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserDAO {
 
-    void create(User user) throws DBException;
+    User create(User user) throws DBException;
 
     User getById(long id) throws DBException;
 
