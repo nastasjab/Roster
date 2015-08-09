@@ -16,16 +16,6 @@
     </filter-mapping>
 
     <servlet>
-        <servlet-name>HelloWorldServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.HelloWorldServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>HelloWorldServlet</servlet-name>
-        <url-pattern>/hello</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
         <servlet-name>ParameterProcessingServlet</servlet-name>
         <servlet-class>lv.javaguru.java2.servlet.ParameterProcessingServlet</servlet-class>
     </servlet>
@@ -103,16 +93,6 @@
     <servlet-mapping>
         <servlet-name>ShiftPatternsServlet</servlet-name>
         <url-pattern>/shiftpattern</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>RosterServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.RosterServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>RosterServlet</servlet-name>
-        <url-pattern>/roster</url-pattern>
     </servlet-mapping>
 
 </web-app>

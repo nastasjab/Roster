@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servlet;
 
+
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.PatternDAO;
 import lv.javaguru.java2.database.ShiftDAO;
@@ -7,8 +8,8 @@ import lv.javaguru.java2.database.ShiftPatternDAO;
 import lv.javaguru.java2.database.jdbc.PatternDAOImpl;
 import lv.javaguru.java2.database.jdbc.ShiftDAOImpl;
 import lv.javaguru.java2.database.jdbc.ShiftPatternDAOImpl;
-import lv.javaguru.java2.domain.Pattern;
 import lv.javaguru.java2.domain.Shift;
+import lv.javaguru.java2.domain.ShiftPattern;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,8 +20,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PatternsServlet extends HttpServlet {
-    PatternDAO patterns = new PatternDAOImpl();
+public class ShiftPatternServlet extends HttpServlet{
+
+    PatternDAO patternDAO = new PatternDAOImpl();
+    ShiftPatternDAO shiftPatternDAO = new ShiftPatternDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest req,
@@ -35,19 +38,38 @@ public class PatternsServlet extends HttpServlet {
 
         update(req);
 
-        List<Pattern> patternList = new ArrayList<Pattern>();
+        Long patternId = null;
         try {
-            patternList = patterns.getAll();
+            patternId = Long.decode(req.getParameter("pattern"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        String patternName = null;
+        try {
+            patternName = patternDAO.getById(patternId).getName();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+
+        List<ShiftPattern> shiftPatternList = new ArrayList<ShiftPattern>();
+        try {
+            shiftPatternList = shiftPatternDAO.getAll(patternId);
         } catch (Throwable e) {
             e.printStackTrace();
         }
 
-        out.println("<html><title>Patterns</title><body><center><h2>Patterns</h2>" +
-                "<a href=\"/roster/\">Main Menu</a>" +
-                "<form method = \"get\" name = \"patternDAO\">" +
-                "<table border = 1 cellpadding = 5><tr>" +
+        out.println("<html><title>Shifts in Pattern" +
+                patternName +
+                "</title><body><center><h2>Shifts in Pattern " +
+                patternName +
+                "</h2><a href=\"/roster/\">Main Menu</a><br>" +
+                "<a href=\"/roster/patterns\">back to Patterns</a>" +
+                "<form method = \"get\"><input type = \"hidden\" name = \"pattern\" value = " +
+                patternId +
+                "><table border = 1 cellpadding = 5><tr>" +
                 "<th>No</th>" +
-                "<th>Name</th>");
+                "<th>Shift</th>");
         if (req.getParameter("edit") == null)
             out.println(
                     "<th><input type = \"submit\" name = \"edit\" value = \"Edit\"></th>" +
@@ -55,13 +77,11 @@ public class PatternsServlet extends HttpServlet {
         else
             out.println("<th><input type = \"submit\" name = \"update\" value = \"Update\"></th>");
 
-        for (Pattern s : patternList) {
-            out.println("<tr><td>" + s.getId() +
-                    "</td><td>" + surroundByInputIfNeeded(s.getName(), "name", s.getId(), req.getParameterValues("edit")) +
-                    "<br>" + getPattern(s.getId()) +
-                    "<br><right><a href=\"/roster/shiftpattern?pattern=" +
-                    s.getId() +
-                    "\">Edit Pattern</a></right></td>");
+        int seqNo = 1;
+        for (ShiftPattern s : shiftPatternList) {
+            out.println("<tr><td>" + (seqNo++) +
+                    "</td><td>" + surroundBySelectIfNeeded(s.getShiftId(), s.getShiftName(), "name", s.getId(), req.getParameterValues("edit")) +
+                    "</td>");
             if (req.getParameter("edit") == null)
                 out.println("<td><input type = \"checkbox\" name = \"edit\" value = \"" + s.getId() + "\"></td>" +
                         "</td><td><input type = \"checkbox\" name = \"delete\" value = \"" + s.getId() + "\"></td>");
@@ -71,44 +91,35 @@ public class PatternsServlet extends HttpServlet {
         }
 
         if (req.getParameter("edit") == null)
-            out.println("<tr>" +
-                    "<td>new</td><td><input type = \"text\" name = \"new_name\"></td>" +
-                    "<td><input type = \"submit\" name = \"add\" value = \"Add\"></td>");
+            out.println("<tr><td>new</td><td>" +
+                    getShiftsDropdownList("add") +
+                    "</td><td><input type = \"submit\" name = \"add\" value = \"Add\"></td>");
 
         out.println("</table></form></center></body></html>");
     }
 
-    private String getPattern(long id) {
-        StringBuilder result = new StringBuilder();
-        List<Shift> shiftsInPattern = new ArrayList<Shift>();
-        ShiftPatternDAO shiftPatternDAO = new ShiftPatternDAOImpl();
-
-        try {
-            shiftsInPattern = shiftPatternDAO.getShiftsByPatternId(id);
-        } catch (DBException e) {
-            e.printStackTrace();
+    private String surroundBySelectIfNeeded(long fieldId, String fieldName, String columnName, long rowId, String[] reqValues) {
+        if (reqValues == null)
+            return fieldName;
+        String prefix = "";
+        String postfix = "";
+        for (String v : reqValues) {
+            long i = 0;
+            try {
+                i = Long.decode(v);
+            } catch (NumberFormatException e) { }
+            if (i == rowId) {
+                fieldName = getShiftsDropdownList(fieldId, "row_" + rowId + "_update");
+            }
         }
-
-        if (shiftsInPattern == null || shiftsInPattern.size() == 0)
-            return "<i>Pattern has no shifts</i>";
-
-        for (Shift s : shiftsInPattern){
-            result.append(s.getName());
-            result.append(" ");
-            /*<input type = \"submit\" name = \"pattern_");
-            result.append(s.getId());
-            result.append("_shift_remove\" value = \"Remove\"><br>"); */
-        }
-        /*
-        result.append(getShiftsDropdownList(id));
-        result.append("<input type = \"hidden\" name = \"pattern_id_shift_add\" value = \"");
-        result.append(id);
-        result.append("\"> <input type = \"submit\" name = \"pattern_shift_add\" value = \"Add Shift\"><br>"); */
-
-        return result.toString();
+        return prefix + fieldName + postfix;
     }
 
-    private String getShiftsDropdownList(long patternId) {
+    private String getShiftsDropdownList(String suffix) {
+        return getShiftsDropdownList(0, suffix);
+    }
+
+    private String getShiftsDropdownList(long selectedShiftId, String suffix) {
         List<Shift> shifts = new ArrayList<Shift>();
         StringBuilder result = new StringBuilder();
         ShiftDAO shiftDAO = new ShiftDAOImpl();
@@ -117,12 +128,14 @@ public class PatternsServlet extends HttpServlet {
         } catch (DBException e) {
             e.printStackTrace();
         }
-        result.append("<select name = \"pattern_");
-        result.append(patternId);
-        result.append("_shift_add");
+        result.append("<select name = \"shift_");
+        result.append(suffix);
         result.append("\">");
         for (Shift s : shifts) {
-            result.append("<option value = \"");
+            result.append("<option ");
+            if (selectedShiftId == s.getId())
+                result.append("selected ");
+            result.append("value = \"");
             result.append(s.getId());
             result.append("\">");
             result.append(s.getName());
@@ -135,22 +148,10 @@ public class PatternsServlet extends HttpServlet {
 
     private void add(HttpServletRequest req) {
         if (req.getParameter("add") != null) {
-            Pattern newPattern = new Pattern();
-            newPattern.setName(req.getParameter("new_name"));
-            try {
-                patterns.create(newPattern);
-            } catch (DBException e) {
-                e.printStackTrace();
-            }
-        }
-
-        /*
-        if (req.getParameter("pattern_shift_add") != null) {
-            ShiftPatternDAO shiftPatternDAO = new ShiftPatternDAOImpl();
-            ShiftPattern shiftPattern = new ShiftPattern();
+            ShiftPattern newPattern = new ShiftPattern();
             Long patternId = null;
             try {
-                patternId = Long.valueOf(req.getParameter("pattern_id_shift_add"));
+                patternId = Long.valueOf(req.getParameter("pattern"));
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
@@ -160,17 +161,15 @@ public class PatternsServlet extends HttpServlet {
             } catch (DBException e) {
                 e.printStackTrace();
             }
-            Long shiftId = null;
-            shiftId = Long.valueOf(req.getParameter("pattern_" + patternId + "_shift_add"));
-            shiftPattern.setPatternId(patternId);
-            shiftPattern.setSeqNo(nextSeqNo);
-            shiftPattern.setShiftId(shiftId);
+            newPattern.setShiftId(Long.valueOf(req.getParameter("shift_add")));
+            newPattern.setPatternId(patternId);
+            newPattern.setSeqNo(nextSeqNo);
             try {
-                shiftPatternDAO.create(shiftPattern);
+                shiftPatternDAO.create(newPattern);
             } catch (DBException e) {
                 e.printStackTrace();
             }
-        }*/
+        }
     }
 
     private void delete(HttpServletRequest req) {
@@ -182,7 +181,7 @@ public class PatternsServlet extends HttpServlet {
                 } catch (NumberFormatException e) { }
                 if (id != 0)
                     try {
-                        patterns.delete(id);
+                        shiftPatternDAO.delete(id);
                     } catch (DBException e) {
                         e.printStackTrace();
                     }
@@ -198,11 +197,14 @@ public class PatternsServlet extends HttpServlet {
                     id = Long.decode(v);
                 } catch (NumberFormatException e) { }
                 if (id != 0) {
-                    Pattern updatePattern = new Pattern();
-                    updatePattern.setId(id);
-                    updatePattern.setName(req.getParameter("update_name_" + id));
+                    Long shiftId = null;
                     try {
-                        patterns.update(updatePattern);
+                        shiftId = Long.valueOf(req.getParameter("shift_row_" + id + "_update"));
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        shiftPatternDAO.updateShiftId(id, shiftId);
                     } catch (DBException e) {
                         e.printStackTrace();
                     }

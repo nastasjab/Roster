@@ -41,7 +41,7 @@ public class UsersServlet extends HttpServlet {
 
         out.println("<html><title>Users</title><body><center><h2>Users</h2>" +
                 "<a href=\"/roster/\">Main Menu</a>" +
-                "<form method = \"get\" name = \"patterns\">" +
+                "<form method = \"get\" name = \"patternDAO\">" +
                 "<table border = 1 cellpadding = 5><tr>" +
                 "<th>No</th>" +
                 "<th>Login</th>" +

@@ -40,7 +40,7 @@ public class ShiftsServlet extends HttpServlet {
 
         out.println("<html><title>Shifts</title><body><center><h2>Shifts</h2>" +
                 "<a href=\"/roster/\">Main Menu</a>" +
-                "<form method = \"get\" name = \"patterns\">" +
+                "<form method = \"get\" name = \"patternDAO\">" +
                 "<table border = 1 cellpadding = 5><tr>" +
                 "<th>No</th>" +
                 "<th>Shift</th>" +

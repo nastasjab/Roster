@@ -1,23 +1,43 @@
 package lv.javaguru.java2.servlet.mvc;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MVCFilter implements Filter{
 
     private Map<String, MVCController> controllers = new HashMap<String, MVCController>();
 
+    private static Logger logger = Logger.getLogger(MVCFilter.class.getName());
+
+    private ApplicationContext springContext;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        controllers.put("/users", new UserController());
-        controllers.put("/useredit", new UserEditController());
-        // controllers.put("/products", new ProductsController());
+
+        try {
+            springContext = new AnnotationConfigApplicationContext(SpringConfig.class);
+        } catch (BeansException e) {
+            logger.log(Level.INFO, "Spring context failed to start", e);
+        }
+
+        controllers.put("/users", getBean(UserController.class));
+        controllers.put("/user", getBean(UserEditController.class));
+        controllers.put("/roster", getBean(RosterController.class));
     }
+
+    private MVCController getBean(Class clazz){
+            return (MVCController) springContext.getBean(clazz);
+        }
 
     @Override
     public void doFilter(ServletRequest request,
