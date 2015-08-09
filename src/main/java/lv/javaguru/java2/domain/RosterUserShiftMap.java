@@ -1,16 +1,14 @@
 package lv.javaguru.java2.domain;
 
 
-import lv.javaguru.java2.domain.Shift;
-import lv.javaguru.java2.domain.User;
-
+import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class RosterUserShiftMap {
 
     User user;
-    Map<Integer, Shift> shiftMap = new HashMap<Integer, Shift>();
+    Map<Date, Shift> userShifts = new HashMap<Date, Shift>();
 
     public RosterUserShiftMap(User user) {
         this.user = user;
@@ -24,19 +22,19 @@ public class RosterUserShiftMap {
         this.user = user;
     }
 
-    public Map<Integer, Shift> getShiftMap() {
-        return shiftMap;
+    public Map<Date, Shift> getUserShifts() {
+        return userShifts;
     }
 
-    public void setShiftMap(Map<Integer, Shift> shiftMap) {
-        this.shiftMap = shiftMap;
+    public void setUserShifts(Map<Date, Shift> userShifts) {
+        this.userShifts = userShifts;
     }
 
-    public void setShift(int day, Shift shift) {
-        this.shiftMap.put(day, shift);
+    public void setShift(Date date, Shift shift) {
+        this.userShifts.put(date, shift);
     }
 
-    public Shift getShift(int day) {
-        return this.shiftMap.get(day);
+    public Shift getShift(Date date) {
+        return this.userShifts.get(date);
     }
 }

@@ -1,6 +1,7 @@
-<%@ page import="java.util.Date" %>
-<%@ page import="java.util.Calendar" %>
 <%@ page import="lv.javaguru.java2.domain.RosterMap" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="lv.javaguru.java2.domain.User" %>
+<%@ page import="java.sql.Date" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% RosterMap rosterMap = (RosterMap) request.getAttribute("model"); %>
@@ -11,7 +12,7 @@
 <body>
 <h2 align="center">Roster</h2>
 <div align="center"><a href="/roster">Main Menu</a></div><br>
-<form method="get">
+<form method="post">
 <table align="center">
     <th>From</th>
     <th><input type="text" name="roster_date_from" value="<%= rosterMap.getFrom() %>"></th>
@@ -21,15 +22,20 @@
 </table><br>
 <table border="1" cellpadding="5" align="center">
     <th>User</th>
-    <% for(int column = 1; column <= 31; column++) { %>
-    <th><%= column %></th>
-    <% } %>
-    <%-- Start of user listing loop --%>
-    <tr><th><%-- User firstname, lastname --%></th>
-        <%-- Start of loop diplaying shifts for a user --%>
-        <td><%-- shift --%></td>
-        <%-- End of loop diplaying shifts for a user --%>
-    </tr><%-- End of user listing loop --%>
+    <%  for(long epochDay = LocalDate.parse(rosterMap.getFrom().toString()).toEpochDay();
+            epochDay <= LocalDate.parse(rosterMap.getTill().toString()).toEpochDay(); epochDay++) { %>
+    <th><%= LocalDate.ofEpochDay(epochDay).getDayOfMonth() %></th>
+    <% }
+    for (User user : rosterMap.getUserList()) { %>
+    <tr><th><%= user.getLastName() + " " + user.getFirstName() %></th>
+        <%  String shift = " ";
+            for(long epochDay = LocalDate.parse(rosterMap.getFrom().toString()).toEpochDay();
+                epochDay <= LocalDate.parse(rosterMap.getTill().toString()).toEpochDay(); epochDay++) {
+        if (rosterMap.getUserShifts(user) != null)
+            shift = rosterMap.getUserShifts(user).getShift(Date.valueOf(LocalDate.ofEpochDay(epochDay))).getName(); %>
+        <td><%= shift %></td>
+        <% } %>
+    </tr><% } %>
 </table>
 </form>
 </body>

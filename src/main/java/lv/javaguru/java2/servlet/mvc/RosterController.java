@@ -1,8 +1,11 @@
 package lv.javaguru.java2.servlet.mvc;
 
 
+import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.RosterMap;
+import lv.javaguru.java2.domain.Shift;
+import lv.javaguru.java2.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +22,14 @@ public class RosterController implements MVCController{
     public MVCModel processRequest(HttpServletRequest req) {
 
         RosterMap rosterMap = new RosterMap(getDateFrom(req), getDateTill(req));
+
+        try {
+            for (User user : userDAO.getAll()) {
+                rosterMap.setUserMap(user, null);
+            }
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
 
         return new MVCModel(rosterMap, "/roster.jsp");
 

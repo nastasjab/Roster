@@ -1,8 +1,7 @@
 package lv.javaguru.java2.domain;
 
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class RosterMap extends Generic {
 
@@ -32,12 +31,16 @@ public class RosterMap extends Generic {
         this.from = from;
     }
 
-    public RosterUserShiftMap getUserMap(User user) {
+    public RosterUserShiftMap getUserShifts(User user) {
         return shiftMap.get(user);
     }
 
     public void setUserMap(User user, RosterUserShiftMap shiftMap) {
         this.shiftMap.put(user, shiftMap);
+    }
+
+    public Set<User> getUserList() {
+        return shiftMap.keySet();
     }
 
 }
