@@ -1,7 +1,9 @@
 <%@ page import="java.util.Date" %>
 <%@ page import="java.util.Calendar" %>
+<%@ page import="lv.javaguru.java2.domain.RosterMap" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% RosterMap rosterMap = (RosterMap) request.getAttribute("model"); %>
 <html>
 <head>
     <title>Roster</title>
@@ -12,9 +14,9 @@
 <form method="get">
 <table align="center">
     <th>From</th>
-    <th><input type="text" name="roster_date_from"></th>
+    <th><input type="text" name="roster_date_from" value="<%= rosterMap.getFrom() %>"></th>
     <th>Till</th>
-    <th><input type="text" name="roster_date_till"></th>
+    <th><input type="text" name="roster_date_till" value="<%= rosterMap.getTill() %>"></th>
     <th><input type="submit" name="roster_date_refresh" value="Refresh"></th>
 </table><br>
 <table border="1" cellpadding="5" align="center">
