@@ -4,7 +4,6 @@ import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.ShiftDAO;
 import lv.javaguru.java2.database.jdbc.ShiftDAOImpl;
 import lv.javaguru.java2.domain.Shift;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +13,7 @@ import java.util.List;
 @Component
 public class ShiftController implements MVCController{
 
-    private ShiftDAO shiftDAO = new ShiftDAOImpl();
+    private final ShiftDAO shiftDAO = new ShiftDAOImpl();
 
     public MVCModel processRequest(HttpServletRequest req) {
 

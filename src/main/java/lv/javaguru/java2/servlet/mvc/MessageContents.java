@@ -2,10 +2,10 @@ package lv.javaguru.java2.servlet.mvc;
 
 public class MessageContents {
 
-    String caption;
-    String message;
-    String url;
-    String urlCaption;
+    private final String caption;
+    private final String message;
+    private final String url;
+    private final String urlCaption;
 
     public MessageContents(String caption, String message, String url, String urlCaption) {
         this.url = url;

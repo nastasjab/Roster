@@ -178,7 +178,7 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                shifts.add(new Long(resultSet.getLong("shiftId")));
+                shifts.add(resultSet.getLong("shiftId"));
             }
         } catch (Throwable e) {
             System.out.println("Exception while getting getShiftIdsByPatternId list ShiftPatternDAOImpl.getList()");

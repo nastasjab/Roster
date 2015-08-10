@@ -5,10 +5,10 @@ import java.util.*;
 
 public class RosterMap extends Generic {
 
-    Date from;
-    Date till;
+    private Date from;
+    private Date till;
 
-    Map<User, RosterUserShiftMap> shiftMap = new HashMap<User, RosterUserShiftMap>();
+    private final Map<User, RosterUserShiftMap> shiftMap = new HashMap<User, RosterUserShiftMap>();
 
     public RosterMap(Date from, Date till) {
         this.from = from;

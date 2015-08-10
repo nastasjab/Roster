@@ -2,7 +2,7 @@ package lv.javaguru.java2.domain;
 
 
 public class Pattern extends Generic{
-    String name;
+    private String name;
 
     public Pattern() {
     }

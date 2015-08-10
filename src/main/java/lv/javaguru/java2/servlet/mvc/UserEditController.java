@@ -16,7 +16,6 @@ public class UserEditController implements MVCController {
 
     public MVCModel processRequest(HttpServletRequest req) {
 
-        long id = 0;
         if (req.getParameter("user_add") != null) {
             add(req).getId();
             return new MVCModel(new MessageContents("New user created", "New user created", "/roster/users", "back to Users List"), "/message.jsp");
@@ -33,17 +32,16 @@ public class UserEditController implements MVCController {
         }
 
         User result = null;
-        if (id == 0)
+        try {
+            long id = getId(req);
             try {
-                id = getId(req);
-                try {
-                    result = userDAO.getById(id);
-                } catch (DBException e) {
-                    e.printStackTrace();
-                }
-            } catch (NullPointerException e) {
-                result = new User();
+                result = userDAO.getById(id);
+            } catch (DBException e) {
+                e.printStackTrace();
             }
+        } catch (NullPointerException e) {
+            result = new User();
+        }
 
         return new MVCModel(result, "/user.jsp");
     }

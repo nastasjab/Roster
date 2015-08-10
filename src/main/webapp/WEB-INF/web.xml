@@ -15,57 +15,8 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-    <servlet>
-        <servlet-name>ParameterProcessingServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.ParameterProcessingServlet</servlet-class>
-    </servlet>
 
-    <servlet-mapping>
-        <servlet-name>ParameterProcessingServlet</servlet-name>
-        <url-pattern>/paramProcessing</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>SessionUsageServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.SessionUsageServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>SessionUsageServlet</servlet-name>
-        <url-pattern>/session</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>RedirectToJSPServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.RedirectToJSPServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>RedirectToJSPServlet</servlet-name>
-        <url-pattern>/jsp</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>UsersServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.UsersServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>UsersServlet</servlet-name>
-        <url-pattern>/users</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ShiftServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.ShiftsServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ShiftServlet</servlet-name>
-        <url-pattern>/shifts</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
+     <servlet>
         <servlet-name>MainMenuServlet</servlet-name>
         <servlet-class>lv.javaguru.java2.servlet.MainMenuServlet</servlet-class>
     </servlet>
