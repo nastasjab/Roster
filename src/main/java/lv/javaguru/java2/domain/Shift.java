@@ -2,9 +2,9 @@ package lv.javaguru.java2.domain;
 
 public class Shift extends Generic{
 
-    private String name;
-    private String shiftStarts;
-    private String shiftEnds;
+    private String name = "";
+    private String shiftStarts = "";
+    private String shiftEnds = "";
 
     public Shift() {
         super();

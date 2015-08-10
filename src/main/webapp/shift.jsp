@@ -18,8 +18,6 @@ a<%@ page import="lv.javaguru.java2.domain.Shift" %>
 <h2 align="center">
   <% if (editShift) { %>
   Edit shift
-  <br><%= shift.getShiftStarts() %>
-  <br><%= shift.getShiftEnds() %>
   <% } else { %>
   Add new shift
   <% } %>
