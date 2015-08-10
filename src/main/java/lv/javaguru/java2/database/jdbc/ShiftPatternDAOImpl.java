@@ -49,7 +49,10 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("select shift_patterns.id, shift_patterns.patternId, shift_patterns.shiftId, shifts.name, shift_patterns.seqNo from shift_patterns, shifts where shift_patterns.id = ? AND shift_patterns.shiftId = shifts.id");
+                    .prepareStatement("select shift_patterns.id, shift_patterns.patternId," +
+                            " shift_patterns.shiftId, shifts.name, shift_patterns.seqNo " +
+                            "from shift_patterns left join shifts on shift_patterns.shiftId=shifts.id " +
+                            "where shift_patterns.id = ? ");
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             ShiftPattern shiftPattern = null;
@@ -76,7 +79,11 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         Connection connection = null;
         try {
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select shift_patterns.id, shift_patterns.patternId, shift_patterns.shiftId, shifts.name, shift_patterns.seqNo from shift_patterns, shifts where shift_patterns.patternId = ? AND shift_patterns.shiftId = shifts.id ORDER BY shift_patterns.seqNo ASC");
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "select shift_patterns.id, shift_patterns.patternId, shift_patterns.shiftId, shifts.name, shift_patterns.seqNo " +
+                            "from shift_patterns left join shifts on shift_patterns.shiftId=shifts.id " +
+                            "where shift_patterns.patternId = ? " +
+                            "ORDER BY shift_patterns.seqNo ASC");
             preparedStatement.setLong(1, patternId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
