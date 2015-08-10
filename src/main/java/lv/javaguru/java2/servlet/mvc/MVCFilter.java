@@ -21,7 +21,6 @@ public class MVCFilter implements Filter{
 
     private ApplicationContext springContext;
 
-    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
         try {
@@ -32,6 +31,8 @@ public class MVCFilter implements Filter{
 
         controllers.put("/users", getBean(UserController.class));
         controllers.put("/user", getBean(UserEditController.class));
+        controllers.put("/shifts", getBean(ShiftController.class));
+        controllers.put("/shift", getBean(ShiftEditController.class));
         controllers.put("/roster", getBean(RosterController.class));
     }
 
@@ -39,7 +40,6 @@ public class MVCFilter implements Filter{
             return (MVCController) springContext.getBean(clazz);
         }
 
-    @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain filterChain) throws IOException, ServletException {
@@ -62,7 +62,6 @@ public class MVCFilter implements Filter{
         else filterChain.doFilter(request,response);
     }
 
-    @Override
     public void destroy() {
 
     }
