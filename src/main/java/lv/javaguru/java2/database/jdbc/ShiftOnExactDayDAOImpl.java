@@ -3,6 +3,7 @@ package lv.javaguru.java2.database.jdbc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.ShiftOnExactDayDAO;
 import lv.javaguru.java2.domain.ShiftOnExactDay;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDAO {
     public void create(ShiftOnExactDay shiftOnExactDay) throws DBException {
         if (shiftOnExactDay == null) {

@@ -3,6 +3,7 @@ package lv.javaguru.java2.database.jdbc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserPatternDAO;
 import lv.javaguru.java2.domain.UserPattern;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
     public void create(UserPattern userPattern) throws DBException {
         if (userPattern == null) {

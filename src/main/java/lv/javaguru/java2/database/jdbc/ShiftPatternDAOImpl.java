@@ -4,6 +4,7 @@ import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.ShiftPatternDAO;
 import lv.javaguru.java2.domain.Shift;
 import lv.javaguru.java2.domain.ShiftPattern;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +12,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
 
     public void create(ShiftPattern shiftPattern) throws DBException {

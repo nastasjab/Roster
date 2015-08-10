@@ -1,10 +1,8 @@
 package lv.javaguru.java2.servlet.mvc;
 
 
-import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.UserDAO;
+import lv.javaguru.java2.database.*;
 import lv.javaguru.java2.domain.RosterMap;
-import lv.javaguru.java2.domain.Shift;
 import lv.javaguru.java2.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -18,6 +16,18 @@ public class RosterController implements MVCController{
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private ShiftDAO shiftDAO;
+
+    @Autowired
+    private ShiftOnExactDayDAO shiftOnExactDayDAO;
+
+    @Autowired
+    private ShiftPatternDAO shiftPatternDAO;
+
+    @Autowired
+    private UserPatternDAO userPatternDAO;
 
     public MVCModel processRequest(HttpServletRequest req) {
 
