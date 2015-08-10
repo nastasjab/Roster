@@ -3,6 +3,7 @@ package lv.javaguru.java2.database.jdbc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.domain.ShiftPattern;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -39,27 +40,29 @@ public class ShiftPatternDAOImplTest {
         assertEquals(shiftPattern.getSeqNo(), shiftPatternFromDB.getSeqNo());
     }
 
+
     @Test
     public void testMultipleShiftPatternCreation() throws DBException {
         shiftPatternDAO.create(shiftPattern);
         shiftPatternDAO.create(shiftPattern2);
-        List<ShiftPattern> shiftPatterns = shiftPatternDAO.getAll();
+        List<ShiftPattern> shiftPatterns = shiftPatternDAO.getAll(1);
         assertEquals(2, shiftPatterns.size());
     }
+
 
     @Test
      public void testDelete() throws DBException {
         shiftPatternDAO.create(shiftPattern);
         shiftPatternDAO.create(shiftPattern2);
-        List<ShiftPattern> shiftPatterns = shiftPatternDAO.getAll();
+        List<ShiftPattern> shiftPatterns = shiftPatternDAO.getAll(1);
         assertEquals(2, shiftPatterns.size());
 
         shiftPatternDAO.delete(shiftPattern.getId());
-        shiftPatterns = shiftPatternDAO.getAll();
+        shiftPatterns = shiftPatternDAO.getAll(1);
         assertEquals(1, shiftPatterns.size());
 
         shiftPatternDAO.delete(shiftPattern2.getId());
-        shiftPatterns = shiftPatternDAO.getAll();
+        shiftPatterns = shiftPatternDAO.getAll(1);
         assertEquals(0, shiftPatterns.size());
     }
 
