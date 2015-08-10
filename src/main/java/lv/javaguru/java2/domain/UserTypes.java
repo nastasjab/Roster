@@ -5,7 +5,7 @@ import java.util.*;
 
 public class UserTypes {
 
-    private Map<String, String> userTypes = new HashMap<String, String>();
+    private final Map<String, String> userTypes = new HashMap<String, String>();
 
     public UserTypes() {
         this.userTypes.put("A", "Administrator");

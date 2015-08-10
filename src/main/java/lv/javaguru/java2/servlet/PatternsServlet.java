@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatternsServlet extends HttpServlet {
-    PatternDAO patterns = new PatternDAOImpl();
+    final PatternDAO patterns = new PatternDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest req,

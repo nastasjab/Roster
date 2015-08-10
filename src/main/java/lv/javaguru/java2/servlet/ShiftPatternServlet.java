@@ -22,8 +22,8 @@ import java.util.List;
 
 public class ShiftPatternServlet extends HttpServlet{
 
-    PatternDAO patternDAO = new PatternDAOImpl();
-    ShiftPatternDAO shiftPatternDAO = new ShiftPatternDAOImpl();
+    final PatternDAO patternDAO = new PatternDAOImpl();
+    final ShiftPatternDAO shiftPatternDAO = new ShiftPatternDAOImpl();
 
     @Override
     protected void doGet(HttpServletRequest req,

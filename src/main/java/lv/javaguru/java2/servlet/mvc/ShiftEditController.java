@@ -4,7 +4,6 @@ import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.ShiftDAO;
 import lv.javaguru.java2.database.jdbc.ShiftDAOImpl;
 import lv.javaguru.java2.domain.Shift;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 @Component
 public class ShiftEditController implements MVCController {
 
-    private ShiftDAO shiftDAO = new ShiftDAOImpl();
+    private final ShiftDAO shiftDAO = new ShiftDAOImpl();
 
     public MVCModel processRequest(HttpServletRequest req) {
 
-        long id = 0;
         if (req.getParameter("shift_add") != null) {
             add(req);
             return new MVCModel(new MessageContents("New shift created", "New shift created", "/roster/shifts", "back to Shifts List"), "/message.jsp");
@@ -33,17 +31,16 @@ public class ShiftEditController implements MVCController {
         }
 
         Shift result = null;
-        if (id == 0)
+        try {
+            long id = getId(req);
             try {
-                id = getId(req);
-                try {
-                    result = shiftDAO.getById(id);
-                } catch (DBException e) {
-                    e.printStackTrace();
-                }
-            } catch (NullPointerException e) {
-                result = new Shift();
+                result = shiftDAO.getById(id);
+            } catch (DBException e) {
+                e.printStackTrace();
             }
+        } catch (NullPointerException e) {
+            result = new Shift();
+        }
 
         return new MVCModel(result, "/shift.jsp");
     }

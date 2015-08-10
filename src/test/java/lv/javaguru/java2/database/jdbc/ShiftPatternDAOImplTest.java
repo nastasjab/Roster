@@ -3,7 +3,6 @@ package lv.javaguru.java2.database.jdbc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.domain.ShiftPattern;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -17,6 +16,7 @@ public class ShiftPatternDAOImplTest {
     private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 
     private final ShiftPatternDAOImpl shiftPatternDAO = new ShiftPatternDAOImpl();
+    private final int PATTERN_ID=1;
 
     private ShiftPattern shiftPattern;
     private ShiftPattern shiftPattern2;
@@ -24,8 +24,8 @@ public class ShiftPatternDAOImplTest {
     @Before
     public void init() throws DBException {
         databaseCleaner.cleanDatabase();
-        shiftPattern = createShiftPattern(1,1,1);
-        shiftPattern2 = createShiftPattern(1,2,2);
+        shiftPattern = createShiftPattern(PATTERN_ID,1,1);
+        shiftPattern2 = createShiftPattern(PATTERN_ID,2,2);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class ShiftPatternDAOImplTest {
     public void testMultipleShiftPatternCreation() throws DBException {
         shiftPatternDAO.create(shiftPattern);
         shiftPatternDAO.create(shiftPattern2);
-        List<ShiftPattern> shiftPatterns = shiftPatternDAO.getAll(1);
+        List<ShiftPattern> shiftPatterns = shiftPatternDAO.getAll(PATTERN_ID);
         assertEquals(2, shiftPatterns.size());
     }
 
@@ -54,15 +54,15 @@ public class ShiftPatternDAOImplTest {
      public void testDelete() throws DBException {
         shiftPatternDAO.create(shiftPattern);
         shiftPatternDAO.create(shiftPattern2);
-        List<ShiftPattern> shiftPatterns = shiftPatternDAO.getAll(1);
+        List<ShiftPattern> shiftPatterns = shiftPatternDAO.getAll(PATTERN_ID);
         assertEquals(2, shiftPatterns.size());
 
         shiftPatternDAO.delete(shiftPattern.getId());
-        shiftPatterns = shiftPatternDAO.getAll(1);
+        shiftPatterns = shiftPatternDAO.getAll(PATTERN_ID);
         assertEquals(1, shiftPatterns.size());
 
         shiftPatternDAO.delete(shiftPattern2.getId());
-        shiftPatterns = shiftPatternDAO.getAll(1);
+        shiftPatterns = shiftPatternDAO.getAll(PATTERN_ID);
         assertEquals(0, shiftPatterns.size());
     }
 

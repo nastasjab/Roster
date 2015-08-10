@@ -2,10 +2,10 @@ package lv.javaguru.java2.domain;
 
 public class ShiftPattern  extends Generic{
 
-    long patternId;
-    long shiftId;
-    String shiftName;
-    int seqNo;
+    private long patternId;
+    private long shiftId;
+    private String shiftName;
+    private int seqNo;
 
     public ShiftPattern() {
     }

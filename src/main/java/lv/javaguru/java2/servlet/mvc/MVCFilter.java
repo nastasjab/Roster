@@ -15,9 +15,9 @@ import java.util.logging.Logger;
 
 public class MVCFilter implements Filter{
 
-    private Map<String, MVCController> controllers = new HashMap<String, MVCController>();
+    private final Map<String, MVCController> controllers = new HashMap<String, MVCController>();
 
-    private static Logger logger = Logger.getLogger(MVCFilter.class.getName());
+    private static final Logger logger = Logger.getLogger(MVCFilter.class.getName());
 
     private ApplicationContext springContext;
 
