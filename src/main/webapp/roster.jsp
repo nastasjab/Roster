@@ -27,7 +27,7 @@
     <th><%= LocalDate.ofEpochDay(epochDay).getDayOfMonth() %></th>
     <% }
     for (User user : rosterMap.getUserList()) { %>
-    <tr><th><%= user.getLastName() + " " + user.getFirstName() %></th>
+    <tr><th><a href="/roster/userpatterns?user=<%= user.getId()%>"><%= user.getLastName() + " " + user.getFirstName() %></a></th>
         <%  String shift = " ";
             for(long epochDay = LocalDate.parse(rosterMap.getFrom().toString()).toEpochDay();
                 epochDay <= LocalDate.parse(rosterMap.getTill().toString()).toEpochDay(); epochDay++) {

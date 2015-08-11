@@ -17,4 +17,6 @@ public interface UserPatternDAO {
 
     List<UserPattern> getAll() throws DBException;
 
+    List<UserPattern> getByUserId(long id) throws DBException;
+
 }

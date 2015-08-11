@@ -74,7 +74,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
         }
     }
 
-    public void delete(long id) throws DBException {
+     public void delete(long id) throws DBException {
         Connection connection = null;
         try {
             connection = getConnection();
@@ -146,4 +146,39 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
         }
         return userPatterns;
     }
+
+    public List<UserPattern> getByUserId(long id) throws DBException {
+
+        List<UserPattern> userPatterns = new ArrayList<UserPattern>();
+
+        Connection connection = null;
+
+        try {
+            connection = getConnection();
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("select u.id, u.shiftPatternId, p.name, u.startDay, u.endDay, u.patternStartDay from user_patterns AS u, patterns AS p where u.userId = ? AND u.shiftPatternId = p.id ORDER BY u.startDay ASC");
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                UserPattern userPattern = new UserPattern();
+                userPattern.setId(resultSet.getLong("u.id"));
+                userPattern.setUserId(id);
+                userPattern.setShiftPatternId(resultSet.getLong("u.shiftPatternId"));
+                userPattern.setShiftPatternName(resultSet.getString("p.name"));
+                userPattern.setStartDay(resultSet.getDate("u.startDay"));
+                userPattern.setEndDay(resultSet.getDate("u.endDay"));
+                userPattern.setPatternStartDay(resultSet.getInt("u.patternStartDay"));
+                userPatterns.add(userPattern);
+            }
+        } catch (Throwable e) {
+            System.out.println("Exception while getting customer list UserPatternDAOImpl.getByUserId()");
+            e.printStackTrace();
+            throw new DBException(e);
+        } finally {
+            closeConnection(connection);
+        }
+        return userPatterns;
+    }
+
+
 }

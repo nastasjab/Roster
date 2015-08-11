@@ -5,6 +5,7 @@ import java.sql.Date;
 public class UserPattern extends Generic{
     private long userId;
     private long shiftPatternId;
+    private String shiftPatternName;
     private Date startDay;
     private Date endDay;
     private int patternStartDay;
@@ -50,5 +51,13 @@ public class UserPattern extends Generic{
 
     public void setPatternStartDay(int patternStartDay) {
         this.patternStartDay = patternStartDay;
+    }
+
+    public String getShiftPatternName() {
+        return shiftPatternName;
+    }
+
+    public void setShiftPatternName(String shiftPatternName) {
+        this.shiftPatternName = shiftPatternName;
     }
 }
