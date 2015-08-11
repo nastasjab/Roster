@@ -56,7 +56,7 @@
       </select></td>
     </tr>
     <tr>
-      <td>Email</td>
+      <td>Starts on Day</td>
       <td><input type="text" name="patternstartday" value="<%= userPattern.getPatternStartDay()%>"></td>
     </tr>
     <tr>
