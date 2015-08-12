@@ -57,7 +57,7 @@ public class UserPatternEditController implements MVCController {
         UserPattern userPattern = null;
         try {
             try {
-                userPattern = userPatternDAO.getById(Long.decode(req.getParameter("pattern")));
+                userPattern = userPatternDAO.getById(getId(req));
             } catch (DBException e) {
                 e.printStackTrace();
             }
@@ -82,7 +82,7 @@ public class UserPatternEditController implements MVCController {
     private long getId(HttpServletRequest req) throws NullPointerException {
         long result = 0;
         try {
-            result = Long.decode(req.getParameter("pattern"));
+            result = Long.decode(req.getParameter("id"));
         } catch (NumberFormatException e){
             e.printStackTrace();
         }

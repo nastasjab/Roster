@@ -5,10 +5,10 @@ import java.sql.Date;
 public class UserPattern extends Generic{
     private long userId;
     private long shiftPatternId;
-    private String shiftPatternName;
+    private String shiftPatternName = "";
     private Date startDay;
     private Date endDay;
-    private int patternStartDay;
+    private int patternStartDay = 1;
 
     public UserPattern() {
     }

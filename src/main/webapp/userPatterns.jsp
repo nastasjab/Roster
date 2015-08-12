@@ -23,7 +23,7 @@
         <th>Starts on Day</th>
         <%  for (UserPattern pattern : userPatterns) { %>
         <tr>
-            <td><a href="/roster/userpattern?user=<%= user.getId()%>&pattern=<%= pattern.getId()%>"><%= pattern.getId()%></a></td>
+            <td><a href="/roster/userpattern?user=<%= user.getId()%>&id=<%= pattern.getId()%>"><%= pattern.getId()%></a></td>
             <td><%= pattern.getStartDay() %></td>
             <td><%= pattern.getEndDay()%></td>
             <td><%= pattern.getShiftPatternName()%></td>
