@@ -26,24 +26,4 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>PatternsServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.PatternsServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>PatternsServlet</servlet-name>
-        <url-pattern>/patterns</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>ShiftPatternsServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.ShiftPatternServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ShiftPatternsServlet</servlet-name>
-        <url-pattern>/shiftpattern</url-pattern>
-    </servlet-mapping>
-
 </web-app>

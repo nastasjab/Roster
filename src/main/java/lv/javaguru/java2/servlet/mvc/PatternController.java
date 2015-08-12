@@ -1,7 +1,8 @@
 package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.ShiftDAO;
+import lv.javaguru.java2.database.PatternDAO;
+import lv.javaguru.java2.domain.Pattern;
 import lv.javaguru.java2.domain.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,21 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ShiftController implements MVCController{
+public class PatternController implements MVCController{
 
     @Autowired
-    private ShiftDAO shiftDAO;
+    private PatternDAO patternDAO;
 
     public MVCModel processRequest(HttpServletRequest req) {
 
-        List<Shift> shifts = new ArrayList<Shift>();
+        List<Pattern> patterns = new ArrayList<Pattern>();
 
         try {
-            shifts = shiftDAO.getAll();
+            patterns = patternDAO.getAll();
         } catch (DBException e) {
             e.printStackTrace();
         }
 
-        return new MVCModel(shifts, "/shifts.jsp");
+        return new MVCModel(patterns, "/patterns.jsp");
     }
 }

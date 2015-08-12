@@ -33,6 +33,9 @@ public class MVCFilter implements Filter{
         controllers.put("/user", getBean(UserEditController.class));
         controllers.put("/shifts", getBean(ShiftController.class));
         controllers.put("/shift", getBean(ShiftEditController.class));
+        controllers.put("/shiftpattern", getBean(ShiftPatternEditController.class));
+        controllers.put("/patterns", getBean(PatternController.class));
+        controllers.put("/pattern", getBean(PatternEditController.class));
         controllers.put("/userpatterns", getBean(UserPatternController.class));
         controllers.put("/userpattern", getBean(UserPatternEditController.class));
         controllers.put("/roster", getBean(RosterController.class));

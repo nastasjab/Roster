@@ -1,4 +1,4 @@
-a<%@ page import="lv.javaguru.java2.domain.Shift" %>
+<%@ page import="lv.javaguru.java2.domain.Shift" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  Shift shift;
   boolean editShift = true;
@@ -17,7 +17,7 @@ a<%@ page import="lv.javaguru.java2.domain.Shift" %>
 <body>
 <h2 align="center">
   <% if (editShift) { %>
-  Edit shift
+  Edit shift #<%=shift.getId()%>
   <% } else { %>
   Add new shift
   <% } %>
