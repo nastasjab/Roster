@@ -1,10 +1,34 @@
 package lv.javaguru.java2.domain;
 
-public class Shift extends Generic{
+import javax.persistence.*;
 
+@Entity
+@Table(name ="shifts")
+public class Shift extends Generic{
+/*
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private long id;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    */
+
+    @Column(name = "name")
     private String name = "";
+
+    @Column(name = "start")
     private String shiftStarts = "";
+
+    @Column(name = "end")
     private String shiftEnds = "";
+
 
     public Shift() {
         super();
