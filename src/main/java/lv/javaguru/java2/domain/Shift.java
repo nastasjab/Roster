@@ -1,11 +1,12 @@
 package lv.javaguru.java2.domain;
 
 import javax.persistence.*;
+import java.sql.Time;
 
 @Entity
 @Table(name ="shifts")
-public class Shift extends Generic{
-/*
+public class Shift {//extends Generic{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
@@ -18,7 +19,7 @@ public class Shift extends Generic{
     public void setId(long id) {
         this.id = id;
     }
-    */
+
 
     @Column(name = "name")
     private String name = "";
@@ -42,19 +43,19 @@ public class Shift extends Generic{
         this.name = name;
     }
 
-    public String getShiftStarts() {
-        return shiftStarts;
-    }
-
-    public void setShiftStarts(String shiftStarts) {
-        this.shiftStarts = shiftStarts;
-    }
-
     public String getShiftEnds() {
         return shiftEnds;
     }
 
     public void setShiftEnds(String shiftEnds) {
         this.shiftEnds = shiftEnds;
+    }
+
+    public String getShiftStarts() {
+        return shiftStarts;
+    }
+
+    public void setShiftStarts(String shiftStarts) {
+        this.shiftStarts = shiftStarts;
     }
 }

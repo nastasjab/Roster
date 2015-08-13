@@ -17,7 +17,7 @@ import java.util.List;
 public class PatternDAOImpl extends DAOImpl implements PatternDAO {
 
     @Autowired
-    private ShiftPatternDAO shiftPatternDAO;
+    private ShiftPatternDAO shiftPatternDAO = new ShiftPatternDAOImpl();
 
     public void create(Pattern pattern) throws DBException {
         if (pattern == null) {

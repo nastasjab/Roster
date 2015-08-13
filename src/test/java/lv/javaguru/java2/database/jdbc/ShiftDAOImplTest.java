@@ -2,21 +2,34 @@ package lv.javaguru.java2.database.jdbc;
 
 
 import lv.javaguru.java2.database.DBException;
+import lv.javaguru.java2.database.ShiftDAO;
 import lv.javaguru.java2.domain.Shift;
+import lv.javaguru.java2.servlet.mvc.SpringConfig;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringConfig.class)
+@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
+@Transactional
 public class ShiftDAOImplTest {
-
-
     private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 
-    private final ShiftDAOImpl shiftDAO = new ShiftDAOImpl();
+    @Autowired
+    //@Qualifier("JDBC")
+    private ShiftDAO shiftDAO;
 
     private Shift shift;
     private Shift shift2;

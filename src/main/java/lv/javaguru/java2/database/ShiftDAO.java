@@ -2,7 +2,10 @@ package lv.javaguru.java2.database;
 
 import lv.javaguru.java2.domain.Shift;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
+
 
 public interface ShiftDAO {
 

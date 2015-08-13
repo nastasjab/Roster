@@ -62,8 +62,8 @@ DROP TABLE IF EXISTS `rosterdb`.`shifts` ;
 CREATE TABLE IF NOT EXISTS `rosterdb`.`shifts` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45),
-  `start` TIME,
-  `end` TIME,
+  `start` VARCHAR(45),
+  `end` VARCHAR(45),
   PRIMARY KEY (`id`)
 )
   ENGINE = InnoDB ;
