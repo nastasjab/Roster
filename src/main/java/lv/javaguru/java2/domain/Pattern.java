@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pattern extends Generic{
+
     private String name = "";
 
     private List<ShiftPattern> shiftPatterns;
@@ -29,6 +30,13 @@ public class Pattern extends Generic{
 
     public void setShiftPatterns(List<ShiftPattern> shiftPatterns) {
         this.shiftPatterns = shiftPatterns;
+    }
+
+    public long getShiftIdBySeqNo(int seqNo) throws NoSuchFieldException {
+        for (ShiftPattern s : shiftPatterns) {
+            if (seqNo == s.getSeqNo()) return s.getShiftId();
+        }
+        throw new NoSuchFieldException();
     }
 
 }

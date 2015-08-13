@@ -6,6 +6,7 @@ import lv.javaguru.java2.domain.UserPattern;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -180,5 +181,45 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
         return userPatterns;
     }
 
+    public List<UserPattern> getByDateFrame(Date startDate, Date endDate) throws DBException {
+
+        List<UserPattern> userPatterns = new ArrayList<UserPattern>();
+
+        Connection connection = null;
+
+        try {
+            connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * " +
+                    "FROM user_patterns " +
+                    "WHERE NOT (endDay > ? AND startDay > ? AND startDay > ? AND endDay > ?) " +
+                    "AND NOT (endDay < ? AND startDay < ? AND startDay < ? AND endDay < ?)");
+            preparedStatement.setDate(1, startDate);
+            preparedStatement.setDate(2, startDate);
+            preparedStatement.setDate(3, endDate);
+            preparedStatement.setDate(4, endDate);
+            preparedStatement.setDate(5, startDate);
+            preparedStatement.setDate(6, startDate);
+            preparedStatement.setDate(7, endDate);
+            preparedStatement.setDate(8, endDate);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                UserPattern userPattern = new UserPattern();
+                userPattern.setId(resultSet.getLong("id"));
+                userPattern.setUserId(resultSet.getLong("userId"));
+                userPattern.setShiftPatternId(resultSet.getLong("shiftPatternId"));
+                userPattern.setStartDay(resultSet.getDate("startDay"));
+                userPattern.setEndDay(resultSet.getDate("endDay"));
+                userPattern.setPatternStartDay(resultSet.getInt("patternStartDay"));
+                userPatterns.add(userPattern);
+            }
+        } catch  (Throwable e) {
+            System.out.println("Exception while getting customer list UserPatternDAOImpl.getByUserId()");
+            e.printStackTrace();
+            throw new DBException(e);
+        } finally {
+            closeConnection(connection);
+        }
+        return userPatterns;
+    }
 
 }

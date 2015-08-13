@@ -1,5 +1,10 @@
 package lv.javaguru.java2.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class User extends Generic {
 
     private String login = "";
