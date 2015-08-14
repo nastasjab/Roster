@@ -1,7 +1,9 @@
-package lv.javaguru.java2.servlet.mvc;
+package lv.javaguru.java2.servlet.mvc.controller;
 
 import lv.javaguru.java2.database.ShiftDAO;
 import lv.javaguru.java2.domain.Shift;
+import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
+import lv.javaguru.java2.servlet.mvc.MVCController;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 

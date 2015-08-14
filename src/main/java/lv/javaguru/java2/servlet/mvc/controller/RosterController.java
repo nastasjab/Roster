@@ -1,8 +1,10 @@
-package lv.javaguru.java2.servlet.mvc;
+package lv.javaguru.java2.servlet.mvc.controller;
 
 
 import lv.javaguru.java2.database.*;
 import lv.javaguru.java2.domain.*;
+import lv.javaguru.java2.servlet.mvc.MVCController;
+import lv.javaguru.java2.servlet.mvc.MVCModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class RosterController implements MVCController{
+public class RosterController implements MVCController {
 
     @Autowired
     private UserDAO userDAO;

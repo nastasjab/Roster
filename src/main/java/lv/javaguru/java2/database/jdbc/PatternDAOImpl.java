@@ -2,10 +2,7 @@ package lv.javaguru.java2.database.jdbc;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.PatternDAO;
-import lv.javaguru.java2.database.ShiftPatternDAO;
 import lv.javaguru.java2.domain.Pattern;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatternDAOImpl extends DAOImpl implements PatternDAO {
-
-    @Autowired
-    private ShiftPatternDAO shiftPatternDAO;
 
     public void create(Pattern pattern) throws DBException {
         if (pattern == null) {

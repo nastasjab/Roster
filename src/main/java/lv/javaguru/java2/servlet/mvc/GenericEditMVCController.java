@@ -97,6 +97,7 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
     }
 
     protected void deleteChildObjects(HttpServletRequest req) {
+        // override if additional cascade delete is required
     }
 
     protected long getId(HttpServletRequest req) throws NullPointerException {

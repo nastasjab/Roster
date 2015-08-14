@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servlet.mvc.domain;
+package lv.javaguru.java2.servlet.mvc.data;
 
 
 import lv.javaguru.java2.domain.Pattern;
@@ -9,7 +9,7 @@ import java.util.List;
 
 public class PatternEditControllerData extends Pattern {
 
-    List<ShiftPattern> shiftPatterns;
+    private List<ShiftPattern> shiftPatterns;
 
     public List<ShiftPattern> getShiftPatterns() {
         if (shiftPatterns == null)

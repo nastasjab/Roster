@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servlet.mvc.domain;
+package lv.javaguru.java2.servlet.mvc.data;
 
 import lv.javaguru.java2.domain.Pattern;
 import lv.javaguru.java2.domain.User;
@@ -8,9 +8,9 @@ import java.util.List;
 
 public class UserPatternEditControllerData {
 
-    User user;
-    UserPattern userPattern;
-    List<Pattern> shiftPatterns;
+    private User user;
+    private UserPattern userPattern;
+    private List<Pattern> shiftPatterns;
 
     public UserPatternEditControllerData(User user, UserPattern userPattern, List<Pattern> shiftPatterns) {
         this.user = user;

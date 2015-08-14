@@ -1,4 +1,4 @@
-<%@ page import="lv.javaguru.java2.servlet.mvc.domain.ShiftPatternEditControllerData" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.ShiftPatternEditControllerData" %>
 <%@ page import="lv.javaguru.java2.domain.Shift" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% ShiftPatternEditControllerData data = (ShiftPatternEditControllerData) request.getAttribute("model");

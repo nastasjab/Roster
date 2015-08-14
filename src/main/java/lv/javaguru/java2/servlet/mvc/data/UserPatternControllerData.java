@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servlet.mvc.domain;
+package lv.javaguru.java2.servlet.mvc.data;
 
 import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.domain.UserPattern;
@@ -7,8 +7,8 @@ import java.util.List;
 
 public class UserPatternControllerData {
 
-    User user;
-    List<UserPattern> userPatterns;
+    private User user;
+    private List<UserPattern> userPatterns;
 
     public UserPatternControllerData(User user, List<UserPattern> userPatterns) {
         this.user = user;

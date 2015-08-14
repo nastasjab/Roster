@@ -25,29 +25,29 @@ public class GenericHibernateDAO<T> {
 
 
     @Transactional
-    public void create(T obj) throws DBException {
+    public void create(T obj) {
         sessionFactory.getCurrentSession().save(obj);
     }
 
     @Transactional
-    public T getById(long id) throws DBException {
+    public T getById(long id) {
         return (T)sessionFactory.getCurrentSession().get(persistentClass, id);
     }
 
     @Transactional
-    public void delete(long id) throws DBException {
+    public void delete(long id) {
         Session session = sessionFactory.getCurrentSession();
         T obj = (T) session.get(persistentClass, id);
         session.delete(obj);
     }
 
     @Transactional
-    public void update(T obj) throws DBException {
+    public void update(T obj) {
         sessionFactory.getCurrentSession().update(obj);
     }
 
     @Transactional
-    public List<T> getAll() throws DBException {
+    public List<T> getAll() {
         return sessionFactory.getCurrentSession().createCriteria(persistentClass).list();
     }
 

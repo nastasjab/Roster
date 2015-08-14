@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servlet.mvc.domain;
+package lv.javaguru.java2.servlet.mvc.data;
 
 
 import lv.javaguru.java2.domain.Shift;

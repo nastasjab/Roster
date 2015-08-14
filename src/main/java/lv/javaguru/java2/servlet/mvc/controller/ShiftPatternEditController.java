@@ -1,10 +1,13 @@
-package lv.javaguru.java2.servlet.mvc;
+package lv.javaguru.java2.servlet.mvc.controller;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.ShiftDAO;
 import lv.javaguru.java2.database.ShiftPatternDAO;
 import lv.javaguru.java2.domain.ShiftPattern;
-import lv.javaguru.java2.servlet.mvc.domain.ShiftPatternEditControllerData;
+import lv.javaguru.java2.servlet.mvc.MVCController;
+import lv.javaguru.java2.servlet.mvc.MVCModel;
+import lv.javaguru.java2.servlet.mvc.MessageContents;
+import lv.javaguru.java2.servlet.mvc.data.ShiftPatternEditControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

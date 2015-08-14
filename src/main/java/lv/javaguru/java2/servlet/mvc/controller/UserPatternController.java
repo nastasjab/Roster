@@ -1,11 +1,13 @@
-package lv.javaguru.java2.servlet.mvc;
+package lv.javaguru.java2.servlet.mvc.controller;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.database.UserPatternDAO;
 import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.domain.UserPattern;
-import lv.javaguru.java2.servlet.mvc.domain.UserPatternControllerData;
+import lv.javaguru.java2.servlet.mvc.MVCController;
+import lv.javaguru.java2.servlet.mvc.MVCModel;
+import lv.javaguru.java2.servlet.mvc.data.UserPatternControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class UserPatternController implements MVCController{
+public class UserPatternController implements MVCController {
 
     @Autowired
     private UserDAO userDAO;

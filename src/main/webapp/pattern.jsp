@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="lv.javaguru.java2.domain.ShiftPattern" %>
-<%@ page import="lv.javaguru.java2.servlet.mvc.domain.PatternEditControllerData" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.PatternEditControllerData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  PatternEditControllerData pattern;
   boolean editPattern = true;
@@ -34,6 +34,7 @@
       <td>Name</td>
       <td><input type="text" name="name" value="<%= pattern.getName() %>"></td>
     </tr>
+    <tr>
       <td colspan="2" align="right">
         <%  if (editPattern) { %>
         <input type="submit" name="act_delete" value="Delete Pattern">
@@ -52,7 +53,7 @@
     <th>ID</th>
     <th>Seq No</th>
     <th>Name</th>
-    <%  List<ShiftPattern> shiftPatterns = (List<ShiftPattern>) pattern.getShiftPatterns();
+    <%  List<ShiftPattern> shiftPatterns = pattern.getShiftPatterns();
       for (ShiftPattern shiftPattern : shiftPatterns) { %>
     <tr>
       <td><a href="/roster/shiftpattern?pattern_id=<%= pattern.getId()%>&amp;id=<%= shiftPattern.getId()%>">
