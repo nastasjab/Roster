@@ -2,10 +2,10 @@ package lv.javaguru.java2.database;
 
 import java.util.List;
 
-public interface DAO<T> {
-    void create(T shift) throws DBException;
+public interface GenericDAO<T> {
+    void create(T obj) throws DBException;
 
-    void update(T shift) throws DBException;
+    void update(T obj) throws DBException;
 
     List<T> getAll() throws DBException;
 

@@ -1,13 +1,13 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.database.DAO;
+import lv.javaguru.java2.database.GenericDAO;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.domain.Generic;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
-public abstract class GenericEditMVCController<T extends DAO, R extends Generic> {
+public abstract class GenericEditMVCController<T extends GenericDAO, R extends Generic> {
 
     @Autowired
     private T dao;
@@ -86,12 +86,17 @@ public abstract class GenericEditMVCController<T extends DAO, R extends Generic>
             e.printStackTrace();
         }
 
+        deleteChildObjects(req);
+
         return new MVCModel(
                 new MessageContents(
                         getObjectName()+" deleted",
                         getObjectName()+" deleted",
                         getListPageAddress(),
                         "Back to "+getObjectName()+"s List"), "/message.jsp");
+    }
+
+    protected void deleteChildObjects(HttpServletRequest req) {
     }
 
     protected long getId(HttpServletRequest req) throws NullPointerException {

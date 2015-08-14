@@ -13,7 +13,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class PatternDAOImpl extends DAOImpl implements PatternDAO {
 
     @Autowired
@@ -61,7 +60,7 @@ public class PatternDAOImpl extends DAOImpl implements PatternDAO {
                 pattern = new Pattern();
                 pattern.setId(resultSet.getLong("id"));
                 pattern.setName(resultSet.getString("name"));
-                pattern.setShiftPatterns(shiftPatternDAO.getAll(pattern.getId()));
+              //  pattern.setShiftPatterns(shiftPatternDAO.getAll(pattern.getId()));
             }
 
             return pattern;

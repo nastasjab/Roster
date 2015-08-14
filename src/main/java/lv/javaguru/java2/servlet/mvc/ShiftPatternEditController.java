@@ -3,13 +3,12 @@ package lv.javaguru.java2.servlet.mvc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.ShiftDAO;
 import lv.javaguru.java2.database.ShiftPatternDAO;
-import lv.javaguru.java2.domain.Shift;
 import lv.javaguru.java2.domain.ShiftPattern;
+import lv.javaguru.java2.servlet.mvc.domain.ShiftPatternEditControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 
 @Component
 public class ShiftPatternEditController implements MVCController {

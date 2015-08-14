@@ -2,6 +2,7 @@ package lv.javaguru.java2.database.jdbc;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.domain.Pattern;
+import lv.javaguru.java2.domain.Shift;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -62,29 +63,20 @@ public class PatternDAOImplTest {
     }
 
     @Test
-    public void testDeleteNotExisting() throws DBException {
-        patternDAO.delete(-1);
-    }
-
-    @Test
     public void testUpdate() throws DBException {
         patternDAO.create(pattern);
 
         pattern = patternDAO.getById(pattern.getId());
-        pattern2.setId(pattern.getId());
+        pattern.setName(pattern2.getName());
 
-        patternDAO.update(pattern2);
+        patternDAO.update(pattern);
 
-        Pattern patternFromDB = patternDAO.getById(pattern2.getId());
+        Pattern patternFromDB = patternDAO.getById(pattern.getId());
 
         assertNotNull(patternFromDB);
         assertEquals(pattern2.getName(), patternFromDB.getName());
     }
 
-    @Test
-    public void testUpdateNotExisting() throws DBException {
-        patternDAO.update(pattern);
-    }
 
     private Pattern createPattern(String name) {
         Pattern pattern = new Pattern();

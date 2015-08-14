@@ -1,5 +1,5 @@
 <%@ page import="lv.javaguru.java2.domain.User" %>
-<%@ page import="lv.javaguru.java2.servlet.mvc.UserPatternEditControllerData" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.domain.UserPatternEditControllerData" %>
 <%@ page import="lv.javaguru.java2.domain.UserPattern" %>
 <%@ page import="java.util.List" %>
 <%@ page import="lv.javaguru.java2.domain.Pattern" %>

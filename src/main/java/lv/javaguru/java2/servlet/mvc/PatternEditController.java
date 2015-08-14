@@ -3,86 +3,74 @@ package lv.javaguru.java2.servlet.mvc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.PatternDAO;
 import lv.javaguru.java2.domain.Pattern;
+import lv.javaguru.java2.servlet.mvc.domain.PatternEditControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Component
-public class PatternEditController implements MVCController {
+public class PatternEditController extends GenericEditMVCController<PatternDAO, Pattern> implements MVCController {
 
     @Autowired
     private PatternDAO patternDAO;
 
-    public MVCModel processRequest(HttpServletRequest req) {
+    // TODO shiftpatternDAO
+  //  @Autowired
+  //  private ShiftDAO shiftDAO;
 
-        if (req.getParameter("pattern_add") != null) {
-            add(req);
-            return new MVCModel(new MessageContents("New pattern created", "New pattern created", "/roster/patterns", "back to Patterns List"), "/message.jsp");
-        }
-
-        if (req.getParameter("pattern_update") != null) {
-            update(req);
-            return new MVCModel(new MessageContents("Pattern updated", "Pattern updated", "/roster/patterns", "back to Patterns List"), "/message.jsp");
-        }
-
-        if (req.getParameter("pattern_delete") != null) {
-            delete(req);
-            return new MVCModel(new MessageContents("Pattern deleted", "Pattern deleted", "/roster/patterns", "back to Patterns List"), "/message.jsp");
-        }
-
-        Pattern result = null;
+    protected MVCModel listObject(HttpServletRequest req){
+        PatternEditControllerData result = null;
         try {
             long id = getId(req);
             try {
-                result = patternDAO.getById(id);
+                result = new PatternEditControllerData();
+                Pattern pattern = patternDAO.getById(id);
+                //TODO  !!!!!!!!!!!
+                // select from shiftPatternDAO only related to this pattern objects
+                //result.setShiftPatterns(shiftDAO.getAll());
+                result.setId(pattern.getId());
+                result.setName(pattern.getName());
+
             } catch (DBException e) {
                 e.printStackTrace();
             }
         } catch (NullPointerException e) {
-            result = new Pattern();
+            result = new PatternEditControllerData();
         }
 
-        return new MVCModel(result, "/pattern.jsp");
+        return new MVCModel(result, getEditPageAddressJSP());
     }
 
-    private long getId(HttpServletRequest req) throws NullPointerException {
-        long result = 0;
-        try {
-            result = Long.decode(req.getParameter("id"));
-        } catch (NumberFormatException e){
-            e.printStackTrace();
-        }
-        return result;
+    @Override
+    protected void deleteChildObjects(HttpServletRequest req) {
+        // TODO cascade delete shifts for this pattern
     }
 
-    private Pattern add(HttpServletRequest req) {
-        Pattern pattern = new Pattern();
-        pattern.setName(req.getParameter("name"));
-        try {
-            patternDAO.create(pattern);
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
-        return pattern;
+    @Override
+    protected String getObjectName() {
+        return "Pattern";
     }
 
-    private void update(HttpServletRequest req) {
-        Pattern pattern = new Pattern();
-        pattern.setId(getId(req));
-        pattern.setName(req.getParameter("name"));
-        try {
-            patternDAO.update(pattern);
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String getEditPageAddressJSP() {
+        return "/pattern.jsp";
     }
 
-    private void delete(HttpServletRequest req) {
-        try {
-            patternDAO.delete(getId(req));
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String getListPageAddress() {
+        return  "/roster/patterns";
     }
+
+    @Override
+    protected Pattern getNewInstance() {
+        return new Pattern();
+    }
+
+    @Override
+    protected void fillParameters(HttpServletRequest req, Pattern object) {
+        object.setName(req.getParameter("name"));
+    }
+
+
 }

@@ -1,10 +1,10 @@
-<%@ page import="lv.javaguru.java2.domain.Pattern" %>
 <%@ page import="java.util.List" %>
 <%@ page import="lv.javaguru.java2.domain.ShiftPattern" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.domain.PatternEditControllerData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%  Pattern pattern;
+<%  PatternEditControllerData pattern;
   boolean editPattern = true;
-  pattern = (Pattern) request.getAttribute("model");
+  pattern = (PatternEditControllerData) request.getAttribute("model");
   if (pattern.getId() == 0) {
     editPattern = false;
   }
@@ -36,11 +36,11 @@
     </tr>
       <td colspan="2" align="right">
         <%  if (editPattern) { %>
-        <input type="submit" name="pattern_delete" value="Delete Pattern">
-        <input type="submit" name="pattern_update" value="Update">
-        <input type="submit" name="pattern_discard" value="Discard Changes">
+        <input type="submit" name="act_delete" value="Delete Pattern">
+        <input type="submit" name="act_update" value="Update">
+        <input type="submit" name="act_discard" value="Discard Changes">
         <% } else { %>
-        <input type="submit" name="pattern_add" value="Add New Pattern">
+        <input type="submit" name="act_add" value="Add New Pattern">
         <% } %>
       </td>
     </tr>

@@ -1,14 +1,18 @@
 package lv.javaguru.java2.domain;
 
+import javax.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Entity
+@Table(name ="patterns")
 public class Pattern extends Generic{
 
-    private String name = "";
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private long id;
 
-    private List<ShiftPattern> shiftPatterns;
+    @Column(name = "name")
+    private String name = "";
 
     public Pattern() {
     }
@@ -21,22 +25,11 @@ public class Pattern extends Generic{
         this.name = name;
     }
 
-    public List<ShiftPattern> getShiftPatterns() {
-        if (shiftPatterns == null)
-            shiftPatterns = new ArrayList<ShiftPattern>();
-
-        return shiftPatterns;
+    public long getId() {
+        return id;
     }
 
-    public void setShiftPatterns(List<ShiftPattern> shiftPatterns) {
-        this.shiftPatterns = shiftPatterns;
+    public void setId(long id) {
+        this.id = id;
     }
-
-    public long getShiftIdBySeqNo(int seqNo) throws NoSuchFieldException {
-        for (ShiftPattern s : shiftPatterns) {
-            if (seqNo == s.getSeqNo()) return s.getShiftId();
-        }
-        throw new NoSuchFieldException();
-    }
-
 }

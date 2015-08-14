@@ -58,8 +58,10 @@ public class RosterController implements MVCController{
 
             Map<Long, Pattern> patterns = new HashMap<Long, Pattern>();
             try {
-                for (Pattern pattern : patternDAO.getAll()) {
-                    pattern.setShiftPatterns(shiftPatternDAO.getAll(pattern.getId()));
+                for (Pattern pattern : patternDAO.getAll()){
+// TODO
+// next line should be reworked. pattern doesn't contains all related shifts
+    //!!!!!!!!!!!//                 pattern.setShiftPatterns(shiftPatternDAO.getAll(pattern.getId()));
                     patterns.put(pattern.getId(), pattern);
                 }
             } catch (DBException e) {
@@ -71,11 +73,13 @@ public class RosterController implements MVCController{
                 int seqNo = userPattern.getPatternStartDay();
                 Map<Integer, Shift> seqNoShiftMap = new HashMap<Integer, Shift>();
                 int patternLength = 0;
-                for (ShiftPattern shiftPattern : patterns.get(userPattern.getShiftPatternId()).getShiftPatterns()) {
+// next line should be reworked. pattern doesn't contains all related shifts
+// TODO
+/*                for (ShiftPattern shiftPattern : patterns.get(userPattern.getShiftPatternId()).getShiftPatterns()) {
                     seqNoShiftMap.put(shiftPattern.getSeqNo(), shifts.get(shiftPattern.getShiftId()));
                     if (shiftPattern.getSeqNo() > patternLength)
                         patternLength = shiftPattern.getSeqNo();
-                }
+                }*/
                 for (long epochDay = LocalDate.parse(getDateFrom(req).toString()).toEpochDay();
                      epochDay <= LocalDate.parse(getDateTill(req).toString()).toEpochDay(); epochDay++) {
                     if (seqNoShiftMap.get(seqNo) !=  null)/*
