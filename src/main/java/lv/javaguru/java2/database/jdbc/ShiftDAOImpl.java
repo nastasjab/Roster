@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-//@Component("JDBC")
+
 public class ShiftDAOImpl extends DAOImpl implements ShiftDAO{
     public void create(Shift shift) throws DBException {
         if (shift == null) {

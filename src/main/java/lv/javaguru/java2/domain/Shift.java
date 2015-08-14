@@ -1,11 +1,10 @@
 package lv.javaguru.java2.domain;
 
 import javax.persistence.*;
-import java.sql.Time;
 
 @Entity
 @Table(name ="shifts")
-public class Shift {//extends Generic{
+public class Shift extends Generic{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

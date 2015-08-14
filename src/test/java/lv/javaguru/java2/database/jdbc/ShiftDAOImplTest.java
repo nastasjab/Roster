@@ -9,10 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -22,13 +20,11 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringConfig.class)
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
 @Transactional
 public class ShiftDAOImplTest {
     private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 
     @Autowired
-    //@Qualifier("JDBC")
     private ShiftDAO shiftDAO;
 
     private Shift shift;
@@ -78,31 +74,23 @@ public class ShiftDAOImplTest {
     }
 
     @Test
-    public void testDeleteNotExisting() throws DBException {
-        shiftDAO.delete(-1);
-    }
-
-    @Test
     public void testUpdate() throws DBException {
         shiftDAO.create(shift);
 
         shift = shiftDAO.getById(shift.getId());
-        shift2.setId(shift.getId());
 
-        shiftDAO.update(shift2);
+        shift.setName(shift2.getName());
+        shift.setShiftStarts(shift2.getShiftStarts());
+        shift.setShiftEnds(shift2.getShiftEnds());
 
-        Shift shiftFromDB = shiftDAO.getById(shift2.getId());
+        shiftDAO.update(shift);
+
+        Shift shiftFromDB = shiftDAO.getById(shift.getId());
 
         assertNotNull(shiftFromDB);
-        assertEquals(shift2.getId(), shiftFromDB.getId());
         assertEquals(shift2.getName(), shiftFromDB.getName());
         assertEquals(shift2.getShiftStarts(), shiftFromDB.getShiftStarts());
         assertEquals(shift2.getShiftEnds(), shiftFromDB.getShiftEnds());
-    }
-
-    @Test
-    public void testUpdateNotExisting() throws DBException {
-        shiftDAO.update(shift);
     }
 
     private Shift createShift(String name, String shiftStarts, String shiftEnds) {

@@ -72,6 +72,9 @@ CREATE TABLE IF NOT EXISTS `rosterdb`.`shifts` (
  -- -----------------------------------------------------
 -- Table `rosterdb`.`patterns`
 -- -----------------------------------------------------
+
+DROP TABLE IF EXISTS `rosterdb`.`patterns` ;
+
 CREATE  TABLE IF NOT EXISTS `rosterdb`.`patterns` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(45) NULL DEFAULT NULL ,
@@ -81,9 +84,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `rosterdb`.`shift_patterns`
+-- Table `rosterdb`.`patterns_shifts`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `rosterdb`.`shift_patterns` (
+DROP TABLE IF EXISTS `rosterdb`.`patterns_shifts` ;
+
+CREATE  TABLE IF NOT EXISTS `rosterdb`.`patterns_shifts` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `patternId` BIGINT(20) NULL DEFAULT NULL ,
   `shiftId` BIGINT(20) NULL DEFAULT NULL ,

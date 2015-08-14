@@ -25,7 +25,7 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement =
-            connection.prepareStatement("insert into shift_patterns values (default, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            connection.prepareStatement("insert into patterns_shifts values (default, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setLong(1, shiftPattern.getPatternId());
             preparedStatement.setLong(2, shiftPattern.getShiftId());
             preparedStatement.setInt(3, shiftPattern.getSeqNo());
@@ -51,10 +51,10 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("select shift_patterns.id, shift_patterns.patternId," +
-                            " shift_patterns.shiftId, shifts.name, shift_patterns.seqNo " +
-                            "from shift_patterns left join shifts on shift_patterns.shiftId=shifts.id " +
-                            "where shift_patterns.id = ? ");
+                    .prepareStatement("select patterns_shifts.id, patterns_shifts.patternId," +
+                            " patterns_shifts.shiftId, shifts.name, patterns_shifts.seqNo " +
+                            "from patterns_shifts left join shifts on patterns_shifts.shiftId=shifts.id " +
+                            "where patterns_shifts.id = ? ");
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             ShiftPattern shiftPattern = null;
@@ -82,10 +82,10 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select shift_patterns.id, shift_patterns.patternId, shift_patterns.shiftId, shifts.name, shift_patterns.seqNo " +
-                            "from shift_patterns left join shifts on shift_patterns.shiftId=shifts.id " +
-                            "where shift_patterns.patternId = ? " +
-                            "ORDER BY shift_patterns.seqNo ASC");
+                    "select patterns_shifts.id, patterns_shifts.patternId, patterns_shifts.shiftId, shifts.name, patterns_shifts.seqNo " +
+                            "from patterns_shifts left join shifts on patterns_shifts.shiftId=shifts.id " +
+                            "where patterns_shifts.patternId = ? " +
+                            "ORDER BY patterns_shifts.seqNo ASC");
             preparedStatement.setLong(1, patternId);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -112,7 +112,7 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("delete from shift_patterns where id = ?");
+                    .prepareStatement("delete from patterns_shifts where id = ?");
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
@@ -133,7 +133,7 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update shift_patterns set patternId = ?, shiftId = ?, seqNo = ? "+
+                    .prepareStatement("update patterns_shifts set patternId = ?, shiftId = ?, seqNo = ? "+
                             "where id = ?");
             preparedStatement.setLong(1, shiftPattern.getPatternId());
             preparedStatement.setLong(2, shiftPattern.getShiftId());
@@ -158,7 +158,7 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update shift_patterns set shiftId = ? where id = ?");
+                    .prepareStatement("update patterns_shifts set shiftId = ? where id = ?");
             preparedStatement.setLong(1, shiftId);
             preparedStatement.setLong(2, id);
             preparedStatement.executeUpdate();
@@ -176,7 +176,7 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         Connection connection = null;
         try {
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("select shiftId from shift_patterns WHERE patternId = ? ORDER BY seqNo ASC ");
+            PreparedStatement preparedStatement = connection.prepareStatement("select shiftId from patterns_shifts WHERE patternId = ? ORDER BY seqNo ASC ");
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -198,9 +198,9 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select shifts.id, shifts.name, shifts.start, shifts.end from shifts, shift_patterns " +
-                            "WHERE shift_patterns.patternId = ? AND shifts.id = shift_patterns.shiftId " +
-                            "ORDER BY shift_patterns.seqNo ASC ");
+                    "select shifts.id, shifts.name, shifts.start, shifts.end from shifts, patterns_shifts " +
+                            "WHERE patterns_shifts.patternId = ? AND shifts.id = patterns_shifts.shiftId " +
+                            "ORDER BY patterns_shifts.seqNo ASC ");
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -227,7 +227,7 @@ public class ShiftPatternDAOImpl extends DAOImpl implements ShiftPatternDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(
-                    "select max(seqNo) + 1 from shift_patterns where patternid = ? limit 1");
+                    "select max(seqNo) + 1 from patterns_shifts where patternid = ? limit 1");
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

@@ -2,20 +2,6 @@ package lv.javaguru.java2.database;
 
 import lv.javaguru.java2.domain.Shift;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import java.util.List;
+public interface ShiftDAO extends DAO<Shift>{
 
-
-public interface ShiftDAO {
-
-    void create(Shift shift) throws DBException;
-
-    Shift getById(long id) throws DBException;
-
-    void delete(long id) throws DBException;
-
-    void update(Shift shift) throws DBException;
-
-    List<Shift> getAll() throws DBException;
 }

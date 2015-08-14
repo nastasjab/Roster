@@ -40,11 +40,11 @@
     <tr>
       <td colspan="2" align="right">
         <%  if (editShift) { %>
-        <input type="submit" name="shift_delete" value="Delete Shift">
-        <input type="submit" name="shift_update" value="Update">
-        <input type="submit" name="shift_discard" value="Discard Changes">
+        <input type="submit" name="act_delete" value="Delete Shift">
+        <input type="submit" name="act_update" value="Update">
+        <input type="submit" name="act_discard" value="Discard Changes">
         <% } else { %>
-        <input type="submit" name="shift_add" value="Add New Shift">
+        <input type="submit" name="act_add" value="Add New Shift">
         <% } %>
       </td>
     </tr>

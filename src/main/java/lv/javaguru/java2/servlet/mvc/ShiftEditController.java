@@ -11,85 +11,37 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 @Component
-@Transactional
-public class ShiftEditController implements MVCController {
+public class ShiftEditController extends GenericEditMVCController<ShiftDAO, Shift> implements MVCController {
 
     @Autowired
     private ShiftDAO shiftDAO;
 
-    public MVCModel processRequest(HttpServletRequest req) {
-
-        if (req.getParameter("shift_add") != null) {
-            add(req);
-            return new MVCModel(new MessageContents("New shift created", "New shift created", "/roster/shifts", "back to Shifts List"), "/message.jsp");
-        }
-
-        if (req.getParameter("shift_update") != null) {
-            update(req);
-            return new MVCModel(new MessageContents("Shift updated", "Shift updated", "/roster/shifts", "back to Shifts List"), "/message.jsp");
-        }
-
-        if (req.getParameter("shift_delete") != null) {
-            delete(req);
-            return new MVCModel(new MessageContents("Shift deleted", "Shift deleted", "/roster/shifts", "back to Shifts List"), "/message.jsp");
-        }
-
-        Shift result = null;
-        try {
-            long id = getId(req);
-            try {
-                result = shiftDAO.getById(id);
-            } catch (DBException e) {
-                e.printStackTrace();
-            }
-        } catch (NullPointerException e) {
-            result = new Shift();
-        }
-
-        return new MVCModel(result, "/shift.jsp");
+    @Override
+    protected void fillParameters(HttpServletRequest req, Shift object) {
+        object.setName(req.getParameter("name"));
+        object.setShiftStarts(req.getParameter("shiftstarts"));
+        object.setShiftEnds(req.getParameter("shiftends"));
     }
 
-    private long getId(HttpServletRequest req) throws NullPointerException {
-        long result = 0;
-        try {
-            result = Long.decode(req.getParameter("id"));
-        } catch (NumberFormatException e){
-            e.printStackTrace();
-        }
-        return result;
+    @Override
+    protected String getObjectName() {
+        return "Shift";
     }
 
-    private Shift add(HttpServletRequest req) {
-        Shift shift = new Shift();
-        shift.setName(req.getParameter("name"));
-        shift.setShiftStarts(req.getParameter("shiftstarts"));
-        shift.setShiftEnds(req.getParameter("shiftends"));
-        try {
-            shiftDAO.create(shift);
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
-        return shift;
+    @Override
+    protected String getListPageAddress() {
+        return "/roster/shifts";
     }
 
-    private void update(HttpServletRequest req) {
-        Shift shift = new Shift();
-        shift.setId(getId(req));
-        shift.setName(req.getParameter("name"));
-        shift.setShiftStarts(req.getParameter("shiftstarts"));
-        shift.setShiftEnds(req.getParameter("shiftends"));
-        try {
-            shiftDAO.update(shift);
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected Shift getNewInstance() {
+        return new Shift();
     }
 
-    private void delete(HttpServletRequest req) {
-        try {
-            shiftDAO.delete(getId(req));
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String getEditPageAddressJSP() {
+        return "/shift.jsp";
     }
+
+
 }
