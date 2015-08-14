@@ -92,7 +92,7 @@ public abstract class GenericEditMVCController<T extends DAO, R extends Generic>
                         getObjectName()+" deleted",
                         getListPageAddress(),
                         "Back to "+getObjectName()+"s List"), "/message.jsp");
-    };
+    }
 
     protected long getId(HttpServletRequest req) throws NullPointerException {
         long result = 0;

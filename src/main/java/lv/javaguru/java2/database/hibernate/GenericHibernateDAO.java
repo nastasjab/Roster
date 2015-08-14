@@ -19,9 +19,10 @@ public class GenericHibernateDAO<T> {
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-
     @Autowired
     SessionFactory sessionFactory;
+
+
 
     @Transactional
     public void create(T obj) throws DBException {

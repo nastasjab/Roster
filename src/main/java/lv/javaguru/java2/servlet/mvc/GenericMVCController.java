@@ -24,7 +24,7 @@ public abstract class GenericMVCController <T extends DAO, R extends Generic> {
             e.printStackTrace();
         }
 
-        return new MVCModel(list, "/shifts.jsp");
+        return new MVCModel(list, getListPageAddress());
     }
 
     protected abstract String getListPageAddress();
