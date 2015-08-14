@@ -2,6 +2,7 @@ package lv.javaguru.java2.domain;
 
 import java.sql.Date;
 
+@Deprecated
 public class ShiftOnExactDay extends Generic{
 
     private long userId;

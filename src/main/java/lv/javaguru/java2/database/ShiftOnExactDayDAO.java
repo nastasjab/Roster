@@ -4,6 +4,7 @@ import lv.javaguru.java2.domain.ShiftOnExactDay;
 
 import java.util.List;
 
+@Deprecated
 public interface ShiftOnExactDayDAO {
 
     void create(ShiftOnExactDay shiftOnExactDay) throws DBException;

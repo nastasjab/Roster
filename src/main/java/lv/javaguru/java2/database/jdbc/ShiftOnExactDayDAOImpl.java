@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Deprecated
 public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDAO {
     public void create(ShiftOnExactDay shiftOnExactDay) throws DBException {
         if (shiftOnExactDay == null) {
