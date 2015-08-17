@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 @Component
-public class ShiftEditController extends GenericEditMVCController<ShiftDAO, Shift> implements MVCController {
+public class ShiftEditController
+        extends GenericEditMVCController<ShiftDAO, Shift> implements MVCController  {
 
     @Override
     protected void fillParameters(HttpServletRequest req, Shift object) {
@@ -23,7 +24,7 @@ public class ShiftEditController extends GenericEditMVCController<ShiftDAO, Shif
     }
 
     @Override
-    protected String getListPageAddress() {
+    protected String getListPageAddress(HttpServletRequest req) {
         return "/roster/shifts";
     }
 

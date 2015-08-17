@@ -12,20 +12,30 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
     @Autowired
     private T dao;
 
-    public MVCModel processRequest(HttpServletRequest req) {
+    public MVCModel processRequest(HttpServletRequest req)  {
         PageAction action = getPageAction(req);
-        switch (action){
-            case ADD : return addObject(req);
-            case UPDATE : return updateObject(req);
-            case DELETE : return deleteObject(req);
-            case LIST :
-            default:   return listObject(req);
+        try{
+            switch (action){
+                case ADD : return addObject(req);
+                case UPDATE : return updateObject(req);
+                case DELETE : return deleteObject(req);
+                case LIST :
+                default:   return listObject(req);
+            }
+        }
+        catch (DBException e){
+            return new MVCModel(
+                    new MessageContents(
+                            e.getMessage(),
+                            e.getMessage(),
+                            getListPageAddress(req),
+                            "Back to "+getObjectName()+"s List"), "/message.jsp");
         }
     }
 
     protected abstract String getObjectName();
     protected abstract String getEditPageAddressJSP();
-    protected abstract String getListPageAddress();
+    protected abstract String getListPageAddress(HttpServletRequest req);
     protected abstract R getNewInstance();
     protected abstract void fillParameters(HttpServletRequest req, R object);
 
@@ -57,7 +67,7 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                 new MessageContents(
                         "New "+getObjectName()+" created",
                         "New "+getObjectName()+" created",
-                        getListPageAddress(),
+                        getListPageAddress(req),
                         "Back to "+getObjectName()+"s List"), "/message.jsp");
     }
 
@@ -75,28 +85,23 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                 new MessageContents(
                         getObjectName()+" updated",
                         getObjectName()+" updated",
-                        getListPageAddress(),
+                        getListPageAddress(req),
                         "Back to "+getObjectName()+"s List"), "/message.jsp");
     }
 
-    protected MVCModel deleteObject(HttpServletRequest req) {
-        try {
-            dao.delete(getId(req));
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
-
+    protected MVCModel deleteObject(HttpServletRequest req) throws DBException {
         deleteChildObjects(req);
+        dao.delete(getId(req));
 
         return new MVCModel(
                 new MessageContents(
                         getObjectName()+" deleted",
                         getObjectName()+" deleted",
-                        getListPageAddress(),
+                        getListPageAddress(req),
                         "Back to "+getObjectName()+"s List"), "/message.jsp");
     }
 
-    protected void deleteChildObjects(HttpServletRequest req) {
+    protected void deleteChildObjects(HttpServletRequest req) throws DBException {
         // override if additional cascade delete is required
     }
 

@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `rosterdb`.`user_patterns` ;
 CREATE  TABLE IF NOT EXISTS `rosterdb`.`user_patterns` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `userId` BIGINT(20) NOT NULL ,
-  `shiftPatternId` BIGINT(20) NOT NULL ,
+  `patternShiftId` BIGINT(20) NOT NULL ,
   `startDay` DATETIME NOT NULL ,
   `endDay` DATETIME NULL DEFAULT NULL ,
   `patternStartDay` INT(11) NULL DEFAULT '1' ,
@@ -94,6 +94,8 @@ CREATE  TABLE IF NOT EXISTS `rosterdb`.`patterns_shifts` (
   `shiftId` BIGINT(20) NULL DEFAULT NULL ,
   `seqNo` INT(11) NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
+   KEY `shift_fk` (`shiftId`),
+  CONSTRAINT `shift_fk` FOREIGN KEY (shiftId) REFERENCES `shifts` (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
 

@@ -2,6 +2,7 @@ package lv.javaguru.java2.servlet.mvc.controller;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.PatternDAO;
+import lv.javaguru.java2.database.PatternShiftDAO;
 import lv.javaguru.java2.domain.Pattern;
 import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
@@ -18,9 +19,8 @@ public class PatternEditController extends GenericEditMVCController<PatternDAO, 
     @Autowired
     private PatternDAO patternDAO;
 
-    // TODO shiftpatternDAO
-  //  @Autowired
-  //  private ShiftDAO shiftDAO;
+    @Autowired
+    private PatternShiftDAO patternShiftDAO;
 
     protected MVCModel listObject(HttpServletRequest req){
         PatternEditControllerData result = null;
@@ -29,9 +29,7 @@ public class PatternEditController extends GenericEditMVCController<PatternDAO, 
             try {
                 result = new PatternEditControllerData();
                 Pattern pattern = patternDAO.getById(id);
-                //TODO  !!!!!!!!!!!
-                // select from shiftPatternDAO only related to this pattern objects
-                //result.setShiftPatterns(shiftDAO.getAll());
+                result.setPatternShifts(patternShiftDAO.getAll(id));
                 result.setId(pattern.getId());
                 result.setName(pattern.getName());
 
@@ -46,8 +44,8 @@ public class PatternEditController extends GenericEditMVCController<PatternDAO, 
     }
 
     @Override
-    protected void deleteChildObjects(HttpServletRequest req) {
-        // TODO cascade delete shifts for this pattern
+    protected void deleteChildObjects(HttpServletRequest req) throws DBException {
+        patternShiftDAO.deleteByPatternId(getId(req));
     }
 
     @Override
@@ -61,7 +59,7 @@ public class PatternEditController extends GenericEditMVCController<PatternDAO, 
     }
 
     @Override
-    protected String getListPageAddress() {
+    protected String getListPageAddress(HttpServletRequest req) {
         return  "/roster/patterns";
     }
 

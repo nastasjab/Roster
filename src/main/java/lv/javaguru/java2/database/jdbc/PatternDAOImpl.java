@@ -54,7 +54,7 @@ public class PatternDAOImpl extends DAOImpl implements PatternDAO {
                 pattern = new Pattern();
                 pattern.setId(resultSet.getLong("id"));
                 pattern.setName(resultSet.getString("name"));
-              //  pattern.setShiftPatterns(shiftPatternDAO.getAll(pattern.getId()));
+              //  pattern.setPatternShifts(patternShiftDAO.getAll(pattern.getId()));
             }
 
             return pattern;

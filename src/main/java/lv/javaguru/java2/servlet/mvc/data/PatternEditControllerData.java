@@ -2,25 +2,25 @@ package lv.javaguru.java2.servlet.mvc.data;
 
 
 import lv.javaguru.java2.domain.Pattern;
-import lv.javaguru.java2.domain.ShiftPattern;
+import lv.javaguru.java2.domain.PatternShift;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PatternEditControllerData extends Pattern {
 
-    private List<ShiftPattern> shiftPatterns;
+    private List<PatternShift> patternShifts;
 
-    public List<ShiftPattern> getShiftPatterns() {
-        if (shiftPatterns == null)
-            shiftPatterns = new ArrayList<ShiftPattern>();
+    public List<PatternShift> getPatternShifts() {
+        if (patternShifts == null)
+            patternShifts = new ArrayList<PatternShift>();
 
-        return shiftPatterns;
+        return patternShifts;
     }
 
-    public void setShiftPatterns(List<ShiftPattern> shiftPatterns) {
+    public void setPatternShifts(List<PatternShift> patternShifts) {
 
-        this.shiftPatterns = new ArrayList<ShiftPattern>(shiftPatterns);
+        this.patternShifts = new ArrayList<PatternShift>(patternShifts);
     }
 
 

@@ -2,12 +2,12 @@ package lv.javaguru.java2.servlet.mvc.data;
 
 
 import lv.javaguru.java2.domain.Shift;
-import lv.javaguru.java2.domain.ShiftPattern;
+import lv.javaguru.java2.domain.PatternShift;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShiftPatternEditControllerData extends ShiftPattern {
+public class PatternShiftEditControllerData extends PatternShift {
 
     private List<Shift> allShifts;
 

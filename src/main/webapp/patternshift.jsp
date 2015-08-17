@@ -1,7 +1,7 @@
-<%@ page import="lv.javaguru.java2.servlet.mvc.data.ShiftPatternEditControllerData" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.PatternShiftEditControllerData" %>
 <%@ page import="lv.javaguru.java2.domain.Shift" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% ShiftPatternEditControllerData data = (ShiftPatternEditControllerData) request.getAttribute("model");
+<% PatternShiftEditControllerData data = (PatternShiftEditControllerData) request.getAttribute("model");
   boolean edit = true;
   if (data.getId() == 0) {
     edit = false;
@@ -36,7 +36,7 @@
         <%
           for (Shift shift : data.getAllShifts()) { %>
         <option value="<%= shift.getId()%>"
-                <%  if (shift.getId() == data.getShiftId()) { %>
+                <%  if (shift.getId() == data.getShift().getId()) { %>
                 selected
                 <% } %>
                 ><%= shift.getName()%>
@@ -50,11 +50,11 @@
     <tr>
       <td colspan="2" align="right">
         <%  if (edit) { %>
-        <input type="submit" name="shiftpattern_delete" value="Delete">
-        <input type="submit" name="shiftpattern_update" value="Update">
-        <input type="submit" name="shiftpattern_discard" value="Discard Changes">
+        <input type="submit" name="act_delete" value="Delete">
+        <input type="submit" name="act_update" value="Update">
+        <input type="submit" name="act_discard" value="Discard Changes">
         <% } else { %>
-        <input type="submit" name="shiftpattern_add" value="Add New">
+        <input type="submit" name="act_add" value="Add New">
         <% } %>
       </td>
     </tr>

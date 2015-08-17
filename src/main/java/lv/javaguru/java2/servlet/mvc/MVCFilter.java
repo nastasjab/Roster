@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servlet.mvc;
 
+import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.servlet.mvc.controller.*;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -34,8 +35,8 @@ public class MVCFilter implements Filter{
         controllers.put("/user", getBean(UserEditController.class));
         controllers.put("/shifts", getBean(ShiftController.class));
         controllers.put("/shift", getBean(ShiftEditController.class));
-        controllers.put("/shiftpattern", getBean(ShiftPatternEditController.class));
         controllers.put("/patterns", getBean(PatternController.class));
+        controllers.put("/patternshift", getBean(PatternShiftEditController.class));
         controllers.put("/pattern", getBean(PatternEditController.class));
         controllers.put("/userpatterns", getBean(UserPatternController.class));
         controllers.put("/userpattern", getBean(UserPatternEditController.class));

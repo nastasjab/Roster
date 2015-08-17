@@ -1,5 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="lv.javaguru.java2.domain.ShiftPattern" %>
+<%@ page import="lv.javaguru.java2.domain.PatternShift" %>
 <%@ page import="lv.javaguru.java2.servlet.mvc.data.PatternEditControllerData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  PatternEditControllerData pattern;
@@ -48,23 +48,26 @@
   </table>
 </form>
 
-<form method="get" name="shiftpatterns">
+<%  if (editPattern) { %>
+<form method="get" name="patternshift">
   <table border = 1 cellpadding = 5 align="center">
     <th>ID</th>
     <th>Seq No</th>
     <th>Name</th>
-    <%  List<ShiftPattern> shiftPatterns = pattern.getShiftPatterns();
-      for (ShiftPattern shiftPattern : shiftPatterns) { %>
+    <%  List<PatternShift> patternShifts = pattern.getPatternShifts();
+      for (PatternShift patternShift : patternShifts) { %>
     <tr>
-      <td><a href="/roster/shiftpattern?pattern_id=<%= pattern.getId()%>&amp;id=<%= shiftPattern.getId()%>">
-        <%= shiftPattern.getId()%></a></td>
-      <td><%= shiftPattern.getSeqNo() %>  </td>
-      <td>  <%= shiftPattern.getShiftName() %> </td>
+      <td><a href="/roster/patternshift?pattern_id=<%= pattern.getId()%>&amp;id=<%= patternShift.getId()%>">
+        <%= patternShift.getId()%></a></td>
+      <td><%= patternShift.getSeqNo() %>  </td>
+      <td>  <%= patternShift.getShift().getName() %>
+        (<%= patternShift.getShift().getShiftStarts() %>-<%= patternShift.getShift().getShiftEnds() %>) </td>
     </tr>
     <% } %>
   </table>
-  <div align="center"><a href="/roster/shiftpattern?pattern_id=<%= pattern.getId()%>">Add shift to pattern</a></div>
+  <div align="center"><a href="/roster/patternshift?pattern_id=<%= pattern.getId()%>">Add shift to pattern</a></div>
 </form>
+<% } %>
 
 </body>
 </html>

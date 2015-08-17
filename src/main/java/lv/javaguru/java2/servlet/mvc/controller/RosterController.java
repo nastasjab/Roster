@@ -30,7 +30,7 @@ public class RosterController implements MVCController {
     private PatternDAO patternDAO;
 
     @Autowired
-    private ShiftPatternDAO shiftPatternDAO;
+    private PatternShiftDAO patternShiftDAO;
 
     @Autowired
     private UserPatternDAO userPatternDAO;
@@ -63,7 +63,7 @@ public class RosterController implements MVCController {
                 for (Pattern pattern : patternDAO.getAll()){
 // TODO
 // next line should be reworked. pattern doesn't contains all related shifts
-    //!!!!!!!!!!!//                 pattern.setShiftPatterns(shiftPatternDAO.getAll(pattern.getId()));
+    //!!!!!!!!!!!//                 pattern.setPatternShifts(patternShiftDAO.getAll(pattern.getId()));
                     patterns.put(pattern.getId(), pattern);
                 }
             } catch (DBException e) {
@@ -77,10 +77,10 @@ public class RosterController implements MVCController {
                 int patternLength = 0;
 // next line should be reworked. pattern doesn't contains all related shifts
 // TODO
-/*                for (ShiftPattern shiftPattern : patterns.get(userPattern.getShiftPatternId()).getShiftPatterns()) {
-                    seqNoShiftMap.put(shiftPattern.getSeqNo(), shifts.get(shiftPattern.getShiftId()));
-                    if (shiftPattern.getSeqNo() > patternLength)
-                        patternLength = shiftPattern.getSeqNo();
+/*                for (PatternShift patternShift : patterns.get(userPattern.getPatternShiftId()).getPatternShifts()) {
+                    seqNoShiftMap.put(patternShift.getSeqNo(), shifts.get(patternShift.getShiftId()));
+                    if (patternShift.getSeqNo() > patternLength)
+                        patternLength = patternShift.getSeqNo();
                 }*/
                 for (long epochDay = LocalDate.parse(getDateFrom(req).toString()).toEpochDay();
                      epochDay <= LocalDate.parse(getDateTill(req).toString()).toEpochDay(); epochDay++) {

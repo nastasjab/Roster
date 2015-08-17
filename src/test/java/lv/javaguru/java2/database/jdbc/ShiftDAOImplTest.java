@@ -93,7 +93,7 @@ public class ShiftDAOImplTest {
         assertEquals(shift2.getShiftEnds(), shiftFromDB.getShiftEnds());
     }
 
-    private Shift createShift(String name, String shiftStarts, String shiftEnds) {
+    public static Shift createShift(String name, String shiftStarts, String shiftEnds) {
         Shift shift = new Shift();
         shift.setName(name);
         shift.setShiftStarts(shiftStarts);
