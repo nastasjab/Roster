@@ -1,8 +1,9 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.database.GenericDAO;
 import lv.javaguru.java2.database.DBException;
+import lv.javaguru.java2.database.GenericDAO;
 import lv.javaguru.java2.domain.Generic;
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +24,16 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                 default:   return listObject(req);
             }
         }
-        catch (DBException e){
+
+        catch (JDBCException e){
+            return new MVCModel(
+                    new MessageContents(
+                            e.getSQLException().getMessage(),
+                            e.getSQLException().getMessage(),
+                            getListPageAddress(req),
+                            "Back to "+getObjectName()+"s List"), "/message.jsp");
+        }
+        catch (Exception e){
             return new MVCModel(
                     new MessageContents(
                             e.getMessage(),
@@ -37,17 +47,13 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
     protected abstract String getEditPageAddressJSP();
     protected abstract String getListPageAddress(HttpServletRequest req);
     protected abstract R getNewInstance();
-    protected abstract void fillParameters(HttpServletRequest req, R object);
+    protected abstract void fillParameters(HttpServletRequest req, R object) throws Exception;
 
-    protected MVCModel listObject(HttpServletRequest req){
+    protected MVCModel listObject(HttpServletRequest req) throws Exception {
         R result = null;
         try {
             long id = getId(req);
-            try {
-                result = (R)dao.getById(id);
-            } catch (DBException e) {
-                e.printStackTrace();
-            }
+            result = (R)dao.getById(id);
         } catch (NullPointerException e) {
             result = getNewInstance();
         }
@@ -55,14 +61,12 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
         return new MVCModel(result, getEditPageAddressJSP());
     }
 
-    protected MVCModel addObject(HttpServletRequest req){
+    protected MVCModel addObject(HttpServletRequest req) throws Exception {
         R object = getNewInstance();
         fillParameters(req, object);
-        try {
-            dao.create(object);
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
+
+        dao.create(object);
+
         return new MVCModel(
                 new MessageContents(
                         "New "+getObjectName()+" created",
@@ -71,15 +75,12 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                         "Back to "+getObjectName()+"s List"), "/message.jsp");
     }
 
-    protected MVCModel updateObject(HttpServletRequest req) {
+    protected MVCModel updateObject(HttpServletRequest req) throws Exception {
         R object = getNewInstance();
         object.setId(getId(req));
         fillParameters(req, object);
-        try {
-            dao.update(object);
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
+
+        dao.update(object);
 
         return new MVCModel(
                 new MessageContents(
@@ -89,7 +90,7 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                         "Back to "+getObjectName()+"s List"), "/message.jsp");
     }
 
-    protected MVCModel deleteObject(HttpServletRequest req) throws DBException {
+    protected MVCModel deleteObject(HttpServletRequest req) throws Exception {
         deleteChildObjects(req);
         dao.delete(getId(req));
 
@@ -101,7 +102,7 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                         "Back to "+getObjectName()+"s List"), "/message.jsp");
     }
 
-    protected void deleteChildObjects(HttpServletRequest req) throws DBException {
+    protected void deleteChildObjects(HttpServletRequest req) throws Exception {
         // override if additional cascade delete is required
     }
 

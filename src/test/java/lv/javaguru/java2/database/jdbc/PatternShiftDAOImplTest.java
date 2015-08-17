@@ -66,17 +66,31 @@ public class PatternShiftDAOImplTest {
         assertEquals(patternShift.getSeqNo(), patternShiftFromDB.getSeqNo());
     }
 
-
     @Test
     public void testMultiplePatternShiftCreation() throws DBException {
+        patternShiftDAO.create(patternShift);
+        patternShiftDAO.create(patternShift3);
+        List<PatternShift>  patternShifts = patternShiftDAO.getAll();
+        assertEquals(2, patternShifts.size());
+    }
+
+    @Test
+    public void testGetAllByPatternId() throws DBException {
         patternShiftDAO.create(patternShift);
         patternShiftDAO.create(patternShift2);
         patternShiftDAO.create(patternShift3);
         List<PatternShift> patternShifts = patternShiftDAO.getAll(PATTERN_ID);
         assertEquals(2, patternShifts.size());
+    }
 
-        patternShifts = patternShiftDAO.getAll();
-        assertEquals(3, patternShifts.size());
+    @Test
+    public void testNextSeqNo() throws DBException {
+        assertEquals(1, patternShiftDAO.getNextSequenceNo(-1));
+
+        patternShiftDAO.create(patternShift);
+        patternShiftDAO.create(patternShift2);
+
+        assertEquals(3, patternShiftDAO.getNextSequenceNo(PATTERN_ID));
     }
 
 
@@ -94,6 +108,25 @@ public class PatternShiftDAOImplTest {
         patternShiftDAO.delete(patternShift2.getId());
         patternShifts = patternShiftDAO.getAll(PATTERN_ID);
         assertEquals(0, patternShifts.size());
+    }
+
+    @Test
+    public void testDeleteByPatternId() throws DBException {
+        patternShiftDAO.create(patternShift);
+        patternShiftDAO.create(patternShift2);
+        patternShiftDAO.create(patternShift3);
+        List<PatternShift> patternShifts = patternShiftDAO.getAll(PATTERN_ID);
+        assertEquals(2, patternShifts.size());
+
+        patternShifts = patternShiftDAO.getAll();
+        assertEquals(3, patternShifts.size());
+
+        patternShiftDAO.deleteByPatternId(PATTERN_ID);
+        patternShifts = patternShiftDAO.getAll(PATTERN_ID);
+        assertEquals(0, patternShifts.size());
+
+        patternShifts = patternShiftDAO.getAll();
+        assertEquals(1, patternShifts.size());
     }
 
     @Test

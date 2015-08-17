@@ -152,6 +152,28 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
         }
     }
 
+    public int getNextSequenceNo(long id) throws DBException {
+        int result = 0;
+        Connection connection = null;
+        try {
+            connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "select max(seqNo) + 1 from patterns_shifts where patternid = ? limit 1");
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                result = resultSet.getInt(1);
+            }
+        } catch (Throwable e) {
+            System.out.println("Exception while executing getNextSequenceNo list ShiftPatternDAOImpl.getList()");
+            e.printStackTrace();
+            throw new DBException(e);
+        } finally {
+            closeConnection(connection);
+        }
+        return result;
+    }
+
     public List<PatternShift> getAll() throws DBException {
         return null;
     }

@@ -5,6 +5,7 @@ import lv.javaguru.java2.database.*;
 import lv.javaguru.java2.domain.*;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,10 +37,16 @@ public class RosterController implements MVCController {
     private UserPatternDAO userPatternDAO;
 
     public MVCModel processRequest(HttpServletRequest req) {
+        RosterMap rosterMap = null;
+        Map<Long, User> users = null;
+        Map<Long, Shift> shifts = null;
+        Map<Long, Pattern> patterns = null;
 
-            RosterMap rosterMap = new RosterMap(getDateFrom(req), getDateTill(req));
+        try {
 
-            Map<Long, User> users = new HashMap<Long, User>();
+            rosterMap = new RosterMap(getDateFrom(req), getDateTill(req));
+
+            users = new HashMap<Long, User>();
             try {
                 for (User user : userDAO.getAll()) {
                     rosterMap.setUserMap(user, null);
@@ -49,28 +56,28 @@ public class RosterController implements MVCController {
                 e.printStackTrace();
             }
 
-            Map<Long, Shift> shifts = new HashMap<Long, Shift>();
-            try {
-                for (Shift shift : shiftDAO.getAll()) {
-                    shifts.put(shift.getId(), shift);
-                }
-            } catch (DBException e) {
-                e.printStackTrace();
+            shifts = new HashMap<Long, Shift>();
+
+            for (Shift shift : shiftDAO.getAll()) {
+                shifts.put(shift.getId(), shift);
             }
 
-            Map<Long, Pattern> patterns = new HashMap<Long, Pattern>();
-            try {
-                for (Pattern pattern : patternDAO.getAll()){
+            patterns = new HashMap<Long, Pattern>();
+
+            for (Pattern pattern : patternDAO.getAll()) {
 // TODO
 // next line should be reworked. pattern doesn't contains all related shifts
-    //!!!!!!!!!!!//                 pattern.setPatternShifts(patternShiftDAO.getAll(pattern.getId()));
-                    patterns.put(pattern.getId(), pattern);
-                }
-            } catch (DBException e) {
-                e.printStackTrace();
+                //!!!!!!!!!!!//                 pattern.setPatternShifts(patternShiftDAO.getAll(pattern.getId()));
+                patterns.put(pattern.getId(), pattern);
             }
+        } catch (JDBCException e) {
+            e.printStackTrace();
+            // TODO more intellegent exception handling
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
 
-            try {
+        try {
             for (UserPattern userPattern : userPatternDAO.getAll()) {
                 int seqNo = userPattern.getPatternStartDay();
                 Map<Integer, Shift> seqNoShiftMap = new HashMap<Integer, Shift>();
@@ -84,9 +91,9 @@ public class RosterController implements MVCController {
                 }*/
                 for (long epochDay = LocalDate.parse(getDateFrom(req).toString()).toEpochDay();
                      epochDay <= LocalDate.parse(getDateTill(req).toString()).toEpochDay(); epochDay++) {
-                    if (seqNoShiftMap.get(seqNo) !=  null)/*
+                    if (seqNoShiftMap.get(seqNo) != null)/*
                         rosterMap.getUserShifts(users.get(userPattern.getUserId())).setShift(Date.valueOf(LocalDate.ofEpochDay(epochDay)),
-                                seqNoShiftMap.get(seqNo))*/;
+                                seqNoShiftMap.get(seqNo))*/ ;
                     else {
                         System.out.println("---------------------\nseqNo = " + seqNo);
                         System.out.println("seqNoShiftMap.get(seqNo)" + seqNoShiftMap.get(seqNo).getName());
@@ -102,6 +109,8 @@ public class RosterController implements MVCController {
         } catch (DBException e) {
             e.printStackTrace();
         }
+
+
 
         return new MVCModel(rosterMap, "/roster.jsp");
 
