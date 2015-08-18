@@ -37,19 +37,19 @@ public class RosterController implements MVCController {
     private UserPatternDAO userPatternDAO;
 
     public MVCModel processRequest(HttpServletRequest req) {
-        RosterMap rosterMap = null;
+        Roster roster = null;
         Map<Long, User> users = null;
         Map<Long, Shift> shifts = null;
         Map<Long, Pattern> patterns = null;
 
         try {
 
-            rosterMap = new RosterMap(getDateFrom(req), getDateTill(req));
+            roster = new Roster(getDateFrom(req), getDateTill(req));
 
             users = new HashMap<Long, User>();
             try {
                 for (User user : userDAO.getAll()) {
-                    rosterMap.setUserMap(user, null);
+                    roster.setUserMap(user, null);
                     users.put(user.getId(), user);
                 }
             } catch (DBException e) {
@@ -92,7 +92,7 @@ public class RosterController implements MVCController {
                 for (long epochDay = LocalDate.parse(getDateFrom(req).toString()).toEpochDay();
                      epochDay <= LocalDate.parse(getDateTill(req).toString()).toEpochDay(); epochDay++) {
                     if (seqNoShiftMap.get(seqNo) != null)/*
-                        rosterMap.getUserShifts(users.get(userPattern.getUserId())).setShift(Date.valueOf(LocalDate.ofEpochDay(epochDay)),
+                        roster.getUserShifts(users.get(userPattern.getUserId())).setPatternShift(Date.valueOf(LocalDate.ofEpochDay(epochDay)),
                                 seqNoShiftMap.get(seqNo))*/ ;
                     else {
                         System.out.println("---------------------\nseqNo = " + seqNo);
@@ -112,7 +112,7 @@ public class RosterController implements MVCController {
 
 
 
-        return new MVCModel(rosterMap, "/roster.jsp");
+        return new MVCModel(roster, "/roster.jsp");
 
     }
 

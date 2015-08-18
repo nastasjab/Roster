@@ -3,14 +3,14 @@ package lv.javaguru.java2.domain;
 import java.sql.Date;
 import java.util.*;
 
-public class RosterMap extends Generic {
+public class Roster extends Generic {
 
     private Date from;
     private Date till;
 
     private final Map<User, RosterUserShiftMap> shiftMap = new HashMap<User, RosterUserShiftMap>();
 
-    public RosterMap(Date from, Date till) {
+    public Roster(Date from, Date till) {
         this.from = from;
         this.till = till;
     }

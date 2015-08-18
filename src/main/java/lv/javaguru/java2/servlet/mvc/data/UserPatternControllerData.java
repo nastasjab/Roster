@@ -10,6 +10,9 @@ public class UserPatternControllerData {
     private User user;
     private List<UserPattern> userPatterns;
 
+    public UserPatternControllerData() {
+    }
+
     public UserPatternControllerData(User user, List<UserPattern> userPatterns) {
         this.user = user;
         this.userPatterns = userPatterns;

@@ -1,16 +1,44 @@
 package lv.javaguru.java2.domain;
 
+import javax.persistence.*;
 import java.sql.Date;
 
+@Entity
+@Table(name = "user_patterns")
 public class UserPattern extends Generic{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private long id;
+
+    @Column(name = "userId")
     private long userId;
-    private long shiftPatternId;
-    private String shiftPatternName = "";
+
+    @Column(name = "startDay", columnDefinition = "DATETIME")
     private Date startDay;
+
+    @Column(name = "endDay", columnDefinition = "DATETIME")
     private Date endDay;
-    private int patternStartDay = 1;
+
+    @Column(name = "patternStartDay")
+    private int patternStartDay;
+
+    @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "patternShiftId")
+    private PatternShift patternShift;
 
     public UserPattern() {
+    }
+
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getUserId() {
@@ -19,14 +47,6 @@ public class UserPattern extends Generic{
 
     public void setUserId(long userId) {
         this.userId = userId;
-    }
-
-    public long getShiftPatternId() {
-        return shiftPatternId;
-    }
-
-    public void setShiftPatternId(long shiftPatternId) {
-        this.shiftPatternId = shiftPatternId;
     }
 
     public Date getStartDay() {
@@ -53,11 +73,15 @@ public class UserPattern extends Generic{
         this.patternStartDay = patternStartDay;
     }
 
-    public String getShiftPatternName() {
-        return shiftPatternName;
+    public PatternShift getPatternShift() {
+        if (patternShift == null)
+            patternShift =  new PatternShift();
+
+        return patternShift;
     }
 
-    public void setShiftPatternName(String shiftPatternName) {
-        this.shiftPatternName = shiftPatternName;
+    public void setPatternShift(PatternShift patternShift) {
+        this.patternShift = patternShift;
     }
+
 }

@@ -1,13 +1,13 @@
 package lv.javaguru.java2.database;
 
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.domain.UserPattern;
 
 import java.sql.Date;
 import java.util.List;
 
-public interface UserPatternDAO {
+public interface UserPatternDAO extends GenericDAO<UserPattern> {
+
     void create(UserPattern userPattern) throws DBException;
 
     UserPattern getById(long id) throws DBException;

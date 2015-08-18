@@ -3,7 +3,6 @@ package lv.javaguru.java2.database.jdbc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserPatternDAO;
 import lv.javaguru.java2.domain.UserPattern;
-import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,7 +11,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
     public void create(UserPattern userPattern) throws DBException {
         if (userPattern == null) {
@@ -27,7 +25,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                     connection.prepareStatement(
                             "insert into user_patterns values (default, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setLong(1, userPattern.getUserId());
-            preparedStatement.setLong(2, userPattern.getShiftPatternId());
+            preparedStatement.setLong(2, userPattern.getPatternShift().getId());
             preparedStatement.setDate(3, userPattern.getStartDay());
             preparedStatement.setDate(4, userPattern.getEndDay());
             preparedStatement.setInt(5, userPattern.getPatternStartDay());
@@ -60,7 +58,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 userPattern = new UserPattern();
                 userPattern.setId(resultSet.getLong("id"));
                 userPattern.setUserId(resultSet.getLong("userId"));
-                userPattern.setShiftPatternId(resultSet.getLong("shiftPatternId"));
+                userPattern.getPatternShift().setId(resultSet.getLong("shiftPatternId"));
                 userPattern.setStartDay(resultSet.getDate("startDay"));
                 userPattern.setEndDay(resultSet.getDate("endDay"));
                 userPattern.setPatternStartDay(resultSet.getInt("patternStartDay"));
@@ -105,7 +103,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                             "startDay = ?, endDay = ?, patternStartDay = ? "+
                             "where id = ?");
             preparedStatement.setLong(1, userPattern.getUserId());
-            preparedStatement.setLong(2, userPattern.getShiftPatternId());
+            preparedStatement.setLong(2, userPattern.getPatternShift().getId());
             preparedStatement.setDate(3, userPattern.getStartDay());
             preparedStatement.setDate(4, userPattern.getEndDay());
             preparedStatement.setInt(5, userPattern.getPatternStartDay());
@@ -132,7 +130,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 UserPattern userPattern = new UserPattern();
                 userPattern.setId(resultSet.getLong("id"));
                 userPattern.setUserId(resultSet.getLong("userId"));
-                userPattern.setShiftPatternId(resultSet.getLong("shiftPatternId"));
+                userPattern.getPatternShift().setId(resultSet.getLong("shiftPatternId"));
                 userPattern.setStartDay(resultSet.getDate("startDay"));
                 userPattern.setEndDay(resultSet.getDate("endDay"));
                 userPattern.setPatternStartDay(resultSet.getInt("patternStartDay"));
@@ -164,8 +162,8 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 UserPattern userPattern = new UserPattern();
                 userPattern.setId(resultSet.getLong("u.id"));
                 userPattern.setUserId(id);
-                userPattern.setShiftPatternId(resultSet.getLong("u.shiftPatternId"));
-                userPattern.setShiftPatternName(resultSet.getString("p.name"));
+                userPattern.getPatternShift().setId(resultSet.getLong("u.shiftPatternId"));
+                // userPattern.setShiftPatternName(resultSet.getString("p.name"));
                 userPattern.setStartDay(resultSet.getDate("u.startDay"));
                 userPattern.setEndDay(resultSet.getDate("u.endDay"));
                 userPattern.setPatternStartDay(resultSet.getInt("u.patternStartDay"));
@@ -206,7 +204,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 UserPattern userPattern = new UserPattern();
                 userPattern.setId(resultSet.getLong("id"));
                 userPattern.setUserId(resultSet.getLong("userId"));
-                userPattern.setShiftPatternId(resultSet.getLong("shiftPatternId"));
+                userPattern.getPatternShift().setId(resultSet.getLong("shiftPatternId"));
                 userPattern.setStartDay(resultSet.getDate("startDay"));
                 userPattern.setEndDay(resultSet.getDate("endDay"));
                 userPattern.setPatternStartDay(resultSet.getInt("patternStartDay"));

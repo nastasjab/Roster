@@ -38,6 +38,8 @@ public class PatternShiftEditController extends
         } catch (NullPointerException e) {
             result = new PatternShiftEditControllerData();
             result.setPatternId(getPatternId(req));
+            // TODO - check how works auto next seqNo when adding new shift to pattern
+            result.setSeqNo(patternShiftDAO.getNextSequenceNo(getPatternId(req)));
         }
 
 

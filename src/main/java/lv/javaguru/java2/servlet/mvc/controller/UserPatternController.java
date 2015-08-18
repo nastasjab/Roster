@@ -3,8 +3,8 @@ package lv.javaguru.java2.servlet.mvc.controller;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.database.UserPatternDAO;
-import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.servlet.mvc.GenericMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 import lv.javaguru.java2.servlet.mvc.data.UserPatternControllerData;
@@ -12,11 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
-public class UserPatternController implements MVCController {
+public class UserPatternController extends GenericMVCController<UserPatternDAO, UserPattern> implements MVCController {
 
     @Autowired
     private UserDAO userDAO;
@@ -24,26 +22,36 @@ public class UserPatternController implements MVCController {
     @Autowired
     private UserPatternDAO userPatternDAO;
 
-    public MVCModel processRequest(HttpServletRequest req) {
-
-        User user = new User();
-
+    @Override
+    public MVCModel processRequest(HttpServletRequest req)  {
+        UserPatternControllerData result = null;
         try {
-            user = userDAO.getById(Long.decode(req.getParameter("user")));
+            result = new UserPatternControllerData();
+            result.setUser(userDAO.getById(getId(req)));
+            result.setUserPatterns(userPatternDAO.getByUserId(getId(req)));
+
+        } catch (NullPointerException e) {
+            result = new UserPatternControllerData();
         } catch (DBException e) {
             e.printStackTrace();
         }
 
-        List<UserPattern> userPatterns = new ArrayList<UserPattern>();
-
-        try {
-            userPatterns = userPatternDAO.getByUserId(Long.decode(req.getParameter("user")));
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
-
-        UserPatternControllerData data = new UserPatternControllerData(user, userPatterns);
-
-        return new MVCModel(data, "/userPatterns.jsp");
+        return new MVCModel(result, getListPageAddress());
     }
+
+    protected long getId(HttpServletRequest req) throws NullPointerException {
+        long result = 0;
+        try {
+            result = Long.decode(req.getParameter("user"));
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    protected String getListPageAddress() {
+        return "/userPatterns.jsp";
+    }
+
 }
