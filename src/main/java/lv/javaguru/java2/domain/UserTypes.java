@@ -20,4 +20,8 @@ public class UserTypes {
         return this.userTypes.keySet();
     }
 
+    public boolean validateKey(String key) {
+        return userTypes.containsKey(key);
+    }
+
 }

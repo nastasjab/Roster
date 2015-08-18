@@ -69,11 +69,11 @@ Add new user
     <tr>
         <td colspan="2" align="right">
             <%  if (editUser) { %>
-            <input type="submit" name="user_delete" value="Delete User">
-            <input type="submit" name="user_update" value="Update">
-            <input type="submit" name="user_discard" value="Discard Changes">
+            <input type="submit" name="act_delete" value="Delete User">
+            <input type="submit" name="act_update" value="Update">
+            <input type="submit" name="act_discard" value="Discard Changes">
             <% } else { %>
-            <input type="submit" name="user_add" value="Add New User">
+            <input type="submit" name="act_add" value="Add New User">
             <% } %>
         </td>
     </tr>

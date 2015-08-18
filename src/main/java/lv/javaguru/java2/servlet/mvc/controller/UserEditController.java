@@ -1,103 +1,50 @@
 package lv.javaguru.java2.servlet.mvc.controller;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.User;
+import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
-import lv.javaguru.java2.servlet.mvc.MVCModel;
-import lv.javaguru.java2.servlet.mvc.data.MessageContents;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Component
-public class UserEditController implements MVCController {
+public class UserEditController extends GenericEditMVCController<UserDAO,User> implements MVCController {
 
-    @Autowired
-    private UserDAO userDAO;
-
-    public MVCModel processRequest(HttpServletRequest req) {
-
-        if (req.getParameter("user_add") != null) {
-            add(req).getId();
-            return new MVCModel(new MessageContents("New user created", "New user created", "/roster/users", "back to Users List"), "/message.jsp");
-        }
-
-        if (req.getParameter("user_update") != null) {
-            update(req);
-            return new MVCModel(new MessageContents("User updated", "User updated", "/roster/users", "back to Users List"), "/message.jsp");
-        }
-
-        if (req.getParameter("user_delete") != null) {
-            delete(req);
-            return new MVCModel(new MessageContents("User deleted", "User deleted", "/roster/users", "back to Users List"), "/message.jsp");
-        }
-
-        User result = null;
-        try {
-            long id = getId(req);
-            try {
-                result = userDAO.getById(id);
-            } catch (DBException e) {
-                e.printStackTrace();
-            }
-        } catch (NullPointerException e) {
-            result = new User();
-        }
-
-        return new MVCModel(result, "/user.jsp");
+    @Override
+    protected void fillParameters(HttpServletRequest req, User object) throws Exception{
+        object.setLogin(req.getParameter("login"));
+        object.setPassword(req.getParameter("password"));
+        object.setUserType(req.getParameter("usertype"));
+        object.setFirstName(req.getParameter("firstname"));
+        object.setLastName(req.getParameter("lastname"));
+        object.setEmail(req.getParameter("email"));
+        object.setPhone(req.getParameter("phone"));
+        validate(object);
     }
 
-    private long getId(HttpServletRequest req) throws NullPointerException {
-        long result = 0;
-        try {
-            result = Long.decode(req.getParameter("id"));
-        } catch (NumberFormatException e){
-            e.printStackTrace();
-        }
-        return result;
+    @Override
+    protected String getObjectName() {
+        return "User";
     }
 
-    private User add(HttpServletRequest req) {
-        User user = new User();
-        user.setLogin(req.getParameter("login"));
-        user.setPassword(req.getParameter("password"));
-        user.setFirstName(req.getParameter("firstname"));
-        user.setLastName(req.getParameter("lastname"));
-        user.setUserType(req.getParameter("usertype"));
-        user.setEmail(req.getParameter("email"));
-        user.setPhone(req.getParameter("phone"));
-        try {
-            userDAO.create(user);
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
-        return user;
+    @Override
+    protected String getListPageAddress(HttpServletRequest req) {
+        return "/roster/users";
     }
 
-    private void update(HttpServletRequest req) {
-        User user = new User();
-        user.setId(getId(req));
-        user.setLogin(req.getParameter("login"));
-        user.setPassword(req.getParameter("password"));
-        user.setFirstName(req.getParameter("firstname"));
-        user.setLastName(req.getParameter("lastname"));
-        user.setUserType(req.getParameter("usertype"));
-        user.setEmail(req.getParameter("email"));
-        user.setPhone(req.getParameter("phone"));
-        try {
-            userDAO.update(user);
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected User getNewInstance() {
+        return new User();
     }
 
-    private void delete(HttpServletRequest req) {
-        try {
-            userDAO.delete(getId(req));
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
+    @Override
+    protected String getEditPageAddressJSP() {
+        return "/user.jsp";
     }
+
+    private void validate(User user) throws Exception {
+
+    }
+
 }
