@@ -44,7 +44,25 @@ public class UserEditController extends GenericEditMVCController<UserDAO,User> i
     }
 
     private void validate(User user) throws Exception {
+        if (!user.getEmail().isEmpty() && !isValidEmailAddress(user.getEmail()))
+            throw new Exception("Invalid e-mail address!");
+
+        if (!user.getPhone().isEmpty() && !isValidPhone(user.getPhone()))
+            throw new Exception("Invalid phone number!");
 
     }
 
+    private boolean isValidPhone(String phone) {
+        String ePattern = "^[0-9 +#-]+$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(phone);
+        return m.matches();
+    }
+
+    private boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
 }

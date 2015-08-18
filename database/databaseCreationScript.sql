@@ -99,8 +99,6 @@ CREATE  TABLE IF NOT EXISTS `rosterdb`.`patterns_shifts` (
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
 
-ALTER TABLE `rosterdb`.`patterns_shifts`
-ADD UNIQUE INDEX `shift_pattern_UNIQUE` (`patternId` ASC, `shiftId` ASC)  COMMENT '';
 
 USE `rosterdb` ;
 

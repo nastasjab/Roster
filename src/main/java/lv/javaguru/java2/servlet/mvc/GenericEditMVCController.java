@@ -31,16 +31,16 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                     new MessageContents(
                             e.getSQLException().getMessage(),
                             e.getSQLException().getMessage(),
-                            getListPageAddress(req),
-                            "Back to "+getObjectName()+"s List"), "/message.jsp");
+                            "javascript:history.back()",
+                            "Back"), "/message.jsp");
         }
         catch (Exception e){
             return new MVCModel(
                     new MessageContents(
                             e.getMessage(),
                             e.getMessage(),
-                            getListPageAddress(req),
-                            "Back to "+getObjectName()+"s List"), "/message.jsp");
+                            "javascript:history.back()",
+                            "Back"), "/message.jsp");
         }
     }
 
