@@ -15,15 +15,4 @@
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 
-
-     <servlet>
-        <servlet-name>MainMenuServlet</servlet-name>
-        <servlet-class>lv.javaguru.java2.servlet.MainMenuServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>MainMenuServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-
 </web-app>

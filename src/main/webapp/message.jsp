@@ -1,4 +1,4 @@
-<%@ page import="lv.javaguru.java2.servlet.mvc.MessageContents" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.MessageContents" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% MessageContents messageContents = (MessageContents) request.getAttribute("model"); %>
 <html>

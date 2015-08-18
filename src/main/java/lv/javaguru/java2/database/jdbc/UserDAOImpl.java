@@ -11,13 +11,9 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class UserDAOImpl extends DAOImpl implements UserDAO {
 
-    public User create(User user) throws DBException {
-        if (user == null) {
-            return null;
-        }
+    public void create(User user) throws DBException {
 
         Connection connection = null;
 
@@ -45,7 +41,6 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
         } finally {
             closeConnection(connection);
         }
-        return user;
     }
 
     public User getById(long id) throws DBException {

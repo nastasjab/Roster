@@ -5,7 +5,7 @@ import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
-import lv.javaguru.java2.servlet.mvc.MessageContents;
+import lv.javaguru.java2.servlet.mvc.data.MessageContents;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

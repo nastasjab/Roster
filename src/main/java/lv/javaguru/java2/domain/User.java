@@ -1,20 +1,47 @@
 package lv.javaguru.java2.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "users")
 public class User extends Generic {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private long id;
+
+    @Column(name = "login")
     private String login = "";
+
+    @Column(name = "password")
     private String password = "";
+
+    @Column(name = "userType", columnDefinition = "CHAR")
     private String userType = "";
+
+    @Column(name = "firstName")
     private String firstName = "";
+
+    @Column(name = "lastName")
     private String lastName = "";
+
+    @Column(name = "email")
     private String email = "";
+
+    @Column(name = "phone")
     private String phone = "";
 
     public User() {
         super();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getLogin() {

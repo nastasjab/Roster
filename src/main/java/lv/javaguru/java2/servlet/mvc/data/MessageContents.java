@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servlet.mvc;
+package lv.javaguru.java2.servlet.mvc.data;
 
 public class MessageContents {
 
