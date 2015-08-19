@@ -27,8 +27,8 @@ public class UserPatternController extends GenericMVCController<UserPatternDAO, 
         UserPatternControllerData result = null;
         try {
             result = new UserPatternControllerData();
-            result.setUser(userDAO.getById(getId(req)));
-            result.setUserPatterns(userPatternDAO.getByUserId(getId(req)));
+            result.setUser(userDAO.getById(getUserId(req)));
+            result.setUserPatterns(userPatternDAO.getByUserId(getUserId(req)));
 
         } catch (NullPointerException e) {
             result = new UserPatternControllerData();
@@ -39,7 +39,7 @@ public class UserPatternController extends GenericMVCController<UserPatternDAO, 
         return new MVCModel(result, getListPageAddress());
     }
 
-    protected long getId(HttpServletRequest req) throws NullPointerException {
+    protected long getUserId(HttpServletRequest req) throws NullPointerException {
         long result = 0;
         try {
             result = Long.decode(req.getParameter("user"));

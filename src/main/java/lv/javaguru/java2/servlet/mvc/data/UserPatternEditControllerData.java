@@ -4,6 +4,7 @@ import lv.javaguru.java2.domain.Pattern;
 import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.domain.UserPattern;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserPatternEditControllerData {
@@ -11,6 +12,12 @@ public class UserPatternEditControllerData {
     private User user;
     private UserPattern userPattern;
     private List<Pattern> shiftPatterns;
+
+    public UserPatternEditControllerData() {
+        this.user = new User();
+        this.userPattern = new UserPattern();
+        this.shiftPatterns = new ArrayList<Pattern>();
+    }
 
     public UserPatternEditControllerData(User user, UserPattern userPattern, List<Pattern> shiftPatterns) {
         this.user = user;

@@ -37,80 +37,15 @@ public class RosterController implements MVCController {
     private UserPatternDAO userPatternDAO;
 
     public MVCModel processRequest(HttpServletRequest req) {
-        Roster roster = null;
-        Map<Long, User> users = null;
-        Map<Long, Shift> shifts = null;
-        Map<Long, Pattern> patterns = null;
+
+        Roster roster = new Roster(getDateFrom(req), getDateTill(req));
 
         try {
-
-            roster = new Roster(getDateFrom(req), getDateTill(req));
-
-            users = new HashMap<Long, User>();
-            try {
-                for (User user : userDAO.getAll()) {
-                    roster.setUserMap(user, null);
-                    users.put(user.getId(), user);
-                }
-            } catch (DBException e) {
-                e.printStackTrace();
-            }
-
-            shifts = new HashMap<Long, Shift>();
-
-            for (Shift shift : shiftDAO.getAll()) {
-                shifts.put(shift.getId(), shift);
-            }
-
-            patterns = new HashMap<Long, Pattern>();
-
-            for (Pattern pattern : patternDAO.getAll()) {
-// TODO
-// next line should be reworked. pattern doesn't contains all related shifts
-                //!!!!!!!!!!!//                 pattern.setPatternShifts(patternShiftDAO.getAll(pattern.getId()));
-                patterns.put(pattern.getId(), pattern);
-            }
-        } catch (JDBCException e) {
-            e.printStackTrace();
-            // TODO more intellegent exception handling
+            for (User user : userDAO.getAll())
+                roster.setUserMap(user, null);
         } catch (DBException e) {
             e.printStackTrace();
         }
-
-        try {
-            for (UserPattern userPattern : userPatternDAO.getAll()) {
-                int seqNo = userPattern.getPatternStartDay();
-                Map<Integer, Shift> seqNoShiftMap = new HashMap<Integer, Shift>();
-                int patternLength = 0;
-// next line should be reworked. pattern doesn't contains all related shifts
-// TODO
-/*                for (PatternShift patternShift : patterns.get(userPattern.getPatternShiftId()).getPatternShifts()) {
-                    seqNoShiftMap.put(patternShift.getSeqNo(), shifts.get(patternShift.getShiftId()));
-                    if (patternShift.getSeqNo() > patternLength)
-                        patternLength = patternShift.getSeqNo();
-                }*/
-                for (long epochDay = LocalDate.parse(getDateFrom(req).toString()).toEpochDay();
-                     epochDay <= LocalDate.parse(getDateTill(req).toString()).toEpochDay(); epochDay++) {
-                    if (seqNoShiftMap.get(seqNo) != null)/*
-                        roster.getUserShifts(users.get(userPattern.getUserId())).setPatternShift(Date.valueOf(LocalDate.ofEpochDay(epochDay)),
-                                seqNoShiftMap.get(seqNo))*/ ;
-                    else {
-                        System.out.println("---------------------\nseqNo = " + seqNo);
-                        System.out.println("seqNoShiftMap.get(seqNo)" + seqNoShiftMap.get(seqNo).getName());
-                        System.out.println("users.get(userPattern.getUserId())" + users.get(userPattern.getUserId()));
-                        System.out.println("Date.valueOf(LocalDate.ofEpochDay(epochDay" + Date.valueOf(LocalDate.ofEpochDay(epochDay)));
-                    }
-                    if (seqNo < patternLength)
-                        seqNo++;
-                    else
-                        seqNo = 0;
-                }
-            }
-        } catch (DBException e) {
-            e.printStackTrace();
-        }
-
-
 
         return new MVCModel(roster, "/roster.jsp");
 

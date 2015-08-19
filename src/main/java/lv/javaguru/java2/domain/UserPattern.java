@@ -29,6 +29,7 @@ public class UserPattern extends Generic{
     private PatternShift patternShift;
 
     public UserPattern() {
+        super();
     }
 
     @Override

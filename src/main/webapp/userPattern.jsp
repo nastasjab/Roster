@@ -12,7 +12,9 @@
   if (userPattern.getId() == 0) {
     edit = false;
   }
-%>
+%><%= edit%>
+<%= user.getFirstName()%>
+<%= userPattern.getStartDay()%>
 <html>
 <head>
   <title>
@@ -47,7 +49,7 @@
         <%
           for (Pattern shiftPattern : shiftPatterns) { %>
         <option value="<%= shiftPattern.getId()%>"
-                <%  if (shiftPattern.getId() == userPattern.getShiftPatternId()) { %>
+                <%  if (shiftPattern.getId() == userPattern.getPatternShift().getShift().getId()) { %>
                 selected
                 <% } %>
                 ><%= shiftPattern.getName()%>
@@ -62,11 +64,11 @@
     <tr>
       <td colspan="2" align="right">
         <%  if (edit) { %>
-        <input type="submit" name="user_pattern_delete" value="Delete">
-        <input type="submit" name="user_pattern_update" value="Update">
-        <input type="submit" name="user_pattern_discard" value="Discard Changes">
+        <input type="submit" name="act_delete" value="Delete">
+        <input type="submit" name="act_update" value="Update">
+        <input type="submit" name="act_discard" value="Discard Changes">
         <% } else { %>
-        <input type="submit" name="user_pattern_add" value="Add New">
+        <input type="submit" name="act_add" value="Add New">
         <% } %>
       </td>
     </tr>

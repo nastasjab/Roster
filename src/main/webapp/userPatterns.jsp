@@ -21,13 +21,14 @@
         <th>End Date</th>
         <th>Pattern</th>
         <th>Starts on Day</th>
-        <%  for (UserPattern pattern : userPatterns) { %>
+        <%  for (UserPattern userPattern : userPatterns) { %>
         <tr>
-            <td><a href="/roster/userpattern?user=<%= user.getId()%>&id=<%= pattern.getId()%>"><%= pattern.getId()%></a></td>
-            <td><%= pattern.getStartDay() %></td>
-            <td><%= pattern.getEndDay()%></td>
-            <td><%= pattern.getShiftPatternName()%></td>
-            <td><%= pattern.getPatternStartDay()%></td>
+            <td><a href="/roster/userpattern?user=<%= user.getId()%>&id=<%= userPattern.getId()%>"><%= userPattern.getId()%></a></td>
+            <td><%= userPattern.getStartDay() %></td>
+            <td><%= userPattern.getEndDay()%></td>
+            // TODO Pattern Name
+            <td><%= userPattern.getPatternShift().getPatternId()%></td>
+            <td><%= userPattern.getPatternStartDay()%></td>
         </tr>
         <% } %>
     </table>
