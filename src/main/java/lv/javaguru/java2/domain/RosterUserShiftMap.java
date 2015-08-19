@@ -7,11 +7,15 @@ import java.util.Map;
 
 public class RosterUserShiftMap {
 
-    private User user;
+    private User user = new User();
     private Map<Date, Shift> userShifts = new HashMap<Date, Shift>();
 
     public RosterUserShiftMap(User user) {
         this.user = user;
+    }
+
+    public RosterUserShiftMap() {
+
     }
 
     public User getUser() {
