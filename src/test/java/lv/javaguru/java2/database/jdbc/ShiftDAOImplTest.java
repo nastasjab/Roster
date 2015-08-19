@@ -73,6 +73,11 @@ public class ShiftDAOImplTest {
         assertEquals(0, shifts.size());
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void testDeleteNotExisting() throws DBException {
+        shiftDAO.delete(-1);
+    }
+
     @Test
     public void testUpdate() throws DBException {
         shiftDAO.create(shift);

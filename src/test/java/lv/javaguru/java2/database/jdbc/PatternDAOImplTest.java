@@ -71,6 +71,11 @@ public class PatternDAOImplTest {
         assertEquals(0, patterns.size());
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void testDeleteNotExisting() throws DBException {
+        patternDAO.delete(-1);
+    }
+
     @Test
     public void testUpdate() throws DBException {
         patternDAO.create(pattern);
@@ -85,7 +90,6 @@ public class PatternDAOImplTest {
         assertNotNull(patternFromDB);
         assertEquals(pattern2.getName(), patternFromDB.getName());
     }
-
 
     private Pattern createPattern(String name) {
         Pattern pattern = new Pattern();

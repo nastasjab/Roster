@@ -110,6 +110,11 @@ public class PatternShiftDAOImplTest {
         assertEquals(0, patternShifts.size());
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void testDeleteNotExisting() throws DBException {
+        patternShiftDAO.delete(-1);
+    }
+
     @Test
     public void testDeleteByPatternId() throws DBException {
         patternShiftDAO.create(patternShift);
