@@ -11,18 +11,17 @@ public class UserPatternEditControllerData {
 
     private User user;
     private UserPattern userPattern;
-    private List<Pattern> shiftPatterns;
-
+    private List<Pattern> patterns;
     public UserPatternEditControllerData() {
         this.user = new User();
         this.userPattern = new UserPattern();
-        this.shiftPatterns = new ArrayList<Pattern>();
+        this.patterns = new ArrayList<Pattern>();
     }
 
-    public UserPatternEditControllerData(User user, UserPattern userPattern, List<Pattern> shiftPatterns) {
+    public UserPatternEditControllerData(User user, UserPattern userPattern, List<Pattern> patterns) {
         this.user = user;
         this.userPattern = userPattern;
-        this.shiftPatterns = shiftPatterns;
+        this.patterns = patterns;
     }
 
     public User getUser() {
@@ -41,11 +40,11 @@ public class UserPatternEditControllerData {
         this.userPattern = userPattern;
     }
 
-    public List<Pattern> getShiftPatterns() {
-        return shiftPatterns;
+    public List<Pattern> getPatterns() {
+        return patterns;
     }
 
-    public void setShiftPatterns(List<Pattern> shiftPatterns) {
-        this.shiftPatterns = shiftPatterns;
+    public void setPatterns(List<Pattern> patterns) {
+        this.patterns = patterns;
     }
 }

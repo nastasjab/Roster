@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="lv.javaguru.java2.domain.UserPattern" %>
 <%@ page import="lv.javaguru.java2.servlet.mvc.data.UserPatternControllerData" %>
+<%@ page import="lv.javaguru.java2.domain.Pattern" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  UserPatternControllerData data = (UserPatternControllerData) request.getAttribute("model");
     User user = data.getUser();
@@ -26,12 +27,10 @@
             <td><a href="/roster/userpattern?user=<%= user.getId()%>&id=<%= userPattern.getId()%>"><%= userPattern.getId()%></a></td>
             <td><%= userPattern.getStartDay() %></td>
             <td><%= userPattern.getEndDay()%></td>
-            // TODO Pattern Name
-            <td><%= userPattern.getPatternShift().getPatternId()%></td>
+            <td><%= data.getPatternById(userPattern.getPatternShift().getPatternId()).getName()%></td>
             <td><%= userPattern.getPatternStartDay()%></td>
         </tr>
         <% } %>
     </table>
-
 </body>
 </html>

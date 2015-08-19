@@ -26,14 +26,15 @@ public class UserPatternEditController extends GenericEditMVCController<UserPatt
 
     @Override
     protected MVCModel listObject(HttpServletRequest req) throws Exception {
-        UserPatternEditControllerData result = null;
+        UserPatternEditControllerData result;
         try {
+            result = new UserPatternEditControllerData();
             result.setUserPattern(userPatternDAO.getById(getId(req)));
         } catch (NullPointerException e) {
             result = new UserPatternEditControllerData();
         }
         result.setUser(userDAO.getById(getUserId(req)));
-        result.setShiftPatterns(patternDAO.getAll());
+        result.setPatterns(patternDAO.getAll());
         return new MVCModel(result, getEditPageAddressJSP());
     }
 

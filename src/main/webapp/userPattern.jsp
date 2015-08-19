@@ -7,14 +7,12 @@
 <% UserPatternEditControllerData data = (UserPatternEditControllerData) request.getAttribute("model");
     User user = data.getUser();
     UserPattern userPattern = data.getUserPattern();
-    List<Pattern> shiftPatterns = data.getShiftPatterns();
+    List<Pattern> shiftPatterns = data.getPatterns();
   boolean edit = true;
   if (userPattern.getId() == 0) {
     edit = false;
   }
-%><%= edit%>
-<%= user.getFirstName()%>
-<%= userPattern.getStartDay()%>
+%>
 <html>
 <head>
   <title>
