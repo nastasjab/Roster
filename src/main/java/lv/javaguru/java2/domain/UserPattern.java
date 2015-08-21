@@ -25,8 +25,8 @@ public class UserPattern extends Generic{
     private int patternStartDay;
 
     @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "patternShiftId")
-    private PatternShift patternShift;
+    @JoinColumn(name = "patternId")
+    private Pattern pattern;
 
     public UserPattern() {
         super();
@@ -74,15 +74,15 @@ public class UserPattern extends Generic{
         this.patternStartDay = patternStartDay;
     }
 
-    public PatternShift getPatternShift() {
-        if (patternShift == null)
-            patternShift =  new PatternShift();
+    public Pattern getPattern() {
+        if (pattern == null)
+            pattern =  new Pattern();
 
-        return patternShift;
+        return pattern;
     }
 
-    public void setPatternShift(PatternShift patternShift) {
-        this.patternShift = patternShift;
+    public void setPattern(Pattern pattern) {
+        this.pattern = pattern;
     }
 
 }

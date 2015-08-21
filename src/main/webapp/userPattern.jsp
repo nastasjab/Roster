@@ -45,12 +45,12 @@
       <td>Pattern</td>
       <td><select name="pattern">
         <%
-          for (Pattern shiftPattern : shiftPatterns) { %>
-        <option value="<%= shiftPattern.getId()%>"
-                <%  if (shiftPattern.getId() == userPattern.getPatternShift().getShift().getId()) { %>
+          for (Pattern pattern : shiftPatterns) { %>
+        <option value="<%= pattern.getId()%>"
+                <%  if (pattern.getId() == userPattern.getPattern().getId()) { %>
                 selected
                 <% } %>
-                ><%= shiftPattern.getName()%>
+                ><%= pattern.getName()%>
         </option>
         <%  } %>
       </select></td>

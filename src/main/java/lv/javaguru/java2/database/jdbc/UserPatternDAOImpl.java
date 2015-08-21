@@ -25,7 +25,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                     connection.prepareStatement(
                             "insert into user_patterns values (default, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setLong(1, userPattern.getUserId());
-            preparedStatement.setLong(2, userPattern.getPatternShift().getId());
+            preparedStatement.setLong(2, userPattern.getPattern().getId());
             preparedStatement.setDate(3, userPattern.getStartDay());
             preparedStatement.setDate(4, userPattern.getEndDay());
             preparedStatement.setInt(5, userPattern.getPatternStartDay());
@@ -58,7 +58,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 userPattern = new UserPattern();
                 userPattern.setId(resultSet.getLong("id"));
                 userPattern.setUserId(resultSet.getLong("userId"));
-                userPattern.getPatternShift().setId(resultSet.getLong("shiftPatternId"));
+                userPattern.getPattern().setId(resultSet.getLong("shiftPatternId"));
                 userPattern.setStartDay(resultSet.getDate("startDay"));
                 userPattern.setEndDay(resultSet.getDate("endDay"));
                 userPattern.setPatternStartDay(resultSet.getInt("patternStartDay"));
@@ -103,7 +103,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                             "startDay = ?, endDay = ?, patternStartDay = ? "+
                             "where id = ?");
             preparedStatement.setLong(1, userPattern.getUserId());
-            preparedStatement.setLong(2, userPattern.getPatternShift().getId());
+            preparedStatement.setLong(2, userPattern.getPattern().getId());
             preparedStatement.setDate(3, userPattern.getStartDay());
             preparedStatement.setDate(4, userPattern.getEndDay());
             preparedStatement.setInt(5, userPattern.getPatternStartDay());
@@ -130,7 +130,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 UserPattern userPattern = new UserPattern();
                 userPattern.setId(resultSet.getLong("id"));
                 userPattern.setUserId(resultSet.getLong("userId"));
-                userPattern.getPatternShift().setId(resultSet.getLong("shiftPatternId"));
+                userPattern.getPattern().setId(resultSet.getLong("shiftPatternId"));
                 userPattern.setStartDay(resultSet.getDate("startDay"));
                 userPattern.setEndDay(resultSet.getDate("endDay"));
                 userPattern.setPatternStartDay(resultSet.getInt("patternStartDay"));
@@ -162,7 +162,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 UserPattern userPattern = new UserPattern();
                 userPattern.setId(resultSet.getLong("u.id"));
                 userPattern.setUserId(id);
-                userPattern.getPatternShift().setId(resultSet.getLong("u.shiftPatternId"));
+                userPattern.getPattern().setId(resultSet.getLong("u.shiftPatternId"));
                 // userPattern.setShiftPatternName(resultSet.getString("p.name"));
                 userPattern.setStartDay(resultSet.getDate("u.startDay"));
                 userPattern.setEndDay(resultSet.getDate("u.endDay"));
@@ -204,7 +204,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 UserPattern userPattern = new UserPattern();
                 userPattern.setId(resultSet.getLong("id"));
                 userPattern.setUserId(resultSet.getLong("userId"));
-                userPattern.getPatternShift().setId(resultSet.getLong("shiftPatternId"));
+                userPattern.getPattern().setId(resultSet.getLong("shiftPatternId"));
                 userPattern.setStartDay(resultSet.getDate("startDay"));
                 userPattern.setEndDay(resultSet.getDate("endDay"));
                 userPattern.setPatternStartDay(resultSet.getInt("patternStartDay"));

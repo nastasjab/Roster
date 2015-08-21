@@ -11,7 +11,7 @@ import java.util.*;
 @Component
 public class Roster extends Generic {
 
-// TODO Do not autowire?
+// TODO Do not autowire! Why?
     @Autowired
     private UserDAO userDAO;
 
@@ -35,15 +35,23 @@ public class Roster extends Generic {
     public Roster(Date from, Date till) {
         this.from = from;
         this.till = till;
-        fillUsers();
-        fillShifts();
+        if (userDAO == null)
+            System.out.println("userDAO = null");
+        else
+            System.out.println("userDAO" + userDAO.toString());
+        if (userPatternDAO == null)
+            System.out.println("userPatternDAO = null");
+        else
+            System.out.println("userPatternDAO" + userPatternDAO.toString());
+        // fillUsers();
+        // fillShifts();
     }
 
     private void fillUsers() {
         try {
-            // TODO userDAO.getAll() throws NullPointerException before query ?
+            // TODO userDAO.getAll() throws NullPointerException before query!
             for (User user : userDAO.getAll())
-                shiftMap.put(user, new RosterUserShiftMap(user));
+                shiftMap.put(user, new RosterUserShiftMap());
         } catch (NullPointerException e) {
             return;
         } catch (DBException e) {
@@ -73,7 +81,7 @@ public class Roster extends Generic {
 
                 for (long day = epochDayFrom; day <= epochDayTill; day++) {
 
-                    shiftMap.get(userPattern.getUserId()).setShift(toSqlDate(day), shiftInPattern.get(seqNo));
+                    setShift(userPattern, shiftInPattern.get(seqNo), day);
 
                     if (seqNo >= patternSize)
                         seqNo = 0;
@@ -88,8 +96,12 @@ public class Roster extends Generic {
 
     }
 
+    private void setShift(UserPattern userPattern, Shift shift, long day) {
+        shiftMap.get(userPattern.getUserId()).setShift(toSqlDate(day), shift);
+    }
+
     private void getShiftsFromPattern(UserPattern userPattern, List<Shift> shiftInPattern) throws DBException {
-        for (PatternShift patternShift : patternShiftDAO.getAll(userPattern.getPatternShift().getId())) {
+        for (PatternShift patternShift : patternShiftDAO.getAll(userPattern.getPattern().getId())) {
             shiftInPattern.add(patternShift.getShift());
         }
     }
@@ -121,11 +133,6 @@ public class Roster extends Generic {
         return userPatternDAO.getByDateFrame(getFrom(), getTill());
     }
 
-    private List<Shift> fillWithShifts(long epochDayFrom, long epochDayTill, long patternOffset) {
-        List<Shift> result = new ArrayList<Shift>();
-        return result;
-    }
-
     private long toEpochDay(Date date) {
         return LocalDate.parse(date.toString()).toEpochDay();
     }
@@ -148,6 +155,13 @@ public class Roster extends Generic {
 
     public RosterUserShiftMap getUserShifts(User user) {
         return shiftMap.get(user);
+    }
+
+    public RosterUserShiftMap getUserShifts(long userId) throws Exception {
+        for (User user : getUserList())
+            if (userId == user.getId())
+                return shiftMap.get(user);
+        throw new Exception("User not found");
     }
 
     public void setUserMap(User user, RosterUserShiftMap shiftMap) {

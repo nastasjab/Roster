@@ -31,7 +31,7 @@
         <%  String shift = " ";
             for(long epochDay = LocalDate.parse(roster.getFrom().toString()).toEpochDay();
                 epochDay <= LocalDate.parse(roster.getTill().toString()).toEpochDay(); epochDay++) {
-        if (roster.getUserShifts(user) != null)
+        if (roster.getUserShifts(user).getShift(Date.valueOf(LocalDate.ofEpochDay(epochDay))) != null)
             shift = roster.getUserShifts(user).getShift(Date.valueOf(LocalDate.ofEpochDay(epochDay))).getName(); %>
         <td><%= shift %></td>
         <% } %>

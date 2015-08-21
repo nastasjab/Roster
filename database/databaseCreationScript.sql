@@ -31,7 +31,7 @@ DROP TABLE IF EXISTS `rosterdb`.`user_patterns` ;
 CREATE  TABLE IF NOT EXISTS `rosterdb`.`user_patterns` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT ,
   `userId` BIGINT(20) NOT NULL ,
-  `patternShiftId` BIGINT(20) NOT NULL ,
+  `patternId` BIGINT(20) NOT NULL ,
   `startDay` DATETIME NOT NULL ,
   `endDay` DATETIME NULL DEFAULT NULL ,
   `patternStartDay` INT(11) NULL DEFAULT '1' ,

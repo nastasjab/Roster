@@ -73,7 +73,7 @@ public class UserPatternEditController extends GenericEditMVCController<UserPatt
     protected void fillParameters(HttpServletRequest req, UserPattern object) {
         object.setUserId(Long.valueOf(req.getParameter("user")));
         object.setPatternStartDay(Integer.valueOf(req.getParameter("patternstartday")));
-        object.getPatternShift().setId(Long.valueOf(req.getParameter("pattern")));
+        object.getPattern().setId(Long.valueOf(req.getParameter("pattern")));
         object.setStartDay(Date.valueOf(req.getParameter("startday")));
         object.setEndDay(Date.valueOf(req.getParameter("endday")));
     }

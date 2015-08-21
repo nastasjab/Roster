@@ -27,7 +27,7 @@
             <td><a href="/roster/userpattern?user=<%= user.getId()%>&id=<%= userPattern.getId()%>"><%= userPattern.getId()%></a></td>
             <td><%= userPattern.getStartDay() %></td>
             <td><%= userPattern.getEndDay()%></td>
-            <td><%= data.getPatternById(userPattern.getPatternShift().getPatternId()).getName()%></td>
+            <td><%= data.getPatternById(userPattern.getPattern().getId()).getName()%></td>
             <td><%= userPattern.getPatternStartDay()%></td>
         </tr>
         <% } %>

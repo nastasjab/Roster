@@ -2,8 +2,12 @@ package lv.javaguru.java2.database.jdbc;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.servlet.mvc.SpringConfig;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.sql.Date;
 import java.util.List;
@@ -11,7 +15,8 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringConfig.class)
 public class UserPatternDAOImplTest {
 
     private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
@@ -36,7 +41,7 @@ public class UserPatternDAOImplTest {
         assertNotNull(userPatternFromDB);
         assertEquals(userPattern.getId(), userPatternFromDB.getId());
         assertEquals(userPattern.getUserId(), userPatternFromDB.getUserId());
-        assertEquals(userPattern.getShiftPatternId(), userPatternFromDB.getShiftPatternId());
+        assertEquals(userPattern.getPattern(), userPatternFromDB.getPattern());
         assertEquals(userPattern.getStartDay(), userPatternFromDB.getStartDay());
         assertEquals(userPattern.getEndDay(), userPatternFromDB.getEndDay());
         assertEquals(userPattern.getPatternStartDay(), userPatternFromDB.getPatternStartDay());
@@ -84,7 +89,7 @@ public class UserPatternDAOImplTest {
 
         assertNotNull(userFromDB);
         assertEquals(userPattern2.getUserId(), userFromDB.getUserId());
-        assertEquals(userPattern2.getShiftPatternId(), userFromDB.getShiftPatternId());
+        assertEquals(userPattern2.getPattern(), userFromDB.getPattern());
         assertEquals(userPattern2.getStartDay(), userFromDB.getStartDay());
         assertEquals(userPattern2.getEndDay(), userFromDB.getEndDay());
         assertEquals(userPattern2.getPatternStartDay(), userFromDB.getPatternStartDay());
@@ -99,7 +104,7 @@ public class UserPatternDAOImplTest {
                             Date startDay, Date endDay, int shiftPatternStartDay) {
         UserPattern userPattern = new UserPattern();
         userPattern.setUserId(userId);
-        userPattern.setShiftPatternId(shiftPatternId);
+        userPattern.getPattern().setId(shiftPatternId);
         userPattern.setStartDay(startDay);
         userPattern.setEndDay(endDay);
         userPattern.setPatternStartDay(shiftPatternStartDay);
