@@ -50,6 +50,7 @@
 
 <%  if (editPattern) { %>
 <form method="get" name="patternshift">
+  <h3 align="center">Shifts</h3>
   <table border = 1 cellpadding = 5 align="center">
     <th>ID</th>
     <th>Seq No</th>
@@ -57,7 +58,7 @@
     <%  List<PatternShift> patternShifts = pattern.getPatternShifts();
       for (PatternShift patternShift : patternShifts) { %>
     <tr>
-      <td><a href="/roster/patternshift?pattern_id=<%= patternShift.getId()%>&amp;id=<%= patternShift.getId()%>">
+      <td><a href="/roster/patternshift?pattern_id=<%= patternShift.getPatternId()%>&amp;id=<%= patternShift.getId()%>">
         <%= patternShift.getId()%></a></td>
       <td><%= patternShift.getSeqNo() %>  </td>
       <td>  <%= patternShift.getShift().getName() %>

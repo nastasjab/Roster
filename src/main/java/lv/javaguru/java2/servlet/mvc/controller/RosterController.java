@@ -53,17 +53,13 @@ public class RosterController implements MVCController {
             for (UserPattern userPattern : getUserPatternsByDatesFromTill()) {
 
                 long epochDayFrom = getEpochDayFrom(userPattern);
-
                 long patternOffset = epochDayFrom - toEpochDay(userPattern.getStartDay()) + (long) userPattern.getPatternStartDay() - 1;
-
                 long epochDayTill = getEpochDayTill(userPattern);
 
                 List<Shift> shiftInPattern = new ArrayList<Shift>();
-
                 getShiftsFromPattern(userPattern, shiftInPattern);
 
                 int patternSize = shiftInPattern.size();
-
                 int seqNo = (int) (patternOffset % (long)patternSize);
 
                 for (long day = epochDayFrom; day <= epochDayTill; day++) {
@@ -86,20 +82,13 @@ public class RosterController implements MVCController {
     }
 
     private void setShift(UserPattern userPattern, Shift shift, long day) {
-        /*
-        if (roster == null || userPattern == null || toSqlDate(day) == null || shift == null || shift.getName() == null) {
-            System.out.println("roster" + roster.toString());
-            System.out.println("userPattern" + userPattern.toString());
-            System.out.println("userPattern.getUserId" + userPattern.getUserId());
-            System.out.println("toSqlDate(day)" + toSqlDate(day));
-            System.out.println("shiftName" + shift.getName());
-        }*/
+
         try {
             roster.getUserShifts(userPattern.getUserId()).setShift(toSqlDate(day), shift);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        // shiftMap.get(userPattern.getUserId()).setShift(toSqlDate(day), shiftInPattern.get(seqNo));
+
     }
 
     private void getShiftsFromPattern(UserPattern userPattern, List<Shift> shiftInPattern) throws DBException {

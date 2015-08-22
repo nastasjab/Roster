@@ -79,7 +79,7 @@ public class PatternShiftEditController extends
 
     @Override
     protected String getListPageAddress(HttpServletRequest req) {
-        return "/roster/pattern?id="+getPatternId(req);
+        return "/roster/pattern?pattern_id="+getPatternId(req);
     }
 
     @Override

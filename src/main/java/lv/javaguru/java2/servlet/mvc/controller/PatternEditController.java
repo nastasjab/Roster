@@ -25,7 +25,7 @@ public class PatternEditController extends GenericEditMVCController<PatternDAO, 
     protected MVCModel listObject(HttpServletRequest req) throws Exception{
         PatternEditControllerData result = null;
         try {
-            long id = getId(req);
+            long id = getPatternId(req);
 
             result = new PatternEditControllerData();
             Pattern pattern = patternDAO.getById(id);
@@ -38,6 +38,15 @@ public class PatternEditController extends GenericEditMVCController<PatternDAO, 
         }
 
         return new MVCModel(result, getEditPageAddressJSP());
+    }
+
+    private long getPatternId(HttpServletRequest req) throws Exception {
+        try {
+            return Long.valueOf(req.getParameter("pattern_id"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new NullPointerException();
     }
 
     @Override

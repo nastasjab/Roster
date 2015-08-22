@@ -28,10 +28,10 @@
     <% }
     for (User user : roster.getUserList()) { %>
     <tr><th><a href="/roster/userpatterns?user=<%= user.getId()%>"><%= user.getLastName() + " " + user.getFirstName() %></a></th>
-        <%  String shift = " ";
-            for(long epochDay = LocalDate.parse(roster.getFrom().toString()).toEpochDay();
+        <%  for(long epochDay = LocalDate.parse(roster.getFrom().toString()).toEpochDay();
                 epochDay <= LocalDate.parse(roster.getTill().toString()).toEpochDay(); epochDay++) {
-        if (roster.getUserShifts(user).getShift(Date.valueOf(LocalDate.ofEpochDay(epochDay))) != null)
+            String shift = " ";
+            if (roster.getUserShifts(user).getShift(Date.valueOf(LocalDate.ofEpochDay(epochDay))) != null)
             shift = roster.getUserShifts(user).getShift(Date.valueOf(LocalDate.ofEpochDay(epochDay))).getName(); %>
         <td><%= shift %></td>
         <% } %>
