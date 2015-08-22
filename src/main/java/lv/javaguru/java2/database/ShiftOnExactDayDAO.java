@@ -2,10 +2,10 @@ package lv.javaguru.java2.database;
 
 import lv.javaguru.java2.domain.ShiftOnExactDay;
 
+import java.sql.Date;
 import java.util.List;
 
-@Deprecated
-public interface ShiftOnExactDayDAO {
+public interface ShiftOnExactDayDAO extends GenericDAO<ShiftOnExactDay>{
 
     void create(ShiftOnExactDay shiftOnExactDay) throws DBException;
 
@@ -16,4 +16,10 @@ public interface ShiftOnExactDayDAO {
     void update(ShiftOnExactDay shiftOnExactDay) throws DBException;
 
     List<ShiftOnExactDay> getAll() throws DBException;
+
+    ShiftOnExactDay getShiftOnExactDay(long userId, Date date);
+
+    void setShiftOnExactDay(ShiftOnExactDay shiftOnExactDay);
+
+    List<ShiftOnExactDay> getShiftsOnExactDay(Date from, Date till);
 }

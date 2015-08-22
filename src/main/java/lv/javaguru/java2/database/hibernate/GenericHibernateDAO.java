@@ -5,6 +5,7 @@ import lv.javaguru.java2.database.DBException;
 import org.hibernate.JDBCException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
@@ -52,5 +53,10 @@ public class GenericHibernateDAO<T> {
         return sessionFactory.getCurrentSession().createCriteria(persistentClass).list();
     }
 
-
+    // TODO for Andrew
+    /*
+    @Transactional
+    public boolean isEmpty() throws DBException {
+        return sessionFactory.getCurrentSession().createCriteria(persistentClass).add(Restrictions.isEmpty(???)).list() == 0;
+*/
 }

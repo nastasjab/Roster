@@ -6,12 +6,12 @@ import lv.javaguru.java2.domain.ShiftOnExactDay;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 @Deprecated
 public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDAO {
     public void create(ShiftOnExactDay shiftOnExactDay) throws DBException {
@@ -28,7 +28,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
                             "insert into shifts_on_exact_day values (default, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setLong(1, shiftOnExactDay.getUserId());
             preparedStatement.setDate(2, shiftOnExactDay.getDate());
-            preparedStatement.setLong(3, shiftOnExactDay.getShiftId());
+            // preparedStatement.setLong(3, shiftOnExactDay.getShiftId());
 
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -59,7 +59,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
                 shiftOnExactDay.setId(resultSet.getLong("id"));
                 shiftOnExactDay.setUserId(resultSet.getLong("userId"));
                 shiftOnExactDay.setDate(resultSet.getDate("date"));
-                shiftOnExactDay.setShiftId(resultSet.getLong("shiftId"));
+                // shiftOnExactDay.setShiftId(resultSet.getLong("shiftId"));
             }
             return shiftOnExactDay;
         } catch (Throwable e) {
@@ -101,7 +101,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
                             "shiftId = ? where id = ?");
             preparedStatement.setLong(1, shiftOnExactDay.getUserId());
             preparedStatement.setDate(2, shiftOnExactDay.getDate());
-            preparedStatement.setLong(3, shiftOnExactDay.getShiftId());
+            // preparedStatement.setLong(3, shiftOnExactDay.getShiftId());
             preparedStatement.setLong(4, shiftOnExactDay.getId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
@@ -126,7 +126,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
                 shift.setId(resultSet.getLong("id"));
                 shift.setUserId(resultSet.getLong("userId"));
                 shift.setDate(resultSet.getDate("date"));
-                shift.setShiftId(resultSet.getLong("shiftId"));
+                // shift.setShiftId(resultSet.getLong("shiftId"));
                 userPatterns.add(shift);
             }
         } catch (Throwable e) {
@@ -137,5 +137,17 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
             closeConnection(connection);
         }
         return userPatterns;
+    }
+
+    public ShiftOnExactDay getShiftOnExactDay(long userId, Date date) {
+        return null;
+    }
+
+    public void setShiftOnExactDay(ShiftOnExactDay shiftOnExactDay) {
+
+    }
+
+    public List<ShiftOnExactDay> getShiftsOnExactDay(Date from, Date till) {
+        return null;
     }
 }

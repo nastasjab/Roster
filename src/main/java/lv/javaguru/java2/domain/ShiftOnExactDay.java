@@ -1,16 +1,41 @@
 package lv.javaguru.java2.domain;
 
+import lv.javaguru.java2.servlet.mvc.MVCController;
+
+import javax.persistence.*;
 import java.sql.Date;
 
-@Deprecated
-public class ShiftOnExactDay extends Generic{
+@Entity
+@Table(name = "shifts_on_exact_day")
+public class ShiftOnExactDay extends Generic {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private long id;
+
+    @Column(name = "userId")
     private long userId;
+
+    @Column(name = "date")
     private Date date;
-    private long shiftId;
+
+    @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "shiftId")
+    private Shift shift;
 
     public ShiftOnExactDay() {
         super();
+    }
+
+    @Override
+    public long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(long id) {
+        this.id = id;
     }
 
     public long getUserId() {
@@ -29,11 +54,11 @@ public class ShiftOnExactDay extends Generic{
         this.date = date;
     }
 
-    public long getShiftId() {
-        return shiftId;
+    public Shift getShift() {
+        return shift;
     }
 
-    public void setShiftId(long shiftId) {
-        this.shiftId = shiftId;
+    public void setShift(Shift shift) {
+        this.shift = shift;
     }
 }

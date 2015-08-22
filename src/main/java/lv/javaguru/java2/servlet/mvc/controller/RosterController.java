@@ -41,13 +41,33 @@ public class RosterController implements MVCController {
 
         roster = new Roster(getDateFrom(req), getDateTill(req));
 
-        try {
-            for (User user : userDAO.getAll())
-                roster.setUserMap(user, new RosterUserShiftMap());
-        } catch (DBException e) {
-            e.printStackTrace();
+        fillWithUsers();
+
+        fillWithUserPatterns();
+
+        fillWithShiftsOnExactDay();
+
+        return new MVCModel(roster, "/roster.jsp");
+
+    }
+
+    private void fillWithShiftsOnExactDay() {
+
+        List<ShiftOnExactDay> shiftsOnExactDay = getShiftsOnExactDay();
+
+        for (ShiftOnExactDay shiftOnExactDay : shiftsOnExactDay) {
+
+            setShift(shiftOnExactDay.getUserId(), shiftOnExactDay.getShift(), toEpochDay(shiftOnExactDay.getDate()));
+
         }
 
+    }
+
+    private List<ShiftOnExactDay> getShiftsOnExactDay() {
+        return shiftOnExactDayDAO.getShiftsOnExactDay(getFrom(), getTill());
+    }
+
+    private void fillWithUserPatterns() {
         try {
 
             for (UserPattern userPattern : getUserPatternsByDatesFromTill()) {
@@ -64,7 +84,7 @@ public class RosterController implements MVCController {
 
                 for (long day = epochDayFrom; day <= epochDayTill; day++) {
 
-                    setShift(userPattern, shiftInPattern.get(seqNo), day);
+                    setShift(userPattern.getUserId(), shiftInPattern.get(seqNo), day);
 
                     if (seqNo >= patternSize - 1)
                         seqNo = 0;
@@ -76,15 +96,21 @@ public class RosterController implements MVCController {
         } catch (DBException e) {
             e.printStackTrace();
         }
-
-        return new MVCModel(roster, "/roster.jsp");
-
     }
 
-    private void setShift(UserPattern userPattern, Shift shift, long day) {
+    private void fillWithUsers() {
+        try {
+            for (User user : userDAO.getAll())
+                roster.setUserMap(user, new RosterUserShiftMap());
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setShift(long userId, Shift shift, long day) {
 
         try {
-            roster.getUserShifts(userPattern.getUserId()).setShift(toSqlDate(day), shift);
+            roster.getUserShifts(userId).setShift(toSqlDate(day), shift);
         } catch (Exception e) {
             e.printStackTrace();
         }
