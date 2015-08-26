@@ -1,21 +1,30 @@
-package lv.javaguru.java2.database.jdbc;
+package lv.javaguru.java2.database;
 
 import static org.junit.Assert.*;
 
 import java.util.List;
 
+import lv.javaguru.java2.servlet.mvc.SpringConfig;
 import org.junit.Before;
 import org.junit.Test;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.domain.User;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.transaction.Transactional;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringConfig.class)
+@Transactional
 public class UserDAOImplTest {
 
     private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 
-    private final UserDAOImpl userDAO = new UserDAOImpl();
+    @Autowired
+    private  UserDAO userDAO; // = new UserDAOImpl();
 
     private User user;
     private User user2;
@@ -67,10 +76,6 @@ public class UserDAOImplTest {
         assertEquals(0, users.size());
     }
 
-    @Test
-    public void testDeleteNotExisting() throws DBException {
-        userDAO.delete(-1);
-    }
 
     @Test
     public void testUpdate() throws DBException {

@@ -1,11 +1,11 @@
-package lv.javaguru.java2.database.jdbc;
+package lv.javaguru.java2.database;
 
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.domain.ShiftOnExactDay;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Date;
 import java.util.List;
@@ -20,7 +20,8 @@ public class ShiftOnExactDayDAOImplTest {
 
     private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 
-    private final ShiftOnExactDayDAOImpl shiftOnExactDayDAO = new ShiftOnExactDayDAOImpl();
+    @Autowired
+    private  ShiftOnExactDayDAO shiftOnExactDayDAO;// = new ShiftOnExactDayDAOImpl();
 
     private ShiftOnExactDay shiftOnExactDay;
     private ShiftOnExactDay shiftOnExactDay2;
@@ -41,7 +42,7 @@ public class ShiftOnExactDayDAOImplTest {
         assertEquals(shiftOnExactDay.getId(), shiftOnExactDayFromDB.getId());
         assertEquals(shiftOnExactDay.getUserId(), shiftOnExactDayFromDB.getUserId());
         assertEquals(shiftOnExactDay.getDate(), shiftOnExactDayFromDB.getDate());
-        assertEquals(shiftOnExactDay.getShiftId(), shiftOnExactDayFromDB.getShiftId());
+        assertEquals(shiftOnExactDay.getShift().getId(), shiftOnExactDayFromDB.getShift().getId());
     }
 
     @Test
@@ -88,7 +89,7 @@ public class ShiftOnExactDayDAOImplTest {
         assertEquals(shiftOnExactDay2.getId(), shiftFromDB.getId());
         assertEquals(shiftOnExactDay2.getUserId(), shiftFromDB.getUserId());
         assertEquals(shiftOnExactDay2.getDate(), shiftFromDB.getDate());
-        assertEquals(shiftOnExactDay2.getShiftId(), shiftFromDB.getShiftId());
+        assertEquals(shiftOnExactDay2.getShift().getId(), shiftFromDB.getShift().getId());
     }
 
     @Test
@@ -100,7 +101,7 @@ public class ShiftOnExactDayDAOImplTest {
         ShiftOnExactDay shiftOnExactDay = new ShiftOnExactDay();
         shiftOnExactDay.setUserId(userId);
         shiftOnExactDay.setDate(date);
-        shiftOnExactDay.setShiftId(shiftId);
+        shiftOnExactDay.getShift().setId(shiftId);
         return shiftOnExactDay;
     }
 

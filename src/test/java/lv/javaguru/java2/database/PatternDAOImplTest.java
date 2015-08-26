@@ -1,7 +1,5 @@
-package lv.javaguru.java2.database.jdbc;
+package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.PatternDAO;
 import lv.javaguru.java2.domain.Pattern;
 import lv.javaguru.java2.servlet.mvc.SpringConfig;
 import org.junit.Before;

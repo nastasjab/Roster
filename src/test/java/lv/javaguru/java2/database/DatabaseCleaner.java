@@ -1,13 +1,17 @@
-package lv.javaguru.java2.database.jdbc;
-
-import lv.javaguru.java2.database.DBException;
+package lv.javaguru.java2.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+import lv.javaguru.java2.database.jdbc.*;
 
+// TODO remove JDBC implementation
 class DatabaseCleaner extends DAOImpl {
+
+    DatabaseCleaner() {
+        super();
+    }
 
     private List<String> getTableNames() {
         List<String> tableNames = new ArrayList<String>();

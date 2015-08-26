@@ -1,8 +1,5 @@
-package lv.javaguru.java2.database.jdbc;
+package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.PatternShiftDAO;
-import lv.javaguru.java2.database.ShiftDAO;
 import lv.javaguru.java2.domain.PatternShift;
 import lv.javaguru.java2.domain.Shift;
 import lv.javaguru.java2.servlet.mvc.SpringConfig;
@@ -10,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 

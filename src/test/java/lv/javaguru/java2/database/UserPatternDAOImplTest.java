@@ -1,14 +1,16 @@
-package lv.javaguru.java2.database.jdbc;
+package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.database.DBException;
+import lv.javaguru.java2.database.hibernate.UserPatternDAOImpl;
 import lv.javaguru.java2.domain.UserPattern;
 import lv.javaguru.java2.servlet.mvc.SpringConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.util.List;
 
@@ -17,11 +19,13 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringConfig.class)
+@Transactional
 public class UserPatternDAOImplTest {
 
     private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 
-    private final UserPatternDAOImpl userPatternDAO = new UserPatternDAOImpl();
+    @Autowired
+    private UserPatternDAO userPatternDAO;// = new UserPatternDAOImpl();
 
     private UserPattern userPattern;
     private UserPattern userPattern2;
@@ -72,11 +76,6 @@ public class UserPatternDAOImplTest {
     }
 
     @Test
-    public void testDeleteNotExisting() throws DBException {
-        userPatternDAO.delete(-1);
-    }
-
-    @Test
     public void testUpdate() throws DBException {
         userPatternDAO.create(userPattern);
 
@@ -95,11 +94,6 @@ public class UserPatternDAOImplTest {
         assertEquals(userPattern2.getPatternStartDay(), userFromDB.getPatternStartDay());
     }
 
-    @Test
-    public void testUpdateNotExisting() throws DBException {
-        userPatternDAO.update(userPattern);
-    }
-
     private UserPattern createUserPattern(long userId, long shiftPatternId,
                             Date startDay, Date endDay, int shiftPatternStartDay) {
         UserPattern userPattern = new UserPattern();
@@ -110,5 +104,10 @@ public class UserPatternDAOImplTest {
         userPattern.setPatternStartDay(shiftPatternStartDay);
         return userPattern;
     }
+
+    //TODO
+    // tests for:
+    // - getByUserId
+    // - getByDateFrame
 
 }

@@ -55,6 +55,8 @@ public class ShiftOnExactDay extends Generic {
     }
 
     public Shift getShift() {
+        if (shift==null) shift = new Shift();
+
         return shift;
     }
 
