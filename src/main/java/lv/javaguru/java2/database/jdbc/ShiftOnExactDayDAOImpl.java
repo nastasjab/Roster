@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@Deprecated
 public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDAO {
     public void create(ShiftOnExactDay shiftOnExactDay) throws DBException {
         if (shiftOnExactDay == null) {
@@ -36,7 +35,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
                 shiftOnExactDay.setId(rs.getLong(1));
             }
         } catch (Throwable e) {
-            System.out.println("Exception while execute ShiftOnExactDayDAOImpl.create()");
+            System.out.println("Exception while execute ShiftOnExactDayDAOImplImpl.create()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -63,7 +62,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
             }
             return shiftOnExactDay;
         } catch (Throwable e) {
-            System.out.println("Exception while execute ShiftOnExactDayDAOImpl.getById()");
+            System.out.println("Exception while execute ShiftOnExactDayDAOImplImpl.getById()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -80,7 +79,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute ShiftOnExactDayDAOImpl.delete()");
+            System.out.println("Exception while execute ShiftOnExactDayDAOImplImpl.delete()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -105,7 +104,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
             preparedStatement.setLong(4, shiftOnExactDay.getId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute ShiftOnExactDayDAOImpl.update()");
+            System.out.println("Exception while execute ShiftOnExactDayDAOImplImpl.update()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -130,7 +129,7 @@ public class ShiftOnExactDayDAOImpl extends DAOImpl implements ShiftOnExactDayDA
                 userPatterns.add(shift);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting data in ShiftOnExactDayDAOImpl.getList()");
+            System.out.println("Exception while getting data in ShiftOnExactDayDAOImplImpl.getList()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {

@@ -1,29 +1,26 @@
 package lv.javaguru.java2.database.hibernate;
 
 
-import lv.javaguru.java2.database.DBException;
 import org.hibernate.JDBCException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-public class GenericHibernateDAO<T> {
+public class GenericHibernateDAOImpl<T> {
 
     private Class<T> persistentClass;
 
-    public GenericHibernateDAO() {
+    public GenericHibernateDAOImpl() {
         this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     @Autowired
     SessionFactory sessionFactory;
-
 
 
     @Transactional

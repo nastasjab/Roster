@@ -24,7 +24,7 @@ public class UserDAOImplTest {
     private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
 
     @Autowired
-    private  UserDAO userDAO; // = new UserDAOImpl();
+    private  UserDAO userDAO;
 
     private User user;
     private User user2;
@@ -82,11 +82,18 @@ public class UserDAOImplTest {
         userDAO.create(user);
 
         user = userDAO.getById(user.getId());
-        user2.setId(user.getId());
 
-        userDAO.update(user2);
+        user.setLogin(user2.getLogin());
+        user.setPassword(user2.getPassword());
+        user.setUserType(user2.getUserType());
+        user.setFirstName(user2.getFirstName());
+        user.setLastName(user2.getLastName());
+        user.setEmail(user2.getEmail());
+        user.setPhone(user2.getPhone());
 
-        User userFromDB = userDAO.getById(user2.getId());
+        userDAO.update(user);
+
+        User userFromDB = userDAO.getById(user.getId());
 
         assertNotNull(userFromDB);
         assertEquals(user2.getLogin(), userFromDB.getLogin());
@@ -96,11 +103,6 @@ public class UserDAOImplTest {
         assertEquals(user2.getLastName(), userFromDB.getLastName());
         assertEquals(user2.getEmail(), userFromDB.getEmail());
         assertEquals(user2.getPhone(), userFromDB.getPhone());
-    }
-
-    @Test
-    public void testUpdateNotExisting() throws DBException {
-        userDAO.update(user);
     }
 
     private User createUser(String login, String password, String userType,

@@ -5,6 +5,6 @@ import lv.javaguru.java2.database.PatternDAO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PatternDAOImpl extends GenericHibernateDAO<Pattern> implements PatternDAO {
+public class PatternDAOImplImpl extends GenericHibernateDAOImpl<Pattern> implements PatternDAO {
 
 }

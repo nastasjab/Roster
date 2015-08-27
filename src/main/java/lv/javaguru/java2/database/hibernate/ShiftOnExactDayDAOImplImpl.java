@@ -10,17 +10,18 @@ import java.sql.Date;
 import java.util.List;
 
 @Component
-public class ShiftOnExactDayDAOImpl extends GenericHibernateDAO<ShiftOnExactDay> implements ShiftOnExactDayDAO {
+public class ShiftOnExactDayDAOImplImpl extends GenericHibernateDAOImpl<ShiftOnExactDay> implements ShiftOnExactDayDAO {
 
     @Transactional
     public ShiftOnExactDay getShiftOnExactDay(long userId, Date date) throws IndexOutOfBoundsException {
 
-        return (ShiftOnExactDay) sessionFactory.getCurrentSession().createCriteria(ShiftOnExactDay.class)
+        List<ShiftOnExactDay> list = sessionFactory.getCurrentSession().createCriteria(ShiftOnExactDay.class)
                 .add(Restrictions.eq("userId", userId))
                 .add(Restrictions.eq("date", date))
-                .setMaxResults(1).list().get(0);
-
+                .setMaxResults(1).list();
+        return list==null || list.isEmpty() ? null : list.get(0);
     }
+
     @Transactional
     public void setShiftOnExactDay(ShiftOnExactDay shiftOnExactDay) {
         sessionFactory.getCurrentSession().saveOrUpdate(shiftOnExactDay);

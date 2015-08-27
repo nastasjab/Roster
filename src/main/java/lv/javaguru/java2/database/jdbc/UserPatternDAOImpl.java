@@ -36,7 +36,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 userPattern.setId(rs.getLong(1));
             }
         } catch (Throwable e) {
-            System.out.println("Exception while execute UserPatternDAOImpl.create()");
+            System.out.println("Exception while execute UserPatternDAOImplImpl.create()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -65,7 +65,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
             }
             return userPattern;
         } catch (Throwable e) {
-            System.out.println("Exception while execute UserPatternDAOImpl.getById()");
+            System.out.println("Exception while execute UserPatternDAOImplImpl.getById()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -82,7 +82,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute UserPatternDAOImpl.delete()");
+            System.out.println("Exception while execute UserPatternDAOImplImpl.delete()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -110,7 +110,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
             preparedStatement.setLong(6, userPattern.getId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute UserPatternDAOImpl.update()");
+            System.out.println("Exception while execute UserPatternDAOImplImpl.update()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -137,7 +137,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 userPatterns.add(userPattern);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting customer list UserPatternDAOImpl.getList()");
+            System.out.println("Exception while getting customer list UserPatternDAOImplImpl.getList()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -170,7 +170,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 userPatterns.add(userPattern);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting customer list UserPatternDAOImpl.getByUserId()");
+            System.out.println("Exception while getting customer list UserPatternDAOImplImpl.getByUserId()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -211,7 +211,7 @@ public class UserPatternDAOImpl extends DAOImpl implements UserPatternDAO{
                 userPatterns.add(userPattern);
             }
         } catch  (Throwable e) {
-            System.out.println("Exception while getting customer list UserPatternDAOImpl.getByUserId()");
+            System.out.println("Exception while getting customer list UserPatternDAOImplImpl.getByUserId()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {

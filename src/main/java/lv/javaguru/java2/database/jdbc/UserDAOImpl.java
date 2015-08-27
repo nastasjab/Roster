@@ -35,7 +35,7 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
                 user.setId(rs.getLong(1));
             }
         } catch (Throwable e) {
-            System.out.println("Exception while execute UserDAOImpl.create()");
+            System.out.println("Exception while execute UserDAOImplImpl.create()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -66,7 +66,7 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
             }
             return user;
         } catch (Throwable e) {
-            System.out.println("Exception while execute UserDAOImpl.getById()");
+            System.out.println("Exception while execute UserDAOImplImpl.getById()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -95,7 +95,7 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
                 users.add(user);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting customer list UserDAOImpl.getList()");
+            System.out.println("Exception while getting customer list UserDAOImplImpl.getList()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -113,7 +113,7 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute UserDAOImpl.delete()");
+            System.out.println("Exception while execute UserDAOImplImpl.delete()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -143,7 +143,7 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
             preparedStatement.setLong(8, user.getId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute UserDAOImpl.update()");
+            System.out.println("Exception while execute UserDAOImplImpl.update()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {

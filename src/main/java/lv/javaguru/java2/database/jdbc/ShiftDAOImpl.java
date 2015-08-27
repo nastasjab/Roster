@@ -34,7 +34,7 @@ public class ShiftDAOImpl extends DAOImpl implements ShiftDAO{
                 shift.setId(rs.getLong(1));
             }
         } catch (Throwable e) {
-            System.out.println("Exception while execute ShiftDAOImpl.create()");
+            System.out.println("Exception while execute ShiftDAOImplImpl.create()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -61,7 +61,7 @@ public class ShiftDAOImpl extends DAOImpl implements ShiftDAO{
             }
             return shift;
         } catch (Throwable e) {
-            System.out.println("Exception while execute ShiftDAOImpl.getById()");
+            System.out.println("Exception while execute ShiftDAOImplImpl.getById()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -78,7 +78,7 @@ public class ShiftDAOImpl extends DAOImpl implements ShiftDAO{
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute ShiftDAOImpl.delete()");
+            System.out.println("Exception while execute ShiftDAOImplImpl.delete()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -102,7 +102,7 @@ public class ShiftDAOImpl extends DAOImpl implements ShiftDAO{
             preparedStatement.setLong(4, shift.getId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute ShiftDAOImpl.update()");
+            System.out.println("Exception while execute ShiftDAOImplImpl.update()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -127,7 +127,7 @@ public class ShiftDAOImpl extends DAOImpl implements ShiftDAO{
                 shifts.add(shift);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting shift list ShiftDAOImpl.getList()");
+            System.out.println("Exception while getting shift list ShiftDAOImplImpl.getList()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {

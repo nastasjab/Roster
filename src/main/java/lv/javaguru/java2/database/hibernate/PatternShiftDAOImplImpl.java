@@ -1,6 +1,5 @@
 package lv.javaguru.java2.database.hibernate;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.PatternShiftDAO;
 import lv.javaguru.java2.domain.PatternShift;
 import org.hibernate.JDBCException;
@@ -16,7 +15,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 @Component
-public class PatternShiftDAOImpl extends GenericHibernateDAO<PatternShift> implements PatternShiftDAO {
+public class PatternShiftDAOImplImpl extends GenericHibernateDAOImpl<PatternShift> implements PatternShiftDAO {
 
     @Transactional
     public List<PatternShift> getAll() throws JDBCException {

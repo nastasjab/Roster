@@ -31,7 +31,7 @@ public class PatternDAOImpl extends DAOImpl implements PatternDAO {
                 pattern.setId(rs.getLong(1));
             }
         } catch (Throwable e) {
-            System.out.println("Exception while execute PatternDAOImpl.create()");
+            System.out.println("Exception while execute PatternDAOImplImpl.create()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -59,7 +59,7 @@ public class PatternDAOImpl extends DAOImpl implements PatternDAO {
 
             return pattern;
         } catch (Throwable e) {
-            System.out.println("Exception while execute PatternDAOImpl.getById()");
+            System.out.println("Exception while execute PatternDAOImplImpl.getById()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -82,7 +82,7 @@ public class PatternDAOImpl extends DAOImpl implements PatternDAO {
                 patterns.add(pattern);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting customer list PatternDAOImpl.getList()");
+            System.out.println("Exception while getting customer list PatternDAOImplImpl.getList()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -104,7 +104,7 @@ public class PatternDAOImpl extends DAOImpl implements PatternDAO {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute PatternDAOImpl.delete()");
+            System.out.println("Exception while execute PatternDAOImplImpl.delete()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -127,7 +127,7 @@ public class PatternDAOImpl extends DAOImpl implements PatternDAO {
             preparedStatement.setLong(2, pattern.getId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute PatternDAOImpl.update()");
+            System.out.println("Exception while execute PatternDAOImplImpl.update()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {

@@ -5,6 +5,6 @@ import lv.javaguru.java2.domain.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserDAOImpl extends GenericHibernateDAO<User> implements UserDAO {
+public class UserDAOImplImpl extends GenericHibernateDAOImpl<User> implements UserDAO {
 
 }

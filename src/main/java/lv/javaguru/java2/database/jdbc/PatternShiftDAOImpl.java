@@ -35,7 +35,7 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
                 patternShift.setId(rs.getLong(1));
             }
         } catch (Throwable e) {
-            System.out.println("Exception while execute PatternShiftDAOImpl.create()");
+            System.out.println("Exception while execute PatternShiftDAOImplImpl.create()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -67,7 +67,7 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
             }
             return patternShift;
         } catch (Throwable e) {
-            System.out.println("Exception while execute PatternShiftDAOImpl.getById()");
+            System.out.println("Exception while execute PatternShiftDAOImplImpl.getById()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -97,7 +97,7 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
                 patternShifts.add(patternShift);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting customer list PatternShiftDAOImpl.getList()");
+            System.out.println("Exception while getting customer list PatternShiftDAOImplImpl.getList()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -119,7 +119,7 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute PatternShiftDAOImpl.delete()");
+            System.out.println("Exception while execute PatternShiftDAOImplImpl.delete()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -144,7 +144,7 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
             preparedStatement.setLong(4, patternShift.getId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute PatternShiftDAOImpl.update()");
+            System.out.println("Exception while execute PatternShiftDAOImplImpl.update()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
