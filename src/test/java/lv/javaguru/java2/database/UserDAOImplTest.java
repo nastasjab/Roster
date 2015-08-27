@@ -1,28 +1,14 @@
 package lv.javaguru.java2.database;
 
-import static org.junit.Assert.*;
-
+import lv.javaguru.java2.domain.User;
 import java.util.List;
-
-import lv.javaguru.java2.servlet.mvc.SpringConfig;
 import org.junit.Before;
 import org.junit.Test;
-
-import lv.javaguru.java2.domain.User;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.transaction.Transactional;
+import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringConfig.class)
-@Transactional
-public class UserDAOImplTest {
-
-    private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
-
+public class UserDAOImplTest extends GenericSpringTest {
     @Autowired
     private  UserDAO userDAO;
 
@@ -31,7 +17,7 @@ public class UserDAOImplTest {
 
     @Before
     public void init() throws DBException {
-        databaseCleaner.cleanDatabase();
+        super.init();
         user = createUser("user", "encryptedPassword", "U", "dima", "pavlov", "dima@pavlov.lv", "29295656");
         user2 = createUser("admin", "encryptedPassword2", "A", "ivan", "petrov", "ivan@petrov.lv", "29299898");
     }

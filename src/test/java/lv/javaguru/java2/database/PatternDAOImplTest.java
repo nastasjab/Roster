@@ -1,26 +1,15 @@
 package lv.javaguru.java2.database;
 
 import lv.javaguru.java2.domain.Pattern;
-import lv.javaguru.java2.servlet.mvc.SpringConfig;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringConfig.class)
-@Transactional
-public class PatternDAOImplTest {
-
-    private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
+public class PatternDAOImplTest extends  GenericSpringTest{
 
     @Autowired
     private PatternDAO patternDAO;
@@ -30,7 +19,7 @@ public class PatternDAOImplTest {
 
     @Before
     public void init() throws DBException {
-        databaseCleaner.cleanDatabase();
+        super.init();
         pattern = createPattern("pattern1");
         pattern2 = createPattern("pattern2");
     }

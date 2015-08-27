@@ -2,26 +2,15 @@ package lv.javaguru.java2.database;
 
 import lv.javaguru.java2.domain.PatternShift;
 import lv.javaguru.java2.domain.Shift;
-import lv.javaguru.java2.servlet.mvc.SpringConfig;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = SpringConfig.class)
-@Transactional
-public class PatternShiftDAOImplTest {
 
-    private final DatabaseCleaner databaseCleaner = new DatabaseCleaner();
-
+public class PatternShiftDAOImplTest extends  GenericSpringTest {
     @Autowired
     private PatternShiftDAO patternShiftDAO;
 
@@ -33,14 +22,12 @@ public class PatternShiftDAOImplTest {
     private PatternShift patternShift;
     private PatternShift patternShift2;
     private PatternShift patternShift3;
-    private Shift shift1;
-    private Shift shift2;
 
     @Before
     public void init() throws DBException {
-        databaseCleaner.cleanDatabase();
-        shift1 = ShiftDAOImplTest.createShift("name", "07:00:00", "15:00:00");
-        shift2 = ShiftDAOImplTest.createShift("name2", "07:00:00", "15:00:00");
+        super.init();
+        Shift shift1 = ShiftDAOImplTest.createShift("name", "07:00:00", "15:00:00");
+        Shift shift2 = ShiftDAOImplTest.createShift("name2", "07:00:00", "15:00:00");
         shiftDAO.create(shift1);
         shiftDAO.create(shift2);
 
