@@ -33,10 +33,10 @@ public class User extends Generic {
     @Column(name = "phone")
     private String phone = "";
 
-    @Column(name = "rosterShowStartDate")
+    @Column(name = "rosterShowStartDate", columnDefinition = "DATETIME")
     private Date rosterShowStartDate;
 
-    @Column(name = "rosterShowEndDate")
+    @Column(name = "rosterShowEndDate", columnDefinition = "DATETIME")
     private Date rosterShowEndDate;
 
     public User() {
