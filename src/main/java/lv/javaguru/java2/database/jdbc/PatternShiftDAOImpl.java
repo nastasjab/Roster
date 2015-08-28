@@ -3,8 +3,6 @@ package lv.javaguru.java2.database.jdbc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.PatternShiftDAO;
 import lv.javaguru.java2.domain.PatternShift;
-import lv.javaguru.java2.domain.Shift;
-import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,7 +23,7 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
             connection = getConnection();
             PreparedStatement preparedStatement =
             connection.prepareStatement("insert into patterns_shifts values (default, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setLong(1, patternShift.getPatternId());
+            preparedStatement.setLong(1, patternShift.getPattern().getId());
             preparedStatement.setLong(2, patternShift.getShift().getId());
             preparedStatement.setInt(3, patternShift.getSeqNo());
 
@@ -60,7 +58,7 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
             if (resultSet.next()) {
                 patternShift = new PatternShift();
                 patternShift.setId(resultSet.getLong(1));
-                patternShift.setPatternId(resultSet.getLong(2));
+                patternShift.getPattern().setId(resultSet.getLong(2));
                 patternShift.getShift().setId(resultSet.getLong(3));
                 patternShift.getShift().setName(resultSet.getString(4));
                 patternShift.setSeqNo(resultSet.getInt(5));
@@ -90,7 +88,7 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
             while (resultSet.next()) {
                 PatternShift patternShift = new PatternShift();
                 patternShift.setId(resultSet.getLong(1));
-                patternShift.setPatternId(resultSet.getLong(2));
+                patternShift.getPattern().setId(resultSet.getLong(2));
                 patternShift.getShift().setId(resultSet.getLong(3));
                 patternShift.getShift().setName(resultSet.getString(4));
                 patternShift.setSeqNo(resultSet.getInt(5));
@@ -138,7 +136,7 @@ public class PatternShiftDAOImpl extends DAOImpl implements PatternShiftDAO {
             PreparedStatement preparedStatement = connection
                     .prepareStatement("update patterns_shifts set patternId = ?, shiftId = ?, seqNo = ? "+
                             "where id = ?");
-            preparedStatement.setLong(1, patternShift.getPatternId());
+            preparedStatement.setLong(1, patternShift.getPattern().getId());
             preparedStatement.setLong(2, patternShift.getShift().getId());
             preparedStatement.setInt(3, patternShift.getSeqNo());
             preparedStatement.setLong(4, patternShift.getId());

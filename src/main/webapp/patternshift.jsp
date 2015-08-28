@@ -21,9 +21,9 @@
   <% } else { %>
   Add new shift to pattern #
   <% } %>
-  <%=data.getPatternId() %>
+  <%=data.getPattern().getId() %>
 </h2>
-<div align="center"><a href="/roster/pattern?pattern_id=<%= data.getPatternId()%>">back to pattern definition</a></div>
+<div align="center"><a href="/roster/pattern?pattern_id=<%= data.getPattern().getId()%>">back to pattern definition</a></div>
 <form method="post">
   <table align="center" cellpadding="5">
     <tr>

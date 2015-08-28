@@ -1,6 +1,10 @@
 package lv.javaguru.java2.domain;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name ="patterns")
@@ -13,6 +17,9 @@ public class Pattern extends Generic{
 
     @Column(name = "name")
     private String name = "";
+
+    @OneToMany(mappedBy="pattern", fetch=FetchType.EAGER)
+    private List<PatternShift> patternShifts;
 
     public Pattern() {
     }
@@ -31,5 +38,13 @@ public class Pattern extends Generic{
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<PatternShift> getPatternShifts() {
+        return patternShifts;
+    }
+
+    public void setPatternShifts(List<PatternShift> patternShifts) {
+        this.patternShifts = patternShifts;
     }
 }

@@ -1,6 +1,7 @@
 package lv.javaguru.java2.database.hibernate;
 
 import lv.javaguru.java2.database.PatternShiftDAO;
+import lv.javaguru.java2.domain.Pattern;
 import lv.javaguru.java2.domain.PatternShift;
 import org.hibernate.JDBCException;
 import org.hibernate.Query;
@@ -25,8 +26,10 @@ public class PatternShiftDAOImplImpl extends GenericHibernateDAOImpl<PatternShif
 
     @Transactional
     public List<PatternShift> getAll(long patternId) throws JDBCException {
+        Pattern pattern = new Pattern();
+        pattern.setId(patternId);
         return sessionFactory.getCurrentSession().createCriteria(PatternShift.class)
-                .add(Restrictions.eq("patternId", patternId))
+                .add(Restrictions.eq("pattern", pattern))
                 .addOrder(Order.asc("seqNo")).list();
 
     }

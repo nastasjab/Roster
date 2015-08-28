@@ -1,10 +1,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="lv.javaguru.java2.domain.PatternShift" %>
-<%@ page import="lv.javaguru.java2.servlet.mvc.data.PatternEditControllerData" %>
+<%@ page import="lv.javaguru.java2.domain.Pattern" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%  PatternEditControllerData pattern;
+<%  Pattern pattern;
   boolean editPattern = true;
-  pattern = (PatternEditControllerData) request.getAttribute("model");
+  pattern = (Pattern) request.getAttribute("model");
   if (pattern.getId() == 0) {
     editPattern = false;
   }
@@ -58,7 +58,7 @@
     <%  List<PatternShift> patternShifts = pattern.getPatternShifts();
       for (PatternShift patternShift : patternShifts) { %>
     <tr>
-      <td><a href="/roster/patternshift?pattern_id=<%= patternShift.getPatternId()%>&amp;id=<%= patternShift.getId()%>">
+      <td><a href="/roster/patternshift?pattern_id=<%= patternShift.getPattern().getId()%>&amp;id=<%= patternShift.getId()%>">
         <%= patternShift.getId()%></a></td>
       <td><%= patternShift.getSeqNo() %>  </td>
       <td>  <%= patternShift.getShift().getName() %>

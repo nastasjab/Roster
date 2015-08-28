@@ -44,7 +44,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
 
         assertNotNull(patternShiftFromDB);
         assertEquals(patternShift.getId(), patternShiftFromDB.getId());
-        assertEquals(patternShift.getPatternId(), patternShiftFromDB.getPatternId());
+        assertEquals(patternShift.getPattern(), patternShiftFromDB.getPattern());
         assertEquals(patternShift.getShift().getId(), patternShiftFromDB.getShift().getId());
         assertEquals(patternShift.getSeqNo(), patternShiftFromDB.getSeqNo());
     }
@@ -122,7 +122,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
         patternShiftDAO.create(patternShift);
 
         patternShift = patternShiftDAO.getById(patternShift.getId());
-        patternShift.setPatternId(patternShift2.getPatternId());
+        patternShift.setPattern(patternShift2.getPattern());
         patternShift.getShift().setId(patternShift2.getShift().getId());
         patternShift.setSeqNo(patternShift2.getSeqNo());
 
@@ -131,7 +131,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
         PatternShift patternShiftFromDB = patternShiftDAO.getById(patternShift.getId());
 
         assertNotNull(patternShiftFromDB);
-        assertEquals(patternShift2.getPatternId(), patternShiftFromDB.getPatternId());
+        assertEquals(patternShift2.getPattern(), patternShiftFromDB.getPattern());
         assertEquals(patternShift2.getShift().getId(), patternShiftFromDB.getShift().getId());
         assertEquals(patternShift2.getSeqNo(), patternShiftFromDB.getSeqNo());
         assertEquals(patternShift2.getShift().getName(), patternShiftFromDB.getShift().getName());
@@ -140,7 +140,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
 
     private PatternShift createPatternShift(long patternId, long shiftId, int seqNo) {
         PatternShift patternShift = new PatternShift();
-        patternShift.setPatternId(patternId);
+        patternShift.getPattern().setId(patternId);
         patternShift.getShift().setId(shiftId);
         patternShift.setSeqNo(seqNo);
         return patternShift;

@@ -7,7 +7,6 @@ import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 import lv.javaguru.java2.servlet.mvc.data.PatternShiftEditControllerData;
-import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,14 +29,14 @@ public class PatternShiftEditController extends
 
             PatternShift patternShift = patternShiftDAO.getById(id);
             result.setId(patternShift.getId());
-            result.setPatternId(patternShift.getPatternId());
+            result.setPattern(patternShift.getPattern());
             result.setSeqNo(patternShift.getSeqNo());
             result.getShift().setName(patternShift.getShift().getName());
             result.getShift().setId(patternShift.getShift().getId());
 
         } catch (NullPointerException e) {
             result = new PatternShiftEditControllerData();
-            result.setPatternId(getPatternId(req));
+            result.getPattern().setId(getPatternId(req));
             result.setSeqNo(patternShiftDAO.getNextSequenceNo(getPatternId(req)));
         }
 
@@ -50,11 +49,11 @@ public class PatternShiftEditController extends
 
     @Override
     protected void fillParameters(HttpServletRequest req, PatternShift object) throws Exception {
-        object.setPatternId(getPatternId(req));
+        object.getPattern().setId(getPatternId(req));
         object.getShift().setId(Long.valueOf(req.getParameter("shift")));
         object.setSeqNo(Integer.valueOf(req.getParameter("seqno")));
         if (object.getSeqNo() == 0)
-            object.setSeqNo(patternShiftDAO.getNextSequenceNo(object.getPatternId()));
+            object.setSeqNo(patternShiftDAO.getNextSequenceNo(object.getPattern().getId()));
     }
 
     private long getPatternId(HttpServletRequest req) throws NullPointerException {
@@ -79,7 +78,7 @@ public class PatternShiftEditController extends
 
     @Override
     protected String getListPageAddress(HttpServletRequest req) {
-        return "/roster/pattern?pattern_id="+getPatternId(req);
+        return "/roster/pattern?id="+getPatternId(req);
     }
 
     @Override

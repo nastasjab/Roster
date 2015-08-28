@@ -6,8 +6,6 @@ import lv.javaguru.java2.domain.Pattern;
 import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
-import lv.javaguru.java2.servlet.mvc.data.PatternEditControllerData;
-import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,24 +19,6 @@ public class PatternEditController extends GenericEditMVCController<PatternDAO, 
 
     @Autowired
     private PatternShiftDAO patternShiftDAO;
-
-    protected MVCModel listObject(HttpServletRequest req) throws Exception{
-        PatternEditControllerData result = null;
-        try {
-            long id = getPatternId(req);
-
-            result = new PatternEditControllerData();
-            Pattern pattern = patternDAO.getById(id);
-            result.setPatternShifts(patternShiftDAO.getAll(id));
-            result.setId(pattern.getId());
-            result.setName(pattern.getName());
-
-        } catch (NullPointerException e) {
-            result = new PatternEditControllerData();
-        }
-
-        return new MVCModel(result, getEditPageAddressJSP());
-    }
 
     private long getPatternId(HttpServletRequest req) throws Exception {
         try {

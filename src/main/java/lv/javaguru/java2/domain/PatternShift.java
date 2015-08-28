@@ -11,8 +11,8 @@ public class PatternShift extends Generic{
     @Column(name = "id", nullable = false)
     private long id;
 
-    @Column(name = "patternId")
-    private long patternId;
+  //  @Column(name = "pattern")
+  //  private long pattern;
 
     @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "shiftId")
@@ -20,6 +20,10 @@ public class PatternShift extends Generic{
 
     @Column(name = "seqNo")
     private int seqNo;
+
+    @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name="patternId")
+    private Pattern pattern;
 
     public PatternShift() {
     }
@@ -32,12 +36,17 @@ public class PatternShift extends Generic{
         this.id = id;
     }
 
-    public long getPatternId() {
-        return patternId;
+    public Pattern getPattern() {
+        if (this.pattern == null)
+            this.pattern = new Pattern();
+        return pattern;
     }
 
-    public void setPatternId(long patternId) {
-        this.patternId = patternId;
+    public void setPattern(Pattern pattern) {
+        if (this.pattern == null)
+            this.pattern = new Pattern();
+
+        this.pattern = pattern;
     }
 
     public int getSeqNo() {

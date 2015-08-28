@@ -16,7 +16,7 @@
     <%  List<Pattern> patterns = (List<Pattern>) request.getAttribute("model");
       for (Pattern pattern : patterns) { %>
     <tr>
-      <td><a href="/roster/pattern?pattern_id=<%= pattern.getId()%>"><%= pattern.getId()%></a></td>
+      <td><a href="/roster/pattern?id=<%= pattern.getId()%>"><%= pattern.getId()%></a></td>
       <td><%= pattern.getName() %></td>
     </tr>
     <% } %>
