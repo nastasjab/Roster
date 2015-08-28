@@ -1,6 +1,7 @@
 package lv.javaguru.java2.domain;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "users")
@@ -31,6 +32,12 @@ public class User extends Generic {
 
     @Column(name = "phone")
     private String phone = "";
+
+    @Column(name = "rosterShowStartDate")
+    private Date rosterShowStartDate;
+
+    @Column(name = "rosterShowEndDate")
+    private Date rosterShowEndDate;
 
     public User() {
         super();
@@ -98,5 +105,21 @@ public class User extends Generic {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public Date getRosterShowStartDate() {
+        return rosterShowStartDate;
+    }
+
+    public void setRosterShowStartDate(Date rosterShowStartDate) {
+        this.rosterShowStartDate = rosterShowStartDate;
+    }
+
+    public Date getRosterShowEndDate() {
+        return rosterShowEndDate;
+    }
+
+    public void setRosterShowEndDate(Date rosterShowEndDate) {
+        this.rosterShowEndDate = rosterShowEndDate;
     }
 }
