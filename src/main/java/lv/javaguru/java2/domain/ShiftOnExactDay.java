@@ -1,7 +1,5 @@
 package lv.javaguru.java2.domain;
 
-import lv.javaguru.java2.servlet.mvc.MVCController;
-
 import javax.persistence.*;
 import java.sql.Date;
 
