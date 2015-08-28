@@ -98,6 +98,7 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
         assertEquals(1, shift.getShift().getId());
 
         shift = shiftOnExactDayDAO.getShiftOnExactDay(2, Date.valueOf("2015-08-15"));
+        // TODO exception should be thrown
         assertNull(shift);
     }
 

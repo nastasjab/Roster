@@ -21,13 +21,7 @@ public class RosterController implements MVCController {
     private UserDAO userDAO;
 
     @Autowired
-    private ShiftDAO shiftDAO;
-
-    @Autowired
     private ShiftOnExactDayDAO shiftOnExactDayDAO;
-
-    @Autowired
-    private PatternDAO patternDAO;
 
     @Autowired
     private PatternShiftDAO patternShiftDAO;
