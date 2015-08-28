@@ -13,7 +13,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Component
-public class UserPatternDAOImplImpl extends GenericHibernateDAOImpl<UserPattern> implements UserPatternDAO {
+public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> implements UserPatternDAO {
 
     @Transactional
     public List<UserPattern> getByUserId(long id) throws DBException {

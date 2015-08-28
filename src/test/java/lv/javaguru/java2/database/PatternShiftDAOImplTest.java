@@ -1,5 +1,6 @@
 package lv.javaguru.java2.database;
 
+import lv.javaguru.java2.domain.Pattern;
 import lv.javaguru.java2.domain.PatternShift;
 import lv.javaguru.java2.domain.Shift;
 import org.junit.Before;
@@ -17,7 +18,11 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
     @Autowired
     private ShiftDAO shiftDAO;
 
-    private final int PATTERN_ID=1;
+    @Autowired
+    private PatternDAO patternDAO;
+
+    private long PATTERN_ID;
+    private long PATTERN_ID2;
 
     private PatternShift patternShift;
     private PatternShift patternShift2;
@@ -31,9 +36,17 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
         shiftDAO.create(shift1);
         shiftDAO.create(shift2);
 
+        Pattern pattern  = PatternDAOImplTest.createPattern("pattern1");
+        Pattern pattern2 = PatternDAOImplTest.createPattern("pattern2");
+        patternDAO.create(pattern);
+        patternDAO.create(pattern2);
+
+        PATTERN_ID = pattern.getId();
+        PATTERN_ID2 = pattern2.getId();
+
         patternShift = createPatternShift(PATTERN_ID, shift1.getId(), 1);
         patternShift2 = createPatternShift(PATTERN_ID, shift2.getId(), 2);
-        patternShift3 = createPatternShift(2, shift1.getId(), 2);
+        patternShift3 = createPatternShift(PATTERN_ID2, shift1.getId(), 2);
     }
 
     @Test

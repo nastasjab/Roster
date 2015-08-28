@@ -6,6 +6,6 @@ import lv.javaguru.java2.database.ShiftDAO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ShiftDAOImplImpl extends GenericHibernateDAOImpl<Shift> implements ShiftDAO {
+public class ShiftDAOImpl extends GenericHibernateDAOImpl<Shift> implements ShiftDAO {
 
 }

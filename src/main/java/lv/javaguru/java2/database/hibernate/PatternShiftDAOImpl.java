@@ -16,7 +16,7 @@ import java.math.BigInteger;
 import java.util.List;
 
 @Component
-public class PatternShiftDAOImplImpl extends GenericHibernateDAOImpl<PatternShift> implements PatternShiftDAO {
+public class PatternShiftDAOImpl extends GenericHibernateDAOImpl<PatternShift> implements PatternShiftDAO {
 
     @Transactional
     public List<PatternShift> getAll() throws JDBCException {

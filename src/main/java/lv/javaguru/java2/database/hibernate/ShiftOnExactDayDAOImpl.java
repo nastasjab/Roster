@@ -10,7 +10,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Component
-public class ShiftOnExactDayDAOImplImpl extends GenericHibernateDAOImpl<ShiftOnExactDay> implements ShiftOnExactDayDAO {
+public class ShiftOnExactDayDAOImpl extends GenericHibernateDAOImpl<ShiftOnExactDay> implements ShiftOnExactDayDAO {
 
     @Transactional
     public ShiftOnExactDay getShiftOnExactDay(long userId, Date date) throws IndexOutOfBoundsException {

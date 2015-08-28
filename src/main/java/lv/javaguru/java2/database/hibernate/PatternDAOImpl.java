@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
-public class PatternDAOImplImpl extends GenericHibernateDAOImpl<Pattern> implements PatternDAO {
+public class PatternDAOImpl extends GenericHibernateDAOImpl<Pattern> implements PatternDAO {
 
     @Transactional
     public List<Pattern> getAll()  throws JDBCException {

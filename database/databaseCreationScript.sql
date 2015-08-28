@@ -19,8 +19,8 @@ CREATE  TABLE IF NOT EXISTS `rosterdb`.`users` (
   `lastName` VARCHAR(45) NULL DEFAULT NULL ,
   `email` VARCHAR(45) NULL DEFAULT NULL ,
   `phone` VARCHAR(45) NULL DEFAULT NULL ,
-  'rosterShowStartDate' DATETIME NULL DEFAULT NULL ,
-  'rosterShowEndDate' DATETIME NULL DEFAULT NULL ,
+  `rosterShowStartDate` DATETIME NULL DEFAULT NULL ,
+  `rosterShowEndDate` DATETIME NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `login_UNIQUE` (`login` ASC) )
 ENGINE = InnoDB;
@@ -98,6 +98,8 @@ CREATE  TABLE IF NOT EXISTS `rosterdb`.`patterns_shifts` (
   PRIMARY KEY (`id`) ,
    KEY `shift_fk` (`shiftId`),
   CONSTRAINT `shift_fk` FOREIGN KEY (shiftId) REFERENCES `shifts` (`id`),
+    KEY `pattern_fk` (`patternId`),
+  CONSTRAINT `pattern_fk` FOREIGN KEY (patternId) REFERENCES `patterns` (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) )
 ENGINE = InnoDB;
 

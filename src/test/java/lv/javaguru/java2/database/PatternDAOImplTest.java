@@ -78,7 +78,7 @@ public class PatternDAOImplTest extends  GenericSpringTest{
         assertEquals(pattern2.getName(), patternFromDB.getName());
     }
 
-    private Pattern createPattern(String name) {
+    public static Pattern createPattern(String name) {
         Pattern pattern = new Pattern();
         pattern.setName(name);
         return pattern;
