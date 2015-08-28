@@ -20,7 +20,7 @@ CREATE  TABLE IF NOT EXISTS `rosterdb`.`users` (
   `email` VARCHAR(45) NULL DEFAULT NULL ,
   `phone` VARCHAR(45) NULL DEFAULT NULL ,
   'rosterShowStartDate' DATETIME NULL DEFAULT NULL ,
-  'rosterShowEndtDate' DATETIME NULL DEFAULT NULL ,
+  'rosterShowEndDate' DATETIME NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `login_UNIQUE` (`login` ASC) )
 ENGINE = InnoDB;
