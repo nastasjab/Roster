@@ -1,8 +1,7 @@
 <%@ page import="lv.javaguru.java2.domain.Roster" %>
-<%@ page import="java.time.LocalDate" %>
 <%@ page import="lv.javaguru.java2.domain.User" %>
-<%@ page import="java.sql.Date" %>
 <%@ page import="lv.javaguru.java2.domain.Shift" %>
+<%@ page import="lv.javaguru.java2.domain.Dates" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% Roster roster = (Roster) request.getAttribute("model"); %>
@@ -32,19 +31,19 @@
 </table></form>
 <table border="1" cellpadding="5" align="center">
     <th>User</th>
-    <%  for(long epochDay = LocalDate.parse(roster.getFrom().toString()).toEpochDay();
-            epochDay <= LocalDate.parse(roster.getTill().toString()).toEpochDay(); epochDay++) { %>
-    <th><%= LocalDate.ofEpochDay(epochDay).getDayOfMonth() %></th>
+    <%  for(long epochDay = Dates.toEpochDay(roster.getFrom());
+            epochDay <= Dates.toEpochDay(roster.getTill()); epochDay++) { %>
+    <th><%= Dates.getDayOfMonth(epochDay) %></th>
     <% }
     for (User user : roster.getUserList()) { %>
     <tr><th><a href="/roster/userpatterns?user=<%= user.getId()%>"><%= user.getLastName() + " " + user.getFirstName() %></a></th>
-        <%  for(long epochDay = LocalDate.parse(roster.getFrom().toString()).toEpochDay();
-                epochDay <= LocalDate.parse(roster.getTill().toString()).toEpochDay(); epochDay++) {
+        <%  for(long epochDay = Dates.toEpochDay(roster.getFrom());
+                epochDay <= Dates.toEpochDay(roster.getTill()); epochDay++) {
             Shift shift = new Shift();
             shift.setName("&nbsp");
-            if (roster.getUserShifts(user).getShift(Date.valueOf(LocalDate.ofEpochDay(epochDay))) != null)
-            shift = roster.getUserShifts(user).getShift(Date.valueOf(LocalDate.ofEpochDay(epochDay))); %>
-        <td><a href="/roster/shiftonexactday?user=<%= user.getId()%>&date=<%= Date.valueOf(LocalDate.ofEpochDay(epochDay))%>&shift=<%= shift.getId()%>">
+            if (roster.getUserShifts(user).getShift(Dates.toSqlDate(epochDay)) != null)
+            shift = roster.getUserShifts(user).getShift(Dates.toSqlDate(epochDay)); %>
+        <td><a href="/roster/shiftonexactday?user=<%= user.getId()%>&date=<%= Dates.toSqlDate(epochDay)%>&shift=<%= shift.getId()%>">
             <%= shift.getName() %></a></td>
         <% } %>
     </tr><% } %>

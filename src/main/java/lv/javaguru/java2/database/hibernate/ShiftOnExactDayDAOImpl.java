@@ -15,11 +15,10 @@ public class ShiftOnExactDayDAOImpl extends GenericHibernateDAOImpl<ShiftOnExact
     @Transactional
     public ShiftOnExactDay getShiftOnExactDay(long userId, Date date) throws IndexOutOfBoundsException {
 
-        List<ShiftOnExactDay> list = sessionFactory.getCurrentSession().createCriteria(ShiftOnExactDay.class)
+        return (ShiftOnExactDay) sessionFactory.getCurrentSession().createCriteria(ShiftOnExactDay.class)
                 .add(Restrictions.eq("userId", userId))
                 .add(Restrictions.eq("date", date))
-                .setMaxResults(1).list();
-        return list==null || list.isEmpty() ? null : list.get(0);
+                .setMaxResults(1).list().get(0);
     }
 
     @Transactional
