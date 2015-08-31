@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
-public abstract class GenericNewEditMVCController <S extends GenericService> {
-
-    @Autowired
-    private S service;
+public abstract class GenericNewEditMVCController {
 
     public MVCModel processRequest(HttpServletRequest req)  {
         PageAction action = getPageAction(req);
@@ -43,17 +40,18 @@ public abstract class GenericNewEditMVCController <S extends GenericService> {
         }
     }
 
+    protected abstract GenericService getService();
     protected abstract String getObjectName();
     protected abstract String getEditPageAddressJSP();
     protected abstract String getListPageAddress(HttpServletRequest req);
     protected abstract Generic fillParameters(HttpServletRequest req) throws Exception;
 
     protected MVCModel listObject(HttpServletRequest req) throws Exception {
-        return new MVCModel(service.getObject(getId(req)), getEditPageAddressJSP());
+        return new MVCModel(getService().getObject(getId(req)), getEditPageAddressJSP());
     }
 
     protected MVCModel addObject(HttpServletRequest req) throws Exception {
-        service.addObject(fillParameters(req));
+        getService().addObject(fillParameters(req));
 
         return new MVCModel(
                 new MessageContents(
@@ -66,7 +64,7 @@ public abstract class GenericNewEditMVCController <S extends GenericService> {
     protected MVCModel updateObject(HttpServletRequest req) throws Exception {
         Generic object = fillParameters(req);
         object.setId(getId(req));
-        service.updateObject(object);
+        getService().updateObject(object);
 
         return new MVCModel(
                 new MessageContents(
@@ -77,7 +75,7 @@ public abstract class GenericNewEditMVCController <S extends GenericService> {
     }
 
     protected MVCModel deleteObject(HttpServletRequest req) throws Exception {
-        service.deleteObject(getId(req));
+        getService().deleteObject(getId(req));
 
         return new MVCModel(
                 new MessageContents(

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Component;
 import java.util.regex.Pattern;
 
 @Component
-public class ShiftServiceImpl extends GenericServiceImpl<ShiftDAO, Shift> implements ShiftService {
+public class ShiftServiceImpl
+        extends GenericServiceImpl<ShiftDAO, Shift> implements ShiftService {
+
     @Override
     public Shift getNewInstance() {
         return new Shift();

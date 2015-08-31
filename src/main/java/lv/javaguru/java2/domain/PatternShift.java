@@ -11,9 +11,6 @@ public class PatternShift extends Generic{
     @Column(name = "id", nullable = false)
     private long id;
 
-  //  @Column(name = "pattern")
-  //  private long pattern;
-
     @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "shiftId")
     private Shift shift;

@@ -1,5 +1,7 @@
 package lv.javaguru.java2.servlet.mvc.controller;
 
+import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.pattern.PatternService;
 import lv.javaguru.java2.core.shift.ShiftService;
 import lv.javaguru.java2.core.shift.ShiftServiceImpl;
 import lv.javaguru.java2.database.ShiftDAO;
@@ -14,7 +16,10 @@ import java.util.regex.Pattern;
 
 @Component
 public class ShiftEditController
-        extends GenericNewEditMVCController<ShiftService> implements MVCController  {
+        extends GenericNewEditMVCController implements MVCController  {
+    @Autowired
+    ShiftService shiftService;
+
     @Override
     protected Generic fillParameters(HttpServletRequest req) throws Exception{
         Shift shift = new Shift();
@@ -22,6 +27,11 @@ public class ShiftEditController
         shift.setShiftStarts(req.getParameter("shiftstarts"));
         shift.setShiftEnds(req.getParameter("shiftends"));
         return shift;
+    }
+
+    @Override
+    protected GenericService getService() {
+        return shiftService;
     }
 
     @Override
