@@ -1,8 +1,8 @@
-package lv.javaguru.java2.database.hibernate;
+package lv.javaguru.java2.database.pattern;
 
-import lv.javaguru.java2.database.PatternShiftDAO;
-import lv.javaguru.java2.domain.Pattern;
-import lv.javaguru.java2.domain.PatternShift;
+import lv.javaguru.java2.database.GenericHibernateDAOImpl;
+import lv.javaguru.java2.domain.pattern.Pattern;
+import lv.javaguru.java2.domain.pattern.PatternShift;
 import org.hibernate.JDBCException;
 import org.hibernate.Query;
 import org.hibernate.Session;

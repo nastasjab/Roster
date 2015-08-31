@@ -1,7 +1,17 @@
 package lv.javaguru.java2.core.roster;
 
-import lv.javaguru.java2.database.*;
+import lv.javaguru.java2.database.pattern.PatternShiftDAO;
+import lv.javaguru.java2.database.roster.ShiftOnExactDayDAO;
+import lv.javaguru.java2.database.user.UserDAO;
+import lv.javaguru.java2.database.user.UserPatternDAO;
 import lv.javaguru.java2.domain.*;
+import lv.javaguru.java2.domain.pattern.PatternShift;
+import lv.javaguru.java2.domain.roster.Roster;
+import lv.javaguru.java2.domain.roster.RosterUserShiftMap;
+import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
+import lv.javaguru.java2.domain.shift.Shift;
+import lv.javaguru.java2.domain.user.User;
+import lv.javaguru.java2.domain.user.UserPattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +40,7 @@ public class RosterServiceImpl implements RosterService {
     public Roster getRoster(Date from, Date till) {
         try {
             roster = getRoster(from, till, userDAO.getAll());
-        } catch (DBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return roster;
@@ -81,12 +91,12 @@ public class RosterServiceImpl implements RosterService {
                 }
             }
 
-        } catch (DBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private List<UserPattern> getUserPatternsByDatesFromTill() throws DBException {
+    private List<UserPattern> getUserPatternsByDatesFromTill() throws Exception {
         return userPatternDAO.getByDateFrame(roster.getFrom(), roster.getTill());
     }
 
@@ -108,7 +118,7 @@ public class RosterServiceImpl implements RosterService {
         return epochDayTill;
     }
 
-    private void getShiftsFromPattern(UserPattern userPattern, List<Shift> shiftInPattern) throws DBException {
+    private void getShiftsFromPattern(UserPattern userPattern, List<Shift> shiftInPattern){
         for (PatternShift patternShift : patternShiftDAO.getAll(userPattern.getPattern().getId())) {
             shiftInPattern.add(patternShift.getShift());
         }

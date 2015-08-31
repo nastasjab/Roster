@@ -1,11 +1,9 @@
-package lv.javaguru.java2.domain;
+package lv.javaguru.java2.domain.roster;
 
-import lv.javaguru.java2.database.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import lv.javaguru.java2.domain.Generic;
+import lv.javaguru.java2.domain.user.User;
 
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.*;
 
 public class Roster extends Generic {

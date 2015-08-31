@@ -1,10 +1,9 @@
 package lv.javaguru.java2.core.pattern;
 
 import lv.javaguru.java2.core.GenericServiceImpl;
-import lv.javaguru.java2.core.shift.ShiftService;
-import lv.javaguru.java2.database.PatternDAO;
+import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.Pattern;
+import lv.javaguru.java2.domain.pattern.Pattern;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-<%@ page import="lv.javaguru.java2.domain.Shift" %>
+<%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  Shift shift;
   boolean editShift = true;

@@ -1,14 +1,13 @@
-package lv.javaguru.java2.domain;
+package lv.javaguru.java2.domain.pattern;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import lv.javaguru.java2.domain.Generic;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name ="patterns")
-public class Pattern extends Generic{
+public class Pattern extends Generic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -3,7 +3,7 @@ package lv.javaguru.java2.servlet.mvc.controller.pattern;
 import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.core.pattern.PatternService;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.Pattern;
+import lv.javaguru.java2.domain.pattern.Pattern;
 import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import org.springframework.beans.factory.annotation.Autowired;

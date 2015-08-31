@@ -1,4 +1,6 @@
-package lv.javaguru.java2.domain;
+package lv.javaguru.java2.domain.user;
+
+import lv.javaguru.java2.domain.Generic;
 
 import javax.persistence.*;
 import java.sql.Date;

@@ -1,6 +1,7 @@
 package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.database.user.UserPatternDAO;
+import lv.javaguru.java2.domain.user.UserPattern;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +18,14 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     private UserPattern userPattern2;
 
     @Before
-    public void init() throws DBException {
+    public void init()  {
         super.init();
         userPattern = createUserPattern(1, 1, Date.valueOf("2015-07-01"), Date.valueOf("2015-07-31"), 1);
         userPattern2 = createUserPattern(2, 2, Date.valueOf("2015-08-01"), Date.valueOf("2015-08-31"), 2);
     }
 
     @Test
-    public void testCreate() throws DBException {
+    public void testCreate()  {
         userPatternDAO.create(userPattern);
 
         UserPattern userPatternFromDB = userPatternDAO.getById(userPattern.getId());
@@ -38,7 +39,7 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-    public void testMultipleUserCreation() throws DBException {
+    public void testMultipleUserCreation()  {
         userPatternDAO.create(userPattern);
         userPatternDAO.create(userPattern2);
         List<UserPattern> userPatterns = userPatternDAO.getAll();
@@ -46,7 +47,7 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-     public void testDelete() throws DBException {
+     public void testDelete()  {
         userPatternDAO.create(userPattern);
         userPatternDAO.create(userPattern2);
         List<UserPattern> userPatterns = userPatternDAO.getAll();
@@ -62,7 +63,7 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-    public void testUpdate() throws DBException {
+    public void testUpdate()  {
         userPatternDAO.create(userPattern);
 
         userPattern = userPatternDAO.getById(userPattern.getId());
@@ -97,7 +98,7 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-    public void testGetByUserId() throws DBException {
+    public void testGetByUserId()  {
         userPatternDAO.create(userPattern);
         userPatternDAO.create(userPattern2);
         List<UserPattern> userPatterns = userPatternDAO.getByUserId(1);
@@ -109,7 +110,7 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-    public void testGetByDateFrame() throws DBException {
+    public void testGetByDateFrame()  {
         userPatternDAO.create(userPattern);
         userPatternDAO.create(userPattern2);
 

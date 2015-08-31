@@ -1,11 +1,14 @@
-package lv.javaguru.java2.domain;
+package lv.javaguru.java2.domain.user;
+
+import lv.javaguru.java2.domain.Generic;
+import lv.javaguru.java2.domain.pattern.Pattern;
 
 import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
 @Table(name = "user_patterns")
-public class UserPattern extends Generic{
+public class UserPattern extends Generic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,6 +1,6 @@
-<%@ page import="lv.javaguru.java2.domain.User" %>
+<%@ page import="lv.javaguru.java2.domain.user.User" %>
 <%@ page import="java.sql.Date" %>
-<%@ page import="lv.javaguru.java2.domain.Shift" %>
+<%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page import="java.util.List" %>
 <%@ page import="lv.javaguru.java2.servlet.mvc.data.ShiftOnExactDayControllerData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

@@ -1,11 +1,10 @@
 package lv.javaguru.java2.servlet.mvc.controller.roster;
 
-import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.ShiftDAO;
-import lv.javaguru.java2.database.ShiftOnExactDayDAO;
-import lv.javaguru.java2.database.UserDAO;
-import lv.javaguru.java2.domain.Shift;
-import lv.javaguru.java2.domain.ShiftOnExactDay;
+import lv.javaguru.java2.database.shift.ShiftDAO;
+import lv.javaguru.java2.database.roster.ShiftOnExactDayDAO;
+import lv.javaguru.java2.database.user.UserDAO;
+import lv.javaguru.java2.domain.shift.Shift;
+import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
 import lv.javaguru.java2.servlet.mvc.*;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
 import lv.javaguru.java2.servlet.mvc.data.ShiftOnExactDayControllerData;
@@ -34,13 +33,13 @@ public class ShiftOnExactDayController extends GenericEditMVCController<ShiftOnE
 
         try {
             result.setUser(userDAO.getById(getUserId(req)));
-        } catch (DBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
             result.setShifts(shiftDAO.getAll());
-        } catch (DBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

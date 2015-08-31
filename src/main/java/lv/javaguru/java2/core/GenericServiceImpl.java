@@ -1,6 +1,5 @@
 package lv.javaguru.java2.core;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.GenericDAO;
 import lv.javaguru.java2.domain.Generic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ public abstract class GenericServiceImpl
     @Autowired
     private T dao;
 
-    public List<Generic> getAll() throws DBException {
+    public List<Generic> getAll()  {
         return dao.getAll();
     }
 
@@ -23,9 +22,8 @@ public abstract class GenericServiceImpl
             result = (R)dao.getById(id);
         } catch (NullPointerException e) {
             result = getNewInstance();
-        } catch (DBException e) {
-            e.printStackTrace();
         }
+
         if (result==null)
             result = getNewInstance();
 
@@ -42,7 +40,7 @@ public abstract class GenericServiceImpl
         dao.update(object);
     }
 
-    public void deleteObject(long id) throws DBException {
+    public void deleteObject(long id)  {
         dao.delete(id);
     }
 

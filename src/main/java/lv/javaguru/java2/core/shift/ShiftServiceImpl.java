@@ -1,9 +1,9 @@
 package lv.javaguru.java2.core.shift;
 
 import lv.javaguru.java2.core.GenericServiceImpl;
-import lv.javaguru.java2.database.ShiftDAO;
+import lv.javaguru.java2.database.shift.ShiftDAO;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.Shift;
+import lv.javaguru.java2.domain.shift.Shift;
 import org.springframework.stereotype.Component;
 
 import java.util.regex.Pattern;

@@ -1,8 +1,11 @@
 package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.domain.Pattern;
-import lv.javaguru.java2.domain.PatternShift;
-import lv.javaguru.java2.domain.Shift;
+import lv.javaguru.java2.database.pattern.PatternDAO;
+import lv.javaguru.java2.database.pattern.PatternShiftDAO;
+import lv.javaguru.java2.database.shift.ShiftDAO;
+import lv.javaguru.java2.domain.pattern.Pattern;
+import lv.javaguru.java2.domain.pattern.PatternShift;
+import lv.javaguru.java2.domain.shift.Shift;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +32,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
     private PatternShift patternShift3;
 
     @Before
-    public void init() throws DBException {
+    public void init()  {
         super.init();
         Shift shift1 = ShiftDAOImplTest.createShift("name", "07:00:00", "15:00:00");
         Shift shift2 = ShiftDAOImplTest.createShift("name2", "07:00:00", "15:00:00");
@@ -50,7 +53,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
     }
 
     @Test
-    public void testCreate() throws DBException {
+    public void testCreate()  {
         patternShiftDAO.create(patternShift);
 
         PatternShift patternShiftFromDB = patternShiftDAO.getById(patternShift.getId());
@@ -63,7 +66,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
     }
 
     @Test
-    public void testMultiplePatternShiftCreation() throws DBException {
+    public void testMultiplePatternShiftCreation()  {
         patternShiftDAO.create(patternShift);
         patternShiftDAO.create(patternShift3);
         List<PatternShift>  patternShifts = patternShiftDAO.getAll();
@@ -71,7 +74,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
     }
 
     @Test
-    public void testGetAllByPatternId() throws DBException {
+    public void testGetAllByPatternId()  {
         patternShiftDAO.create(patternShift);
         patternShiftDAO.create(patternShift2);
         patternShiftDAO.create(patternShift3);
@@ -80,7 +83,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
     }
 
     @Test
-    public void testNextSeqNo() throws DBException {
+    public void testNextSeqNo()  {
         assertEquals(1, patternShiftDAO.getNextSequenceNo(-1));
 
         patternShiftDAO.create(patternShift);
@@ -91,7 +94,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
 
 
     @Test
-     public void testDelete() throws DBException {
+     public void testDelete()  {
         patternShiftDAO.create(patternShift);
         patternShiftDAO.create(patternShift2);
         List<PatternShift> patternShifts = patternShiftDAO.getAll(PATTERN_ID);
@@ -107,12 +110,12 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void testDeleteNotExisting() throws DBException {
+    public void testDeleteNotExisting()  {
         patternShiftDAO.delete(-1);
     }
 
     @Test
-    public void testDeleteByPatternId() throws DBException {
+    public void testDeleteByPatternId()  {
         patternShiftDAO.create(patternShift);
         patternShiftDAO.create(patternShift2);
         patternShiftDAO.create(patternShift3);
@@ -131,7 +134,7 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
     }
 
     @Test
-    public void testUpdate() throws DBException {
+    public void testUpdate()  {
         patternShiftDAO.create(patternShift);
 
         patternShift = patternShiftDAO.getById(patternShift.getId());

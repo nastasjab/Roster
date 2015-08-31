@@ -1,9 +1,8 @@
-package lv.javaguru.java2.database.hibernate;
+package lv.javaguru.java2.database.user;
 
 
-import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.UserPatternDAO;
-import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.database.GenericHibernateDAOImpl;
+import lv.javaguru.java2.domain.user.UserPattern;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
@@ -16,7 +15,7 @@ import java.util.List;
 public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> implements UserPatternDAO {
 
     @Transactional
-    public List<UserPattern> getByUserId(long id) throws DBException {
+    public List<UserPattern> getByUserId(long id)  {
         return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
                 .addOrder(Order.asc("startDay"))
                 .add(Restrictions.eq("userId",id))
@@ -24,7 +23,7 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
     }
 
     @Transactional
-    public List<UserPattern> getByDateFrame(Date startDate, Date endDate) throws DBException {
+    public List<UserPattern> getByDateFrame(Date startDate, Date endDate) {
         return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
                 .addOrder(Order.asc("startDay"))
                 .add(Restrictions.or(Restrictions.between("startDay", startDate, endDate),

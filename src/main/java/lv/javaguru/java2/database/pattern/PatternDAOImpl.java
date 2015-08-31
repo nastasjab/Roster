@@ -1,7 +1,7 @@
-package lv.javaguru.java2.database.hibernate;
+package lv.javaguru.java2.database.pattern;
 
-import lv.javaguru.java2.domain.Pattern;
-import lv.javaguru.java2.database.PatternDAO;
+import lv.javaguru.java2.database.GenericHibernateDAOImpl;
+import lv.javaguru.java2.domain.pattern.Pattern;
 import org.hibernate.Criteria;
 import org.hibernate.JDBCException;
 import org.springframework.stereotype.Component;

@@ -5,13 +5,13 @@ import org.hibernate.JDBCException;
 import java.util.List;
 
 public interface GenericDAO<T> {
-    void create(T obj) throws JDBCException, DBException;
+    void create(T obj) throws JDBCException;
 
-    void update(T obj) throws JDBCException, DBException;
+    void update(T obj) throws JDBCException;
 
-    List<T> getAll() throws JDBCException, DBException;
+    List<T> getAll() throws JDBCException;
 
-    T getById(long id) throws JDBCException, DBException;
+    T getById(long id) throws JDBCException;
 
-    void delete(long id) throws JDBCException, DBException;
+    void delete(long id) throws JDBCException;
 }

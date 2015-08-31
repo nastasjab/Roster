@@ -1,6 +1,7 @@
 package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.domain.Pattern;
+import lv.javaguru.java2.database.pattern.PatternDAO;
+import lv.javaguru.java2.domain.pattern.Pattern;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,14 @@ public class PatternDAOImplTest extends  GenericSpringTest{
     private Pattern pattern2;
 
     @Before
-    public void init() throws DBException {
+    public void init() {
         super.init();
         pattern = createPattern("pattern1");
         pattern2 = createPattern("pattern2");
     }
 
     @Test
-    public void testCreate() throws DBException {
+    public void testCreate()  {
         patternDAO.create(pattern);
 
         Pattern patternFromDB = patternDAO.getById(pattern.getId());
@@ -35,7 +36,7 @@ public class PatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-    public void testMultiplePatternCreation() throws DBException {
+    public void testMultiplePatternCreation()  {
         patternDAO.create(pattern);
         patternDAO.create(pattern2);
         List<Pattern> patterns = patternDAO.getAll();
@@ -43,7 +44,7 @@ public class PatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-     public void testDelete() throws DBException {
+     public void testDelete() {
         patternDAO.create(pattern);
         patternDAO.create(pattern2);
         List<Pattern> patterns = patternDAO.getAll();
@@ -59,12 +60,12 @@ public class PatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void testDeleteNotExisting() throws DBException {
+    public void testDeleteNotExisting()  {
         patternDAO.delete(-1);
     }
 
     @Test
-    public void testUpdate() throws DBException {
+    public void testUpdate()  {
         patternDAO.create(pattern);
 
         pattern = patternDAO.getById(pattern.getId());

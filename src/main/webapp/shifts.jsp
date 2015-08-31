@@ -1,4 +1,4 @@
-<%@ page import="lv.javaguru.java2.domain.Shift" %>
+<%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>

@@ -1,7 +1,7 @@
 package lv.javaguru.java2.core.roster;
 
-import lv.javaguru.java2.domain.Roster;
-import lv.javaguru.java2.domain.User;
+import lv.javaguru.java2.domain.roster.Roster;
+import lv.javaguru.java2.domain.user.User;
 
 import java.sql.Date;
 import java.util.List;

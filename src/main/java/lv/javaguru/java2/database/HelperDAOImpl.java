@@ -1,4 +1,4 @@
-package lv.javaguru.java2.database.hibernate;
+package lv.javaguru.java2.database;
 
 import lv.javaguru.java2.database.HelperDAO;
 import org.hibernate.SessionFactory;

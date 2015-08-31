@@ -20,7 +20,7 @@ public class GenericSpringTest {
     public HelperDAO helperDAO;
 
     @Before
-    public void init() throws DBException {
+    public void init()  {
         DatabaseCleaner databaseCleaner = new DatabaseCleaner(helperDAO);
         databaseCleaner.cleanDatabase();
     }

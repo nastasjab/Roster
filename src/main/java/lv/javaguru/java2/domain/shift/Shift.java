@@ -1,10 +1,12 @@
-package lv.javaguru.java2.domain;
+package lv.javaguru.java2.domain.shift;
+
+import lv.javaguru.java2.domain.Generic;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name ="shifts")
-public class Shift extends Generic{
+public class Shift extends Generic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

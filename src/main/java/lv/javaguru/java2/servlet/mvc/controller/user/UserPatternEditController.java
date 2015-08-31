@@ -1,7 +1,9 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
-import lv.javaguru.java2.database.*;
-import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.database.pattern.PatternDAO;
+import lv.javaguru.java2.database.user.UserDAO;
+import lv.javaguru.java2.database.user.UserPatternDAO;
+import lv.javaguru.java2.domain.user.UserPattern;
 import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;

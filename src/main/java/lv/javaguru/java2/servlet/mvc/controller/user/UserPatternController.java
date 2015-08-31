@@ -1,11 +1,9 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
-import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.PatternDAO;
-import lv.javaguru.java2.database.UserDAO;
-import lv.javaguru.java2.database.UserPatternDAO;
-import lv.javaguru.java2.domain.Pattern;
-import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.database.pattern.PatternDAO;
+import lv.javaguru.java2.database.user.UserDAO;
+import lv.javaguru.java2.database.user.UserPatternDAO;
+import lv.javaguru.java2.domain.user.UserPattern;
 import lv.javaguru.java2.servlet.mvc.GenericMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
@@ -37,13 +35,11 @@ public class UserPatternController extends GenericMVCController<UserPatternDAO, 
 
         } catch (NullPointerException e) {
             result = new UserPatternControllerData();
-        } catch (DBException e) {
-            e.printStackTrace();
         }
 
         try {
             result.setPatterns(patternDAO.getAll());
-        } catch (DBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

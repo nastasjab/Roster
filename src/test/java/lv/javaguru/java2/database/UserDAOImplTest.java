@@ -1,6 +1,7 @@
 package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.domain.User;
+import lv.javaguru.java2.database.user.UserDAO;
+import lv.javaguru.java2.domain.user.User;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,20 +11,20 @@ import static org.junit.Assert.*;
 
 public class UserDAOImplTest extends GenericSpringTest {
     @Autowired
-    private  UserDAO userDAO;
+    private UserDAO userDAO;
 
     private User user;
     private User user2;
 
     @Before
-    public void init() throws DBException {
+    public void init()  {
         super.init();
         user = createUser("user", "encryptedPassword", "U", "dima", "pavlov", "dima@pavlov.lv", "29295656");
         user2 = createUser("admin", "encryptedPassword2", "A", "ivan", "petrov", "ivan@petrov.lv", "29299898");
     }
 
     @Test
-    public void testCreate() throws DBException {
+    public void testCreate()  {
         userDAO.create(user);
 
         User userFromDB = userDAO.getById(user.getId());
@@ -39,7 +40,7 @@ public class UserDAOImplTest extends GenericSpringTest {
     }
 
     @Test
-    public void testMultipleUserCreation() throws DBException {
+    public void testMultipleUserCreation()  {
         userDAO.create(user);
         userDAO.create(user2);
         List<User> users = userDAO.getAll();
@@ -47,7 +48,7 @@ public class UserDAOImplTest extends GenericSpringTest {
     }
 
     @Test
-     public void testDelete() throws DBException {
+     public void testDelete()  {
         userDAO.create(user);
         userDAO.create(user2);
         List<User> users = userDAO.getAll();
@@ -64,7 +65,7 @@ public class UserDAOImplTest extends GenericSpringTest {
 
 
     @Test
-    public void testUpdate() throws DBException {
+    public void testUpdate()  {
         userDAO.create(user);
 
         user = userDAO.getById(user.getId());

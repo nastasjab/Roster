@@ -1,5 +1,7 @@
-package lv.javaguru.java2.domain;
+package lv.javaguru.java2.domain.roster;
 
+
+import lv.javaguru.java2.domain.shift.Shift;
 
 import java.sql.Date;
 import java.util.HashMap;

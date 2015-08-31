@@ -1,14 +1,10 @@
-package lv.javaguru.java2.core.pattern.shift;
+package lv.javaguru.java2.core.pattern;
 
 import lv.javaguru.java2.core.GenericServiceImpl;
-import lv.javaguru.java2.core.pattern.PatternService;
-import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.PatternDAO;
-import lv.javaguru.java2.database.PatternShiftDAO;
-import lv.javaguru.java2.database.ShiftDAO;
+import lv.javaguru.java2.database.pattern.PatternShiftDAO;
+import lv.javaguru.java2.database.shift.ShiftDAO;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.Pattern;
-import lv.javaguru.java2.domain.PatternShift;
+import lv.javaguru.java2.domain.pattern.PatternShift;
 import lv.javaguru.java2.servlet.mvc.data.PatternShiftEditControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +19,7 @@ public class PatternShiftServiceImpl
     @Autowired
     private ShiftDAO shiftDAO;
 
-    public Generic getObject(long id, long patternId) throws DBException {
+    public Generic getObject(long id, long patternId) {
         PatternShiftEditControllerData result = new PatternShiftEditControllerData();
         try {
              PatternShift patternShift = patternShiftDAO.getById(id);
@@ -37,16 +33,13 @@ public class PatternShiftServiceImpl
             result = new PatternShiftEditControllerData();
             result.getPattern().setId(patternId);
             result.setSeqNo(patternShiftDAO.getNextSequenceNo(patternId));
-        } catch (DBException e) {
-            e.printStackTrace();
         }
-
 
         result.setAllShifts(shiftDAO.getAll());
         return result;
     }
 
-    public int getNextSequence(long patternId) throws DBException {
+    public int getNextSequence(long patternId)  {
         return patternShiftDAO.getNextSequenceNo(patternId);
     }
 

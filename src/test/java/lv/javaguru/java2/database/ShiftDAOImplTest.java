@@ -1,6 +1,7 @@
 package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.domain.Shift;
+import lv.javaguru.java2.database.shift.ShiftDAO;
+import lv.javaguru.java2.domain.shift.Shift;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,14 @@ public class ShiftDAOImplTest extends GenericSpringTest{
     private Shift shift2;
 
     @Before
-    public void init() throws DBException {
+    public void init()  {
         super.init();
         shift = createShift("1", "07:00:00", "15:00:00");
         shift2 = createShift("2", "15:00:00", "23:00:00");
     }
 
     @Test
-    public void testCreate() throws DBException {
+    public void testCreate()  {
         shiftDAO.create(shift);
 
         Shift shiftFromDB = shiftDAO.getById(shift.getId());
@@ -37,7 +38,7 @@ public class ShiftDAOImplTest extends GenericSpringTest{
     }
 
     @Test
-    public void testMultipleUserCreation() throws DBException {
+    public void testMultipleUserCreation()  {
         shiftDAO.create(shift);
         shiftDAO.create(shift2);
         List<Shift> shifts = shiftDAO.getAll();
@@ -45,7 +46,7 @@ public class ShiftDAOImplTest extends GenericSpringTest{
     }
 
     @Test
-    public void testDelete() throws DBException {
+    public void testDelete()  {
         shiftDAO.create(shift);
         shiftDAO.create(shift2);
         List<Shift> shifts = shiftDAO.getAll();
@@ -61,12 +62,12 @@ public class ShiftDAOImplTest extends GenericSpringTest{
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void testDeleteNotExisting() throws DBException {
+    public void testDeleteNotExisting()  {
         shiftDAO.delete(-1);
     }
 
     @Test
-    public void testUpdate() throws DBException {
+    public void testUpdate()  {
         shiftDAO.create(shift);
 
         shift = shiftDAO.getById(shift.getId());

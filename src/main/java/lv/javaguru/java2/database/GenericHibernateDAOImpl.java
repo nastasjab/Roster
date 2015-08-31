@@ -1,4 +1,4 @@
-package lv.javaguru.java2.database.hibernate;
+package lv.javaguru.java2.database;
 
 
 import org.hibernate.JDBCException;
@@ -20,7 +20,7 @@ public class GenericHibernateDAOImpl<T> {
     }
 
     @Autowired
-    SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
 
     @Transactional
@@ -53,7 +53,7 @@ public class GenericHibernateDAOImpl<T> {
     // TODO for Andrew
     /*
     @Transactional
-    public boolean isEmpty() throws DBException {
+    public boolean isEmpty()  {
         return sessionFactory.getCurrentSession().createCriteria(persistentClass).add(Restrictions.isEmpty(???)).list() == 0;
 */
 }

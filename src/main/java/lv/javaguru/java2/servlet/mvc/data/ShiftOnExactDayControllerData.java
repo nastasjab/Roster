@@ -1,9 +1,9 @@
 package lv.javaguru.java2.servlet.mvc.data;
 
 
-import lv.javaguru.java2.domain.Shift;
-import lv.javaguru.java2.domain.ShiftOnExactDay;
-import lv.javaguru.java2.domain.User;
+import lv.javaguru.java2.domain.shift.Shift;
+import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
+import lv.javaguru.java2.domain.user.User;
 
 import java.util.List;
 

@@ -21,7 +21,7 @@ class DatabaseCleaner {
         return tableNames;
     }
 
-    public void cleanDatabase() throws DBException {
+    public void cleanDatabase() {
         for(String tableName : getTableNames()) {
             helperDAO.deleteTable(tableName);
         }

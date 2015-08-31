@@ -1,6 +1,7 @@
 package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.domain.ShiftOnExactDay;
+import lv.javaguru.java2.database.roster.ShiftOnExactDayDAO;
+import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,20 +14,20 @@ import static org.junit.Assert.*;
 
 public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
     @Autowired
-    private  ShiftOnExactDayDAO shiftOnExactDayDAO;
+    private ShiftOnExactDayDAO shiftOnExactDayDAO;
 
     private ShiftOnExactDay shiftOnExactDay;
     private ShiftOnExactDay shiftOnExactDay2;
 
     @Before
-    public void init() throws DBException {
+    public void init()  {
         super.init();
         shiftOnExactDay = createShiftOnExactDay(1, Date.valueOf("2015-08-15"), 1);
         shiftOnExactDay2 = createShiftOnExactDay(2, Date.valueOf("2015-08-25"), 2);
     }
 
     @Test
-    public void testCreate() throws DBException {
+    public void testCreate()  {
         shiftOnExactDayDAO.create(shiftOnExactDay);
 
         ShiftOnExactDay shiftOnExactDayFromDB = shiftOnExactDayDAO.getById(shiftOnExactDay.getId());
@@ -41,7 +42,7 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
     }
 
     @Test
-    public void testMultipleUserCreation() throws DBException {
+    public void testMultipleUserCreation()  {
         shiftOnExactDayDAO.create(shiftOnExactDay);
         shiftOnExactDayDAO.create(shiftOnExactDay2);
         List<ShiftOnExactDay> userPatterns = shiftOnExactDayDAO.getAll();
@@ -49,7 +50,7 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
     }
 
     @Test
-    public void testDelete() throws DBException {
+    public void testDelete()  {
         shiftOnExactDayDAO.create(shiftOnExactDay);
         shiftOnExactDayDAO.create(shiftOnExactDay2);
         List<ShiftOnExactDay> shiftsOnExactDays = shiftOnExactDayDAO.getAll();
@@ -65,7 +66,7 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
     }
 
     @Test
-    public void testUpdate() throws DBException {
+    public void testUpdate()  {
         shiftOnExactDayDAO.create(shiftOnExactDay);
 
         shiftOnExactDay = shiftOnExactDayDAO.getById(shiftOnExactDay.getId());
@@ -85,12 +86,12 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
     }
 
     @Test
-    public void testUpdateNotExisting() throws DBException {
+    public void testUpdateNotExisting()  {
         shiftOnExactDayDAO.update(shiftOnExactDay);
     }
 
     @Test
-    public void testGetShiftOnExactDay() throws DBException {
+    public void testGetShiftOnExactDay()  {
         shiftOnExactDayDAO.create(shiftOnExactDay);
         shiftOnExactDayDAO.create(shiftOnExactDay2);
 
@@ -103,7 +104,7 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
     }
 
     @Test
-    public void testSetShiftOnExactDay() throws DBException {
+    public void testSetShiftOnExactDay()  {
         shiftOnExactDayDAO.setShiftOnExactDay(shiftOnExactDay);
 
         ShiftOnExactDay shiftOnExactDayFromDB = shiftOnExactDayDAO.getById(shiftOnExactDay.getId());
@@ -117,7 +118,7 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
     }
 
     @Test
-    public void testGetShiftsOnExactDay() throws DBException {
+    public void testGetShiftsOnExactDay()  {
         shiftOnExactDayDAO.create(shiftOnExactDay);
         shiftOnExactDayDAO.create(shiftOnExactDay2);
 

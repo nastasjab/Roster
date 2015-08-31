@@ -1,4 +1,7 @@
-package lv.javaguru.java2.domain;
+package lv.javaguru.java2.domain.roster;
+
+import lv.javaguru.java2.domain.Generic;
+import lv.javaguru.java2.domain.shift.Shift;
 
 import javax.persistence.*;
 import java.sql.Date;

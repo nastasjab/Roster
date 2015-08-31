@@ -1,11 +1,12 @@
-package lv.javaguru.java2.database;
+package lv.javaguru.java2.database.roster;
 
-import lv.javaguru.java2.domain.ShiftOnExactDay;
+import lv.javaguru.java2.database.GenericDAO;
+import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
 
 import java.sql.Date;
 import java.util.List;
 
-public interface ShiftOnExactDayDAO extends GenericDAO<ShiftOnExactDay>{
+public interface ShiftOnExactDayDAO extends GenericDAO<ShiftOnExactDay> {
     ShiftOnExactDay getShiftOnExactDay(long userId, Date date);
 
     void setShiftOnExactDay(ShiftOnExactDay shiftOnExactDay);

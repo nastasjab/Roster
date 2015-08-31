@@ -1,7 +1,7 @@
-package lv.javaguru.java2.database.hibernate;
+package lv.javaguru.java2.database.roster;
 
-import lv.javaguru.java2.database.ShiftOnExactDayDAO;
-import lv.javaguru.java2.domain.ShiftOnExactDay;
+import lv.javaguru.java2.database.GenericHibernateDAOImpl;
+import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 

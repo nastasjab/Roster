@@ -1,10 +1,9 @@
 package lv.javaguru.java2.servlet.mvc.controller.pattern;
 
 import lv.javaguru.java2.core.GenericService;
-import lv.javaguru.java2.core.pattern.PatternService;
-import lv.javaguru.java2.core.pattern.shift.PatternShiftService;
+import lv.javaguru.java2.core.pattern.PatternShiftService;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.PatternShift;
+import lv.javaguru.java2.domain.pattern.PatternShift;
 import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;

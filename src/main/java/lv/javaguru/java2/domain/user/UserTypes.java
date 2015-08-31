@@ -1,4 +1,4 @@
-package lv.javaguru.java2.domain;
+package lv.javaguru.java2.domain.user;
 
 
 import java.util.*;
