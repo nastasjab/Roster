@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servlet.mvc.controller;
+package lv.javaguru.java2.servlet.mvc.controller.roster;
 
 
 import lv.javaguru.java2.core.roster.RosterService;

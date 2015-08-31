@@ -1,6 +1,17 @@
 package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.servlet.mvc.controller.*;
+import lv.javaguru.java2.servlet.mvc.controller.pattern.PatternController;
+import lv.javaguru.java2.servlet.mvc.controller.pattern.PatternEditController;
+import lv.javaguru.java2.servlet.mvc.controller.pattern.PatternShiftEditController;
+import lv.javaguru.java2.servlet.mvc.controller.roster.RosterController;
+import lv.javaguru.java2.servlet.mvc.controller.roster.ShiftOnExactDayController;
+import lv.javaguru.java2.servlet.mvc.controller.shift.ShiftController;
+import lv.javaguru.java2.servlet.mvc.controller.shift.ShiftEditController;
+import lv.javaguru.java2.servlet.mvc.controller.user.UserController;
+import lv.javaguru.java2.servlet.mvc.controller.user.UserEditController;
+import lv.javaguru.java2.servlet.mvc.controller.user.UserPatternController;
+import lv.javaguru.java2.servlet.mvc.controller.user.UserPatternEditController;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -30,6 +41,7 @@ public class MVCFilter implements Filter{
             logger.log(Level.INFO, "Spring context failed to start", e);
         }
 
+        controllers.put("/login", getBean(LoginController.class));
         controllers.put("/users", getBean(UserController.class));
         controllers.put("/user", getBean(UserEditController.class));
         controllers.put("/shifts", getBean(ShiftController.class));
@@ -40,7 +52,8 @@ public class MVCFilter implements Filter{
         controllers.put("/userpatterns", getBean(UserPatternController.class));
         controllers.put("/userpattern", getBean(UserPatternEditController.class));
         controllers.put("/roster", getBean(RosterController.class));
-        controllers.put("/", getBean(MainMenuController.class));
+        controllers.put("/menu", getBean(MainMenuController.class));
+        controllers.put("/", getBean(LoginController.class));
         controllers.put("/shiftonexactday", getBean(ShiftOnExactDayController.class));
 
     }
@@ -61,7 +74,14 @@ public class MVCFilter implements Filter{
         if (controller != null) {
             MVCModel model = controller.processRequest(req);
 
-            req.setAttribute("model", model.getData());
+
+            if (model.getJspName().startsWith("redirect:")) {
+                controller = controllers.get(model.getJspName().replace("redirect:",""));
+                model = controller.processRequest(req);
+                req.setAttribute("model", model.getData());
+            } else{
+                req.setAttribute("model", model.getData());
+            }
 
             ServletContext context = req.getServletContext();
             RequestDispatcher requestDispacher =

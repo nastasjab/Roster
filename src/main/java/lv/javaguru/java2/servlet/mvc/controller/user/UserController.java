@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servlet.mvc.controller;
+package lv.javaguru.java2.servlet.mvc.controller.user;
 
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.User;

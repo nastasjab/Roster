@@ -1,4 +1,4 @@
-package lv.javaguru.java2.servlet.mvc.controller;
+package lv.javaguru.java2.servlet.mvc.controller.shift;
 
 import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.core.pattern.PatternService;
