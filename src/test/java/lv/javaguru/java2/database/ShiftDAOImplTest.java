@@ -1,5 +1,6 @@
 package lv.javaguru.java2.database;
 
+import lv.javaguru.java2.GenericSpringTest;
 import lv.javaguru.java2.database.shift.ShiftDAO;
 import lv.javaguru.java2.domain.shift.Shift;
 import org.junit.Before;
@@ -8,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
-public class ShiftDAOImplTest extends GenericSpringTest{
+public class ShiftDAOImplTest extends GenericSpringTest {
     @Autowired
     private ShiftDAO shiftDAO;
 
@@ -20,9 +20,8 @@ public class ShiftDAOImplTest extends GenericSpringTest{
 
     @Before
     public void init()  {
-        super.init();
-        shift = createShift("1", "07:00:00", "15:00:00");
-        shift2 = createShift("2", "15:00:00", "23:00:00");
+        shift = createShift("ssssss1", "07:00:00", "15:00:00");
+        shift2 = createShift("sssssss2", "15:00:00", "23:00:00");
     }
 
     @Test
@@ -39,26 +38,32 @@ public class ShiftDAOImplTest extends GenericSpringTest{
 
     @Test
     public void testMultipleUserCreation()  {
+        List<Shift> shifts = shiftDAO.getAll();
+        int shiftCount = shifts==null ? 0 : shifts.size();
+
         shiftDAO.create(shift);
         shiftDAO.create(shift2);
-        List<Shift> shifts = shiftDAO.getAll();
-        assertEquals(2, shifts.size());
+        shifts = shiftDAO.getAll();
+        assertEquals(2, shifts.size()-shiftCount);
     }
 
     @Test
     public void testDelete()  {
+        List<Shift> shifts = shiftDAO.getAll();
+        int shiftCount = shifts==null ? 0 : shifts.size();
+
         shiftDAO.create(shift);
         shiftDAO.create(shift2);
-        List<Shift> shifts = shiftDAO.getAll();
-        assertEquals(2, shifts.size());
+        shifts = shiftDAO.getAll();
+        assertEquals(2, shifts.size()-shiftCount);
 
         shiftDAO.delete(shift.getId());
         shifts = shiftDAO.getAll();
-        assertEquals(1, shifts.size());
+        assertEquals(1, shifts.size() - shiftCount);
 
         shiftDAO.delete(shift2.getId());
         shifts = shiftDAO.getAll();
-        assertEquals(0, shifts.size());
+        assertEquals(0, shifts.size()-shiftCount);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -84,6 +89,17 @@ public class ShiftDAOImplTest extends GenericSpringTest{
         assertEquals(shift2.getName(), shiftFromDB.getName());
         assertEquals(shift2.getShiftStarts(), shiftFromDB.getShiftStarts());
         assertEquals(shift2.getShiftEnds(), shiftFromDB.getShiftEnds());
+    }
+
+    @Test
+    public void testGetByObjectName()  {
+        shiftDAO.create(shift);
+
+        Shift shiftFromDB = shiftDAO.getByObjectName(shift.getName());
+        assertTrue(shiftFromDB.getName().equals(shift.getName()));
+
+        shiftDAO.delete(shift.getId());
+        assertNull(shiftDAO.getByObjectName(shift.getName()));
     }
 
     public static Shift createShift(String name, String shiftStarts, String shiftEnds) {

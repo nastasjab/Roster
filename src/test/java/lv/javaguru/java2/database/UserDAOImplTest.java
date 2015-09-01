@@ -1,5 +1,6 @@
 package lv.javaguru.java2.database;
 
+import lv.javaguru.java2.GenericSpringTest;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.domain.user.User;
 import java.util.List;
@@ -18,9 +19,8 @@ public class UserDAOImplTest extends GenericSpringTest {
 
     @Before
     public void init()  {
-        super.init();
-        user = createUser("user", "encryptedPassword", "U", "dima", "pavlov", "dima@pavlov.lv", "29295656");
-        user2 = createUser("admin", "encryptedPassword2", "A", "ivan", "petrov", "ivan@petrov.lv", "29299898");
+        user = createUser("userrrrr", "encryptedPassword", "U", "dima", "pavlov", "dima@pavlov.lv", "29295656");
+        user2 = createUser("adminnnn", "encryptedPassword2", "A", "ivan", "petrov", "ivan@petrov.lv", "29299898");
     }
 
     @Test
@@ -41,26 +41,32 @@ public class UserDAOImplTest extends GenericSpringTest {
 
     @Test
     public void testMultipleUserCreation()  {
+        List<User> users = userDAO.getAll();
+        int usersCount = users==null ? 0 : users.size();
+
         userDAO.create(user);
         userDAO.create(user2);
-        List<User> users = userDAO.getAll();
-        assertEquals(2, users.size());
+        users = userDAO.getAll();
+        assertEquals(2, users.size()-usersCount);
     }
 
     @Test
      public void testDelete()  {
+        List<User> users = userDAO.getAll();
+        int usersCount = users==null ? 0 : users.size();
+
         userDAO.create(user);
         userDAO.create(user2);
-        List<User> users = userDAO.getAll();
-        assertEquals(2, users.size());
+        users = userDAO.getAll();
+        assertEquals(2, users.size()-usersCount);
 
         userDAO.delete(user.getId());
         users = userDAO.getAll();
-        assertEquals(1, users.size());
+        assertEquals(1, users.size()-usersCount);
 
         userDAO.delete(user2.getId());
         users = userDAO.getAll();
-        assertEquals(0, users.size());
+        assertEquals(0, users.size()-usersCount);
     }
 
 

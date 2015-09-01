@@ -22,7 +22,7 @@ public class PatternShiftServiceImpl
     public Generic getObject(long id, long patternId) {
         PatternShiftEditControllerData result = new PatternShiftEditControllerData();
         try {
-             PatternShift patternShift = patternShiftDAO.getById(id);
+            PatternShift patternShift = patternShiftDAO.getById(id);
             result.setId(patternShift.getId());
             result.setPattern(patternShift.getPattern());
             result.setSeqNo(patternShift.getSeqNo());
@@ -49,7 +49,5 @@ public class PatternShiftServiceImpl
     }
 
     @Override
-    protected void validate(Generic object) throws Exception {
-
-    }
+    public void validate(Generic object, boolean add) throws Exception {    }
 }

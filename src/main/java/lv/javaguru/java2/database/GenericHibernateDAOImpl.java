@@ -50,6 +50,11 @@ public class GenericHibernateDAOImpl<T> {
         return sessionFactory.getCurrentSession().createCriteria(persistentClass).list();
     }
 
+    @Transactional
+    public T getByObjectName(String objectName)  throws JDBCException {
+        return null;
+    }
+
     // TODO for Andrew
     /*
     @Transactional

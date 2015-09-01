@@ -1,5 +1,6 @@
 package lv.javaguru.java2.database;
 
+import lv.javaguru.java2.GenericSpringTest;
 import lv.javaguru.java2.database.roster.ShiftOnExactDayDAO;
 import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
 import org.junit.Before;
@@ -21,7 +22,6 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
 
     @Before
     public void init()  {
-        super.init();
         shiftOnExactDay = createShiftOnExactDay(1, Date.valueOf("2015-08-15"), 1);
         shiftOnExactDay2 = createShiftOnExactDay(2, Date.valueOf("2015-08-25"), 2);
     }
@@ -43,26 +43,32 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
 
     @Test
     public void testMultipleUserCreation()  {
+        List<ShiftOnExactDay> shiftOnExactDays = shiftOnExactDayDAO.getAll();
+        int shiftOnExactDaysCount = shiftOnExactDays==null ? 0 : shiftOnExactDays.size();
+
         shiftOnExactDayDAO.create(shiftOnExactDay);
         shiftOnExactDayDAO.create(shiftOnExactDay2);
-        List<ShiftOnExactDay> userPatterns = shiftOnExactDayDAO.getAll();
-        assertEquals(2, userPatterns.size());
+        shiftOnExactDays = shiftOnExactDayDAO.getAll();
+        assertEquals(2, shiftOnExactDays.size()-shiftOnExactDaysCount);
     }
 
     @Test
     public void testDelete()  {
+        List<ShiftOnExactDay> shiftsOnExactDays = shiftOnExactDayDAO.getAll();
+        int shiftOnExactDaysCount = shiftsOnExactDays==null ? 0 : shiftsOnExactDays.size();
+
         shiftOnExactDayDAO.create(shiftOnExactDay);
         shiftOnExactDayDAO.create(shiftOnExactDay2);
-        List<ShiftOnExactDay> shiftsOnExactDays = shiftOnExactDayDAO.getAll();
-        assertEquals(2, shiftsOnExactDays.size());
+        shiftsOnExactDays = shiftOnExactDayDAO.getAll();
+        assertEquals(2, shiftsOnExactDays.size()-shiftOnExactDaysCount);
 
         shiftOnExactDayDAO.delete(shiftOnExactDay.getId());
         shiftsOnExactDays = shiftOnExactDayDAO.getAll();
-        assertEquals(1, shiftsOnExactDays.size());
+        assertEquals(1, shiftsOnExactDays.size()-shiftOnExactDaysCount);
 
         shiftOnExactDayDAO.delete(shiftOnExactDay2.getId());
         shiftsOnExactDays = shiftOnExactDayDAO.getAll();
-        assertEquals(0, shiftsOnExactDays.size());
+        assertEquals(0, shiftsOnExactDays.size()-shiftOnExactDaysCount);
     }
 
     @Test
@@ -90,7 +96,7 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
         shiftOnExactDayDAO.update(shiftOnExactDay);
     }
 
-    @Test
+    @Test (expected = IndexOutOfBoundsException.class)
     public void testGetShiftOnExactDay()  {
         shiftOnExactDayDAO.create(shiftOnExactDay);
         shiftOnExactDayDAO.create(shiftOnExactDay2);
@@ -99,8 +105,6 @@ public class ShiftOnExactDayDAOImplTest extends GenericSpringTest {
         assertEquals(1, shift.getShift().getId());
 
         shift = shiftOnExactDayDAO.getShiftOnExactDay(2, Date.valueOf("2015-08-15"));
-        // TODO exception should be thrown
-        assertNull(shift);
     }
 
     @Test

@@ -1,5 +1,6 @@
 package lv.javaguru.java2.database;
 
+import lv.javaguru.java2.GenericSpringTest;
 import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.pattern.PatternShiftDAO;
 import lv.javaguru.java2.database.shift.ShiftDAO;
@@ -14,7 +15,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 
-public class PatternShiftDAOImplTest extends  GenericSpringTest {
+public class PatternShiftDAOImplTest extends GenericSpringTest {
     @Autowired
     private PatternShiftDAO patternShiftDAO;
 
@@ -33,14 +34,13 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
 
     @Before
     public void init()  {
-        super.init();
-        Shift shift1 = ShiftDAOImplTest.createShift("name", "07:00:00", "15:00:00");
-        Shift shift2 = ShiftDAOImplTest.createShift("name2", "07:00:00", "15:00:00");
+        Shift shift1 = ShiftDAOImplTest.createShift("shift#name", "07:00:00", "15:00:00");
+        Shift shift2 = ShiftDAOImplTest.createShift("shift#name2", "07:00:00", "15:00:00");
         shiftDAO.create(shift1);
         shiftDAO.create(shift2);
 
-        Pattern pattern  = PatternDAOImplTest.createPattern("pattern1");
-        Pattern pattern2 = PatternDAOImplTest.createPattern("pattern2");
+        Pattern pattern  = PatternDAOImplTest.createPattern("shift#pattern1");
+        Pattern pattern2 = PatternDAOImplTest.createPattern("shift#pattern2");
         patternDAO.create(pattern);
         patternDAO.create(pattern2);
 
@@ -67,10 +67,13 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
 
     @Test
     public void testMultiplePatternShiftCreation()  {
+        List<PatternShift>  patternShifts = patternShiftDAO.getAll();
+        int patternShiftCount = patternShifts==null ? 0 : patternShifts.size();
+
         patternShiftDAO.create(patternShift);
         patternShiftDAO.create(patternShift3);
-        List<PatternShift>  patternShifts = patternShiftDAO.getAll();
-        assertEquals(2, patternShifts.size());
+        patternShifts = patternShiftDAO.getAll();
+        assertEquals(2, patternShifts.size()-patternShiftCount);
     }
 
     @Test
@@ -116,21 +119,24 @@ public class PatternShiftDAOImplTest extends  GenericSpringTest {
 
     @Test
     public void testDeleteByPatternId()  {
+        List<PatternShift>  patternShifts = patternShiftDAO.getAll();
+        int patternShiftCount = patternShifts==null ? 0 : patternShifts.size();
+
         patternShiftDAO.create(patternShift);
         patternShiftDAO.create(patternShift2);
         patternShiftDAO.create(patternShift3);
-        List<PatternShift> patternShifts = patternShiftDAO.getAll(PATTERN_ID);
+        patternShifts = patternShiftDAO.getAll(PATTERN_ID);
         assertEquals(2, patternShifts.size());
 
         patternShifts = patternShiftDAO.getAll();
-        assertEquals(3, patternShifts.size());
+        assertEquals(3, patternShifts.size()-patternShiftCount);
 
         patternShiftDAO.deleteByPatternId(PATTERN_ID);
         patternShifts = patternShiftDAO.getAll(PATTERN_ID);
         assertEquals(0, patternShifts.size());
 
         patternShifts = patternShiftDAO.getAll();
-        assertEquals(1, patternShifts.size());
+        assertEquals(1, patternShifts.size()-patternShiftCount);
     }
 
     @Test
