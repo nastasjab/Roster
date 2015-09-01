@@ -24,6 +24,17 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
     }
 
     @Transactional
+    public UserPattern get(Date date, long userId) throws DBException, IndexOutOfBoundsException {
+        return (UserPattern) sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
+                .add(Restrictions.eq("userId", userId))
+                .add(Restrictions.and(
+                        Restrictions.ge("startDay", date),
+                        Restrictions.le("endDay", date)))
+                .setMaxResults(1)
+                .list().get(0);
+    }
+
+    @Transactional
     public List<UserPattern> getByDateFrame(Date startDate, Date endDate) throws DBException {
         return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
                 .addOrder(Order.asc("startDay"))

@@ -2,6 +2,7 @@ package lv.javaguru.java2.servlet.mvc.controller;
 
 
 import lv.javaguru.java2.core.roster.RosterService;
+import lv.javaguru.java2.domain.Roster;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ public class RosterController implements MVCController {
 
     public MVCModel processRequest(HttpServletRequest req) {
 
-        return new MVCModel(rosterService.getRoster(getDateFrom(req), getDateTill(req)), "/roster.jsp");
+        return new MVCModel(rosterService
+                .getRoster(new Roster(getDateFrom(req), getDateTill(req))), "/roster.jsp");
 
     }
 

@@ -27,18 +27,18 @@ public class RosterServiceImpl implements RosterService {
     private Roster roster;
 
 
-    public Roster getRoster(Date from, Date till) {
+    public Roster getRoster(Roster roster) {
         try {
-            roster = getRoster(from, till, userDAO.getAll());
+            roster = getRoster(roster, userDAO.getAll());
         } catch (DBException e) {
             e.printStackTrace();
         }
         return roster;
     }
 
-    public Roster getRoster(Date from, Date till, List<User> forUsers) {
+    public Roster getRoster(Roster roster, List<User> forUsers) {
 
-        roster = new Roster(from, till);
+        this.roster = roster;
 
         fillWithUsers(forUsers);
 
@@ -47,6 +47,36 @@ public class RosterServiceImpl implements RosterService {
         fillWithShiftsOnExactDay();
 
         return roster;
+
+    }
+
+    public Shift getShift(Roster roster, Date date, long userId) {
+        try {
+            return getSingleShift(date, userId);
+        } catch (IndexOutOfBoundsException e) {
+            return getShiftFromUserPattern(date, userId);
+        }
+    }
+
+    private Shift getShiftFromUserPattern(Date date, long userId) {
+        try {
+            return getUserPattern(date, userId).getPattern().getPatternShifts()
+                    .get((int) getPatternOffset(getUserPattern(date, userId), date)).getShift();
+        } catch (DBException e) {
+            e.printStackTrace();
+            return new Shift();
+        }
+    }
+
+    private UserPattern getUserPattern(Date date, long userId) throws DBException {
+        return userPatternDAO.get(date, userId);
+    }
+
+    private Shift getSingleShift(Date date, long userId) {
+        return shiftOnExactDayDAO.getShiftOnExactDay(userId, date).getShift();
+    }
+
+    public void setSingleShift(Roster roster, Date date, long userId, long shiftId) {
 
     }
 
@@ -61,7 +91,7 @@ public class RosterServiceImpl implements RosterService {
             for (UserPattern userPattern : getUserPatternsByDatesFromTill()) {
 
                 long epochDayFrom = getEpochDayFrom(userPattern);
-                long patternOffset = epochDayFrom - Dates.toEpochDay(userPattern.getStartDay()) + (long) userPattern.getPatternStartDay() - 1;
+                long patternOffset = getPatternOffset(userPattern, epochDayFrom);
                 long epochDayTill = getEpochDayTill(userPattern);
 
                 List<Shift> shiftInPattern = new ArrayList<Shift>();
@@ -84,6 +114,14 @@ public class RosterServiceImpl implements RosterService {
         } catch (DBException e) {
             e.printStackTrace();
         }
+    }
+
+    private long getPatternOffset(UserPattern userPattern, long epochDayFrom) {
+        return epochDayFrom - Dates.toEpochDay(userPattern.getStartDay()) + (long) userPattern.getPatternStartDay() - 1;
+    }
+
+    private long getPatternOffset(UserPattern userPattern, Date date) {
+        return getPatternOffset(userPattern, Dates.toEpochDay(date));
     }
 
     private List<UserPattern> getUserPatternsByDatesFromTill() throws DBException {
