@@ -2,7 +2,7 @@ package lv.javaguru.java2.servlet.mvc.controller.roster;
 
 
 import lv.javaguru.java2.core.roster.RosterService;
-import lv.javaguru.java2.domain.Roster;
+import lv.javaguru.java2.domain.roster.Roster;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,16 +1,16 @@
 package lv.javaguru.java2.core.userpattern;
 
 import lv.javaguru.java2.core.GenericServiceImpl;
-import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.UserPatternDAO;
+import lv.javaguru.java2.database.user.UserPatternDAO;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.domain.user.UserPattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Component
 public class UserPatternsServiceImpl
@@ -23,8 +23,7 @@ public class UserPatternsServiceImpl
     public UserPattern getUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
         try {
             return userPatternDAO.get(date, userId);
-        } catch (DBException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             return new UserPattern();
         }
     }
@@ -32,8 +31,7 @@ public class UserPatternsServiceImpl
     public List<UserPattern> getByUserId(long id) {
         try {
             return userPatternDAO.getByUserId(id);
-        } catch (DBException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             return new ArrayList<UserPattern>();
         }
     }
@@ -41,22 +39,19 @@ public class UserPatternsServiceImpl
     public List<UserPattern> getByDateFrame(Date startDate, Date endDate) {
         try {
             return userPatternDAO.getByDateFrame(startDate, endDate);
-        } catch (DBException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
             return new ArrayList<UserPattern>();
 
         }
     }
 
     @Override
-    protected void validate(Generic object) throws Exception {
-        // TODO
+    public void validate(Generic object, boolean add) throws Exception {
+
     }
 
     @Override
     public UserPattern getNewInstance() {
         return new UserPattern();
     }
-
-
 }

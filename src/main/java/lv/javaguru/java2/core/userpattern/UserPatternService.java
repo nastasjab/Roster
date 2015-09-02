@@ -1,7 +1,8 @@
 package lv.javaguru.java2.core.userpattern;
 
 import lv.javaguru.java2.core.GenericService;
-import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.domain.user.UserPattern;
+
 
 import java.sql.Date;
 import java.util.List;
