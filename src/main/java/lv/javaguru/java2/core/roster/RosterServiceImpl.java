@@ -1,7 +1,17 @@
 package lv.javaguru.java2.core.roster;
 
-import lv.javaguru.java2.database.*;
+import lv.javaguru.java2.database.pattern.PatternShiftDAO;
+import lv.javaguru.java2.database.roster.ShiftOnExactDayDAO;
+import lv.javaguru.java2.database.user.UserDAO;
+import lv.javaguru.java2.database.user.UserPatternDAO;
 import lv.javaguru.java2.domain.*;
+import lv.javaguru.java2.domain.pattern.PatternShift;
+import lv.javaguru.java2.domain.roster.Roster;
+import lv.javaguru.java2.domain.roster.RosterUserShiftMap;
+import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
+import lv.javaguru.java2.domain.shift.Shift;
+import lv.javaguru.java2.domain.user.User;
+import lv.javaguru.java2.domain.user.UserPattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,7 +40,7 @@ public class RosterServiceImpl implements RosterService {
     public Roster getRoster(Roster roster) {
         try {
             roster = getRoster(roster, userDAO.getAll());
-        } catch (DBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return roster;
@@ -62,7 +72,7 @@ public class RosterServiceImpl implements RosterService {
         try {
             return getUserPattern(date, userId).getPattern().getPatternShifts()
                     .get((int) getPatternOffset(getUserPattern(date, userId), date)).getShift();
-        } catch (DBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return new Shift();
         }
@@ -111,7 +121,7 @@ public class RosterServiceImpl implements RosterService {
                 }
             }
 
-        } catch (DBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

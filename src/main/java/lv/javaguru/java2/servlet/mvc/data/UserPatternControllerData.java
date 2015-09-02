@@ -1,8 +1,8 @@
 package lv.javaguru.java2.servlet.mvc.data;
 
-import lv.javaguru.java2.domain.Pattern;
-import lv.javaguru.java2.domain.User;
-import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.domain.pattern.Pattern;
+import lv.javaguru.java2.domain.user.User;
+import lv.javaguru.java2.domain.user.UserPattern;
 
 import java.util.List;
 

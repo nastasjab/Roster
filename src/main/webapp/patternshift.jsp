@@ -1,5 +1,5 @@
 <%@ page import="lv.javaguru.java2.servlet.mvc.data.PatternShiftEditControllerData" %>
-<%@ page import="lv.javaguru.java2.domain.Shift" %>
+<%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% PatternShiftEditControllerData data = (PatternShiftEditControllerData) request.getAttribute("model");
   boolean edit = true;

@@ -1,6 +1,5 @@
 package lv.javaguru.java2.core;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.GenericDAO;
 import lv.javaguru.java2.domain.Generic;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,21 +10,20 @@ public abstract class GenericServiceImpl
        < T extends GenericDAO,
         R extends Generic> implements  GenericService {
     @Autowired
-    private T dao;
+    public T dao;
 
-    public List<Generic> getAll() throws DBException {
+    public List<Generic> getAll() throws Exception  {
         return dao.getAll();
     }
 
-    public Generic getObject(long id) {
+    public Generic getObject(long id) throws Exception{
         R result=null;
         try {
             result = (R)dao.getById(id);
         } catch (NullPointerException e) {
             result = getNewInstance();
-        } catch (DBException e) {
-            e.printStackTrace();
         }
+
         if (result==null)
             result = getNewInstance();
 
@@ -33,20 +31,28 @@ public abstract class GenericServiceImpl
     }
 
     public void addObject(Generic object) throws Exception {
-        validate(object);
+        validate(object, true);
         dao.create(object);
     }
 
     public void updateObject(Generic object) throws Exception {
-        validate(object);
+        R result = (R)dao.getById(object.getId());
+        if (result==null)
+            throw new ObjectNotExistException();
+
+        validate(object, false);
         dao.update(object);
     }
 
-    public void deleteObject(long id) throws DBException {
+    public void deleteObject(long id) throws Exception {
+        R result = (R)dao.getById(id);
+        if (result==null)
+            throw new ObjectNotExistException();
+
         dao.delete(id);
     }
 
-    protected abstract void validate(Generic object) throws Exception;
+    public abstract void validate(Generic object, boolean add) throws Exception;
 
     public abstract R getNewInstance();
 }

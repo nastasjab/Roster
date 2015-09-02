@@ -1,6 +1,5 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.GenericDAO;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;

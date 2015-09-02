@@ -1,6 +1,8 @@
 package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.domain.UserPattern;
+import lv.javaguru.java2.GenericSpringTest;
+import lv.javaguru.java2.database.user.UserPatternDAO;
+import lv.javaguru.java2.domain.user.UserPattern;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class UserPatternDAOImplTest extends  GenericSpringTest{
+public class UserPatternDAOImplTest extends GenericSpringTest {
     @Autowired
     private UserPatternDAO userPatternDAO;
 
@@ -17,14 +19,13 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     private UserPattern userPattern2;
 
     @Before
-    public void init() throws DBException {
-        super.init();
+    public void init()  {
         userPattern = createUserPattern(1, 1, Date.valueOf("2015-07-01"), Date.valueOf("2015-07-31"), 1);
         userPattern2 = createUserPattern(2, 2, Date.valueOf("2015-08-01"), Date.valueOf("2015-08-31"), 2);
     }
 
     @Test
-    public void testCreate() throws DBException {
+    public void testCreate()  {
         userPatternDAO.create(userPattern);
 
         UserPattern userPatternFromDB = userPatternDAO.getById(userPattern.getId());
@@ -38,31 +39,37 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-    public void testMultipleUserCreation() throws DBException {
+    public void testMultipleUserCreation()  {
+        List<UserPattern> userPatterns = userPatternDAO.getAll();
+        int userPatternsCount = userPatterns==null ? 0 : userPatterns.size();
+
         userPatternDAO.create(userPattern);
         userPatternDAO.create(userPattern2);
-        List<UserPattern> userPatterns = userPatternDAO.getAll();
-        assertEquals(2, userPatterns.size());
+        userPatterns = userPatternDAO.getAll();
+        assertEquals(2, userPatterns.size()-userPatternsCount);
     }
 
     @Test
-     public void testDelete() throws DBException {
+     public void testDelete()  {
+        List<UserPattern> userPatterns = userPatternDAO.getAll();
+        int userPatternsCount = userPatterns==null ? 0 : userPatterns.size();
+
         userPatternDAO.create(userPattern);
         userPatternDAO.create(userPattern2);
-        List<UserPattern> userPatterns = userPatternDAO.getAll();
-        assertEquals(2, userPatterns.size());
+        userPatterns = userPatternDAO.getAll();
+        assertEquals(2, userPatterns.size()-userPatternsCount);
 
         userPatternDAO.delete(userPattern.getId());
         userPatterns = userPatternDAO.getAll();
-        assertEquals(1, userPatterns.size());
+        assertEquals(1, userPatterns.size()-userPatternsCount);
 
         userPatternDAO.delete(userPattern2.getId());
         userPatterns = userPatternDAO.getAll();
-        assertEquals(0, userPatterns.size());
+        assertEquals(0, userPatterns.size()-userPatternsCount);
     }
 
     @Test
-    public void testUpdate() throws DBException {
+    public void testUpdate()  {
         userPatternDAO.create(userPattern);
 
         userPattern = userPatternDAO.getById(userPattern.getId());
@@ -97,7 +104,7 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-    public void testGetByUserId() throws DBException {
+    public void testGetByUserId()  {
         userPatternDAO.create(userPattern);
         userPatternDAO.create(userPattern2);
         List<UserPattern> userPatterns = userPatternDAO.getByUserId(1);
@@ -109,23 +116,24 @@ public class UserPatternDAOImplTest extends  GenericSpringTest{
     }
 
     @Test
-    public void testGetByDateFrame() throws DBException {
+    public void testGetByDateFrame()  {
+        List<UserPattern> userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-07-01"), Date.valueOf("2015-08-31"));
+        int userPatternsCount1 = userPatterns==null ? 0 : userPatterns.size();
+        userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-07-01"), Date.valueOf("2015-07-25"));
+        int userPatternsCount2 = userPatterns==null ? 0 : userPatterns.size();
+        userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-06-01"), Date.valueOf("2015-06-30"));
+        int userPatternsCount3 = userPatterns==null ? 0 : userPatterns.size();
+
         userPatternDAO.create(userPattern);
         userPatternDAO.create(userPattern2);
 
-        List<UserPattern> userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-07-01"), Date.valueOf("2015-08-31"));
-        assertEquals(2, userPatterns.size());
-
-        userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-07-21"), Date.valueOf("2015-08-15"));
-        assertEquals(2, userPatterns.size());
+        userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-07-01"), Date.valueOf("2015-08-31"));
+        assertEquals(2, userPatterns.size()-userPatternsCount1);
 
         userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-07-01"), Date.valueOf("2015-07-25"));
-        assertEquals(1, userPatterns.size());
-
-        userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-06-01"), Date.valueOf("2015-07-01"));
-        assertEquals(1, userPatterns.size());
+        assertEquals(1, userPatterns.size()-userPatternsCount2);
 
         userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-06-01"), Date.valueOf("2015-06-30"));
-        assertEquals(0, userPatterns.size());
+        assertEquals(0, userPatterns.size()-userPatternsCount3);
     }
 }

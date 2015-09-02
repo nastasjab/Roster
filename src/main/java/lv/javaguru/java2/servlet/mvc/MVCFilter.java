@@ -1,6 +1,10 @@
 package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.servlet.mvc.controller.*;
+import lv.javaguru.java2.servlet.mvc.controller.pattern.*;
+import lv.javaguru.java2.servlet.mvc.controller.roster.*;
+import lv.javaguru.java2.servlet.mvc.controller.shift.*;
+import lv.javaguru.java2.servlet.mvc.controller.user.*;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -42,7 +46,6 @@ public class MVCFilter implements Filter{
         controllers.put("/roster", getBean(RosterController.class));
         controllers.put("/", getBean(MainMenuController.class));
         controllers.put("/shiftonexactday", getBean(ShiftOnExactDayController.class));
-
     }
 
     private MVCController getBean(Class clazz){
@@ -61,7 +64,14 @@ public class MVCFilter implements Filter{
         if (controller != null) {
             MVCModel model = controller.processRequest(req);
 
-            req.setAttribute("model", model.getData());
+
+            if (model.getJspName().startsWith("redirect:")) {
+                controller = controllers.get(model.getJspName().replace("redirect:",""));
+                model = controller.processRequest(req);
+                req.setAttribute("model", model.getData());
+            } else{
+                req.setAttribute("model", model.getData());
+            }
 
             ServletContext context = req.getServletContext();
             RequestDispatcher requestDispacher =

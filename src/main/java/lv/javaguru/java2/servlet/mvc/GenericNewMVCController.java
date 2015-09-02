@@ -9,17 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public abstract class GenericNewMVCController <S extends GenericService> {
-
-    @Autowired
-    private S service;
-
+public abstract class GenericNewMVCController  {
     public MVCModel processRequest(HttpServletRequest req)  {
 
         List<Generic> list;
 
         try {
-            list = service.getAll();
+            list = getService().getAll();
         } catch (JDBCException e){
             return new MVCModel(
                     new MessageContents(
@@ -42,4 +38,5 @@ public abstract class GenericNewMVCController <S extends GenericService> {
     }
 
     protected abstract String getListPageAddress();
+    protected abstract GenericService getService();
 }

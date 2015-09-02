@@ -1,6 +1,6 @@
-<%@ page import="lv.javaguru.java2.domain.Roster" %>
-<%@ page import="lv.javaguru.java2.domain.User" %>
-<%@ page import="lv.javaguru.java2.domain.Shift" %>
+<%@ page import="lv.javaguru.java2.domain.roster.Roster" %>
+<%@ page import="lv.javaguru.java2.domain.user.User" %>
+<%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page import="lv.javaguru.java2.domain.Dates" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
