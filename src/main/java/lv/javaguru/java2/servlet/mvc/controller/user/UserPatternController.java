@@ -27,7 +27,7 @@ public class UserPatternController extends GenericMVCController<UserPatternDAO, 
 
     @Override
     public MVCModel processRequest(HttpServletRequest req)  {
-        UserPatternControllerData result;
+        UserPatternControllerData result = null;
         try {
             result = new UserPatternControllerData();
             result.setUser(userDAO.getById(getUserId(req)));

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+
 
 @Component
 public class UserPatternsServiceImpl
@@ -19,26 +21,37 @@ public class UserPatternsServiceImpl
     private UserPatternDAO userPatternDAO;
 
     public UserPattern getUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
-        return userPatternDAO.get(date, userId);
+        try {
+            return userPatternDAO.get(date, userId);
+        } catch (Exception e) {
+            return new UserPattern();
+        }
     }
 
     public List<UserPattern> getByUserId(long id) {
-        return userPatternDAO.getByUserId(id);
+        try {
+            return userPatternDAO.getByUserId(id);
+        } catch (Exception e) {
+            return new ArrayList<UserPattern>();
+        }
     }
 
     public List<UserPattern> getByDateFrame(Date startDate, Date endDate) {
-        return userPatternDAO.getByDateFrame(startDate, endDate);
+        try {
+            return userPatternDAO.getByDateFrame(startDate, endDate);
+        } catch (Exception e) {
+            return new ArrayList<UserPattern>();
+
+        }
     }
 
     @Override
     public void validate(Generic object, boolean add) throws Exception {
-        // TODO pattern overlap and more
+
     }
 
     @Override
     public UserPattern getNewInstance() {
         return new UserPattern();
     }
-
-
 }
