@@ -78,7 +78,7 @@ public class RosterServiceImpl implements RosterService {
         }
     }
 
-    private UserPattern getUserPattern(Date date, long userId) throws DBException {
+    private UserPattern getUserPattern(Date date, long userId) {
         return userPatternDAO.get(date, userId);
     }
 
@@ -134,7 +134,7 @@ public class RosterServiceImpl implements RosterService {
         return getPatternOffset(userPattern, Dates.toEpochDay(date));
     }
 
-    private List<UserPattern> getUserPatternsByDatesFromTill() throws DBException {
+    private List<UserPattern> getUserPatternsByDatesFromTill() {
         return userPatternDAO.getByDateFrame(roster.getFrom(), roster.getTill());
     }
 
@@ -156,7 +156,7 @@ public class RosterServiceImpl implements RosterService {
         return epochDayTill;
     }
 
-    private void getShiftsFromPattern(UserPattern userPattern, List<Shift> shiftInPattern) throws DBException {
+    private void getShiftsFromPattern(UserPattern userPattern, List<Shift> shiftInPattern) {
         for (PatternShift patternShift : patternShiftDAO.getAll(userPattern.getPattern().getId())) {
             shiftInPattern.add(patternShift.getShift());
         }

@@ -27,7 +27,7 @@ public class UserPattern extends Generic {
     @Column(name = "patternStartDay")
     private int patternStartDay;
 
-    @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToOne
     @JoinColumn(name = "patternId")
     private Pattern pattern;
 
