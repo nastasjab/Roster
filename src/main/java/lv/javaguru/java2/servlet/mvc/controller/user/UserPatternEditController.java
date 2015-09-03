@@ -1,10 +1,12 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
+import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.userpattern.UserPatternService;
 import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.user.UserDAO;
-import lv.javaguru.java2.database.user.UserPatternDAO;
+import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.user.UserPattern;
-import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
+import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 import lv.javaguru.java2.servlet.mvc.data.UserPatternEditControllerData;
@@ -15,13 +17,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 
 @Component
-public class UserPatternEditController extends GenericEditMVCController<UserPatternDAO, UserPattern> implements MVCController {
+public class UserPatternEditController extends GenericNewEditMVCController implements MVCController {
 
     @Autowired
     private UserDAO userDAO;
 
     @Autowired
-    private UserPatternDAO userPatternDAO;
+    private UserPatternService userPatternService;
 
     @Autowired
     private PatternDAO patternDAO;
@@ -31,7 +33,7 @@ public class UserPatternEditController extends GenericEditMVCController<UserPatt
         UserPatternEditControllerData result;
         try {
             result = new UserPatternEditControllerData();
-            result.setUserPattern(userPatternDAO.getById(getId(req)));
+            result.setUserPattern((UserPattern) userPatternService.getObject(getId(req)));
         } catch (NullPointerException e) {
             result = new UserPatternEditControllerData();
         }
@@ -57,6 +59,11 @@ public class UserPatternEditController extends GenericEditMVCController<UserPatt
     }
 
     @Override
+    protected GenericService getService() {
+        return userPatternService;
+    }
+
+    @Override
     protected String getObjectName() {
         return "User Pattern";
     }
@@ -67,17 +74,14 @@ public class UserPatternEditController extends GenericEditMVCController<UserPatt
     }
 
     @Override
-    protected UserPattern getNewInstance() {
-        return new UserPattern();
-    }
-
-    @Override
-    protected void fillParameters(HttpServletRequest req, UserPattern object) {
-        object.setUserId(Long.valueOf(req.getParameter("user")));
-        object.setPatternStartDay(Integer.valueOf(req.getParameter("patternstartday")));
-        object.getPattern().setId(Long.valueOf(req.getParameter("pattern")));
-        object.setStartDay(Date.valueOf(req.getParameter("startday")));
-        object.setEndDay(Date.valueOf(req.getParameter("endday")));
+    protected Generic fillParameters(HttpServletRequest req) throws Exception {
+        UserPattern userPattern = new UserPattern();
+        userPattern.setUserId(Long.valueOf(req.getParameter("user")));
+        userPattern.setPatternStartDay(Integer.valueOf(req.getParameter("patternstartday")));
+        userPattern.getPattern().setId(Long.valueOf(req.getParameter("pattern")));
+        userPattern.setStartDay(Date.valueOf(req.getParameter("startday")));
+        userPattern.setEndDay(Date.valueOf(req.getParameter("endday")));
+        return userPattern;
     }
 
 }

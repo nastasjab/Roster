@@ -2,7 +2,10 @@ package lv.javaguru.java2.database.user;
 
 
 import lv.javaguru.java2.database.GenericHibernateDAOImpl;
+import lv.javaguru.java2.domain.pattern.Pattern;
 import lv.javaguru.java2.domain.user.UserPattern;
+import org.hibernate.Criteria;
+import org.hibernate.JDBCException;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
@@ -15,10 +18,18 @@ import java.util.List;
 public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> implements UserPatternDAO {
 
     @Transactional
+    public List<UserPattern> getAll()  throws JDBCException {
+        return sessionFactory.getCurrentSession().createCriteria(Pattern.class)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .list();
+    }
+
+    @Transactional
     public List<UserPattern> getByUserId(long id) {
         return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
                 .addOrder(Order.asc("startDay"))
-                .add(Restrictions.eq("userId",id))
+                .add(Restrictions.eq("userId", id))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }
 
@@ -31,6 +42,16 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
                         Restrictions.le("endDay", date)))
                 .setMaxResults(1)
                 .list().get(0);
+    }
+
+    @Transactional
+    public List<UserPattern> getByDate(Date date) {
+        return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
+                .add(Restrictions.and(
+                        Restrictions.ge("startDay", date),
+                        Restrictions.le("endDay", date)))
+                .setMaxResults(1)
+                .list();
     }
 
     @Transactional

@@ -20,6 +20,9 @@ public class UserPatternsServiceImpl
     @Autowired
     private UserPatternDAO userPatternDAO;
 
+    @Autowired
+    private UserPatternValidator validator;
+
     public UserPattern getUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
         try {
             return userPatternDAO.get(date, userId);
@@ -47,7 +50,12 @@ public class UserPatternsServiceImpl
 
     @Override
     public void validate(Generic object, boolean add) throws Exception {
-
+        UserPattern userPattern = (UserPattern) object;
+        validator.validateUserId(userPattern.getUserId());
+        validator.validateStartDay(userPattern.getStartDay());
+        validator.validateEndDay(userPattern.getEndDay());
+        validator.validatePatternsStartDay(userPattern.getPattern(), userPattern.getPatternStartDay());
+        validator.validatePatternId(userPattern.getPattern().getId());
     }
 
     @Override
