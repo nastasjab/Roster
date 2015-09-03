@@ -16,4 +16,6 @@ public interface GenericDAO<T> {
     void delete(long id) throws JDBCException;
 
     T getByObjectName(String objectName) throws JDBCException;
+
+    boolean isEmpty() throws JDBCException;
 }

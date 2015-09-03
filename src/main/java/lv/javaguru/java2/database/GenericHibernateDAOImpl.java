@@ -55,10 +55,9 @@ public class GenericHibernateDAOImpl<T> {
         return null;
     }
 
-    // TODO for Andrew
-    /*
     @Transactional
-    public boolean isEmpty()  {
-        return sessionFactory.getCurrentSession().createCriteria(persistentClass).add(Restrictions.isEmpty(???)).list() == 0;
-*/
+    public boolean isEmpty()  throws JDBCException {
+        return sessionFactory.getCurrentSession().createCriteria(persistentClass).setMaxResults(1).list().size() == 0;
+    }
+
 }
