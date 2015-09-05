@@ -27,7 +27,7 @@ public class UserPattern extends Generic {
     @Column(name = "patternStartDay")
     private int patternStartDay;
 
-    @OneToOne
+    @OneToOne (fetch=FetchType.EAGER)
     @JoinColumn(name = "patternId")
     private Pattern pattern;
 

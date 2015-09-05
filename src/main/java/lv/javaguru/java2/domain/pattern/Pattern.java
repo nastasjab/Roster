@@ -46,4 +46,11 @@ public class Pattern extends Generic {
     public void setPatternShifts(List<PatternShift> patternShifts) {
         this.patternShifts = patternShifts;
     }
+
+    public int getSize() {
+        if (patternShifts == null)
+            return 0;
+        else
+            return patternShifts.size();
+    }
 }

@@ -8,4 +8,8 @@ public class ValueOutOfBoundsException extends Exception{
     public ValueOutOfBoundsException(String message) {
         super(String.format("'%s' is out of bounds!", message));
     }
+
+    public ValueOutOfBoundsException(String message, String bounds) {
+        super(String.format("'%s' is out of bounds! '%s'", message, bounds));
+    }
 }

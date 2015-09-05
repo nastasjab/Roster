@@ -1,6 +1,7 @@
 package lv.javaguru.java2.core.userpattern;
 
 import lv.javaguru.java2.core.GenericServiceImpl;
+import lv.javaguru.java2.core.ObjectExistException;
 import lv.javaguru.java2.database.user.UserPatternDAO;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.user.UserPattern;
@@ -51,11 +52,14 @@ public class UserPatternsServiceImpl
     @Override
     public void validate(Generic object, boolean add) throws Exception {
         UserPattern userPattern = (UserPattern) object;
-        validator.validateUserId(userPattern.getUserId());
-        validator.validateStartDay(userPattern.getStartDay());
-        validator.validateEndDay(userPattern.getEndDay());
-        validator.validatePatternsStartDay(userPattern.getPattern(), userPattern.getPatternStartDay());
-        validator.validatePatternId(userPattern.getPattern().getId());
+
+        if (add && userPatternDAO.getById(userPattern.getId()) != null)
+            throw new ObjectExistException("User Pattern");
+
+        validator.validateUserId(userPattern);
+        validator.validateDates(userPattern, add);
+        validator.validatePatternsStartDay(userPattern);
+        validator.validatePatternId(userPattern);
     }
 
     @Override

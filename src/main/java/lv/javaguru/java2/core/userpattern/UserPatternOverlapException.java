@@ -1,18 +1,29 @@
 package lv.javaguru.java2.core.userpattern;
 
-/**
- * Created by Boss on 03.09.2015.
- */
+
+import lv.javaguru.java2.domain.user.UserPattern;
+
+import java.util.List;
+
 public class UserPatternOverlapException extends Exception{
     public UserPatternOverlapException() {
         super("Patterns overlap!");
     }
 
-    public UserPatternOverlapException(String message) {
-        super(String.format("Pattern '%s' overlaps with another!", message));
+    public UserPatternOverlapException(List<UserPattern> overlapsWith) throws UserPatternOverlapException{
+        StringBuilder s = new StringBuilder();
+        for (UserPattern userPattern : overlapsWith) {
+            s.append("from ");
+            s.append(userPattern.getStartDay());
+            s.append(" till ");
+            s.append(userPattern.getEndDay());
+            s.append("<br>");
+        }
+
+        throw new UserPatternOverlapException(s.toString());
     }
 
-    public UserPatternOverlapException(String pattern1, String pattern2) {
-        super(String.format("Pattern '%s' overlaps with pattern '%s'!", pattern1, pattern2));
+    private UserPatternOverlapException(String s) {
+        super(String.format("Pattern overlaps with following patterns:\n'%s'", s));
     }
 }

@@ -35,11 +35,11 @@
   <table align="center" cellpadding="5">
     <tr>
       <td>Start Date</td>
-      <td><input type="text" name="startday" value="<%= userPattern.getStartDay() %>"></td>
+      <td><input type="date" name="startday" value="<%= userPattern.getStartDay() %>"></td>
     </tr>
     <tr>
       <td>End Date</td>
-      <td><input type="text" name="endday" value="<%= userPattern.getEndDay()%>"></td>
+      <td><input type="date" name="endday" value="<%= userPattern.getEndDay()%>"></td>
     </tr>
     <tr>
       <td>Pattern</td>

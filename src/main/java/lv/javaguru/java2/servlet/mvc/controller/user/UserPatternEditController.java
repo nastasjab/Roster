@@ -36,6 +36,7 @@ public class UserPatternEditController extends GenericNewEditMVCController imple
             result.setUserPattern((UserPattern) userPatternService.getObject(getId(req)));
         } catch (NullPointerException e) {
             result = new UserPatternEditControllerData();
+            result.getUserPattern().setPatternStartDay(1);
         }
         result.setUser(userDAO.getById(getUserId(req)));
         result.setPatterns(patternDAO.getAll());

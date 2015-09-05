@@ -18,12 +18,6 @@ public class UserPatternEditControllerData {
         this.patterns = new ArrayList<Pattern>();
     }
 
-    public UserPatternEditControllerData(User user, UserPattern userPattern, List<Pattern> patterns) {
-        this.user = user;
-        this.userPattern = userPattern;
-        this.patterns = patterns;
-    }
-
     public User getUser() {
         return user;
     }

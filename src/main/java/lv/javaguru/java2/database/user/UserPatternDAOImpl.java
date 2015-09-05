@@ -37,6 +37,7 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
     public UserPattern get(Date date, long userId) throws IndexOutOfBoundsException {
         return (UserPattern) sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
                 .add(Restrictions.eq("userId", userId))
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .add(Restrictions.and(
                         Restrictions.ge("startDay", date),
                         Restrictions.le("endDay", date)))
@@ -47,6 +48,7 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
     @Transactional
     public List<UserPattern> getByDate(Date date) {
         return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .add(Restrictions.and(
                         Restrictions.ge("startDay", date),
                         Restrictions.le("endDay", date)))
@@ -57,6 +59,7 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
     @Transactional
     public List<UserPattern> getByDateFrame(Date startDate, Date endDate) {
         return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .addOrder(Order.asc("startDay"))
                 .add(Restrictions.or(Restrictions.between("startDay", startDate, endDate),
                         Restrictions.between("endDay", startDate, endDate),
@@ -64,4 +67,17 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
                                 Restrictions.lt("startDay", startDate), Restrictions.gt("endDay", endDate))))
                 .list();
     }
+
+    @Transactional
+    public List<UserPattern> getByDateFrame(Date startDate, Date endDate, long userId) {
+        return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
+                .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+                .add(Restrictions.eq("userId", userId))
+                .add(Restrictions.or(Restrictions.between("startDay", startDate, endDate),
+                        Restrictions.between("endDay", startDate, endDate),
+                        Restrictions.and(
+                                Restrictions.lt("startDay", startDate), Restrictions.gt("endDay", endDate))))
+                .list();
+    }
+
 }

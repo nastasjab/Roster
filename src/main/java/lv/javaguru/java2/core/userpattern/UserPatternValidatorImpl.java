@@ -6,10 +6,13 @@ import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.database.user.UserPatternDAO;
 import lv.javaguru.java2.domain.pattern.Pattern;
+import lv.javaguru.java2.domain.user.UserPattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class UserPatternValidatorImpl implements UserPatternValidator{
@@ -23,29 +26,31 @@ public class UserPatternValidatorImpl implements UserPatternValidator{
     @Autowired
     private UserPatternDAO userPatternDAO;
 
-    public void validateUserId(long userId) throws ObjectNotExistException {
-        if (userId == 0 || userDAO.getById(userId) == null)
+    public void validateUserId(UserPattern userPattern) throws Exception {
+        if (userPattern.getUserId() == 0 || userDAO.getById(userPattern.getUserId()) == null)
             throw new ObjectNotExistException("user");
     }
 
-    public void validateStartDay(Date date) throws UserPatternOverlapException {
-        if (userPatternDAO.getByDate(date) != null) // TODO unless updated!
-            throw new UserPatternOverlapException();
+    public void validateDates(UserPattern userPattern, boolean add) throws Exception {
+        List<UserPattern> overlapsWith = new ArrayList<UserPattern>();
+        List<UserPattern> userPatterns = userPatternDAO
+                .getByDateFrame(userPattern.getStartDay(), userPattern.getEndDay(), userPattern.getUserId());
+
+        for (UserPattern userPatternFromDB : userPatterns)
+            if (add || !add && userPattern.getId() != userPatternFromDB.getId())
+                overlapsWith.add(userPatternFromDB);
+
+        if (overlapsWith.size() != 0)
+            throw new UserPatternOverlapException(overlapsWith);
     }
 
-    public void validateEndDay(Date date) throws UserPatternOverlapException {
-        if (userPatternDAO.getByDate(date) != null)  // TODO unless updated!
-            throw new UserPatternOverlapException();
+    public void validatePatternsStartDay(UserPattern userPattern) throws Exception {
+        if (userPattern.getPatternStartDay() < 1 || userPattern.getPatternStartDay() > patternDAO.getById(userPattern.getPattern().getId()).getSize())
+            throw new ValueOutOfBoundsException("Pattern start day", "1 - " + patternDAO.getById(userPattern.getPattern().getId()).getSize());
     }
 
-    public void validatePatternsStartDay(Pattern pattern, int patternStartDay) throws ValueOutOfBoundsException {
-        System.out.println(pattern.getPatternShifts().size());
-        if (patternStartDay < 1 || patternStartDay > pattern.getPatternShifts().size())
-            throw new ValueOutOfBoundsException("Pattern start day");
-    }
-
-    public void validatePatternId(long patternId) throws ObjectNotExistException {
-        if (patternDAO.getById(patternId) == null)
+    public void validatePatternId(UserPattern userPattern) throws Exception {
+        if (patternDAO.getById(userPattern.getPattern().getId()) == null)
             throw new ObjectNotExistException("pattern");
     }
 }
