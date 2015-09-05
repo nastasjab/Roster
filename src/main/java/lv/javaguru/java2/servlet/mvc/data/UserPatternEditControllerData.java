@@ -12,6 +12,7 @@ public class UserPatternEditControllerData {
     private User user;
     private UserPattern userPattern;
     private List<Pattern> patterns;
+
     public UserPatternEditControllerData() {
         this.user = new User();
         this.userPattern = new UserPattern();

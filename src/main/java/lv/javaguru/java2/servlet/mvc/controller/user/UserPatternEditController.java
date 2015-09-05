@@ -30,12 +30,10 @@ public class UserPatternEditController extends GenericNewEditMVCController imple
 
     @Override
     protected MVCModel listObject(HttpServletRequest req) throws Exception {
-        UserPatternEditControllerData result;
-        try {
-            result = new UserPatternEditControllerData();
+        UserPatternEditControllerData result = new UserPatternEditControllerData();
+        if (getId(req) != 0) {
             result.setUserPattern((UserPattern) userPatternService.getObject(getId(req)));
-        } catch (NullPointerException e) {
-            result = new UserPatternEditControllerData();
+        } else {
             result.getUserPattern().setPatternStartDay(1);
         }
         result.setUser(userDAO.getById(getUserId(req)));
