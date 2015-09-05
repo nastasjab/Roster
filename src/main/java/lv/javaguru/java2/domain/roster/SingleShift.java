@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "shifts_on_exact_day")
-public class ShiftOnExactDay extends Generic {
+@Table(name = "single_shifts")
+public class SingleShift extends Generic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,7 +25,7 @@ public class ShiftOnExactDay extends Generic {
     @JoinColumn(name = "shiftId")
     private Shift shift;
 
-    public ShiftOnExactDay() {
+    public SingleShift() {
         super();
     }
 

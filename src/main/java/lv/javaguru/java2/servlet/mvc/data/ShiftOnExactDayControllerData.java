@@ -2,7 +2,7 @@ package lv.javaguru.java2.servlet.mvc.data;
 
 
 import lv.javaguru.java2.domain.shift.Shift;
-import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
+import lv.javaguru.java2.domain.roster.SingleShift;
 import lv.javaguru.java2.domain.user.User;
 
 import java.util.List;
@@ -11,17 +11,17 @@ public class ShiftOnExactDayControllerData {
 
     User user;
     List<Shift> shifts;
-    ShiftOnExactDay shiftOnExactDay;
+    SingleShift singleShift;
 
     public ShiftOnExactDayControllerData() {
     }
 
-    public ShiftOnExactDay getShiftOnExactDay() {
-        return shiftOnExactDay;
+    public SingleShift getSingleShift() {
+        return singleShift;
     }
 
-    public void setShiftOnExactDay(ShiftOnExactDay shiftOnExactDay) {
-        this.shiftOnExactDay = shiftOnExactDay;
+    public void setSingleShift(SingleShift singleShift) {
+        this.singleShift = singleShift;
     }
 
     public User getUser() {

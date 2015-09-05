@@ -6,9 +6,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  ShiftOnExactDayControllerData data = (ShiftOnExactDayControllerData) request.getAttribute("model");
     User user = data.getUser();
-    Date date = data.getShiftOnExactDay().getDate();
-    long shiftOnExactDayId = data.getShiftOnExactDay().getId();
-    long currentShiftId = data.getShiftOnExactDay().getShift().getId();
+    Date date = data.getSingleShift().getDate();
+    long shiftOnExactDayId = data.getSingleShift().getId();
+    long currentShiftId = data.getSingleShift().getShift().getId();
     List<Shift> shifts = data.getShifts();
 %>
 <html>

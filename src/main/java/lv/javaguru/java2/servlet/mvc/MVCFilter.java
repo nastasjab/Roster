@@ -45,7 +45,7 @@ public class MVCFilter implements Filter{
         controllers.put("/userpattern", getBean(UserPatternEditController.class));
         controllers.put("/roster", getBean(RosterController.class));
         controllers.put("/", getBean(MainMenuController.class));
-        controllers.put("/shiftonexactday", getBean(ShiftOnExactDayController.class));
+        controllers.put("/shiftonexactday", getBean(SingleShiftController.class));
     }
 
     private MVCController getBean(Class clazz){

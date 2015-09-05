@@ -1,14 +1,14 @@
 package lv.javaguru.java2.core.roster;
 
 import lv.javaguru.java2.database.pattern.PatternShiftDAO;
-import lv.javaguru.java2.database.roster.ShiftOnExactDayDAO;
+import lv.javaguru.java2.database.roster.SingleShiftDAO;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.database.user.UserPatternDAO;
 import lv.javaguru.java2.domain.*;
 import lv.javaguru.java2.domain.pattern.PatternShift;
 import lv.javaguru.java2.domain.roster.Roster;
 import lv.javaguru.java2.domain.roster.RosterUserShiftMap;
-import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
+import lv.javaguru.java2.domain.roster.SingleShift;
 import lv.javaguru.java2.domain.shift.Shift;
 import lv.javaguru.java2.domain.user.User;
 import lv.javaguru.java2.domain.user.UserPattern;
@@ -26,7 +26,7 @@ public class RosterServiceImpl implements RosterService {
     private UserDAO userDAO;
 
     @Autowired
-    private ShiftOnExactDayDAO shiftOnExactDayDAO;
+    private SingleShiftDAO singleShiftDAO;
 
     @Autowired
     private PatternShiftDAO patternShiftDAO;
@@ -83,7 +83,7 @@ public class RosterServiceImpl implements RosterService {
     }
 
     private Shift getSingleShift(Date date, long userId) {
-        return shiftOnExactDayDAO.getShiftOnExactDay(userId, date).getShift();
+        return singleShiftDAO.getShiftOnExactDay(userId, date).getShift();
     }
 
     public void setSingleShift(Roster roster, Date date, long userId, long shiftId) {
@@ -174,11 +174,11 @@ public class RosterServiceImpl implements RosterService {
 
     private void fillWithShiftsOnExactDay() {
 
-        List<ShiftOnExactDay> shiftsOnExactDay = shiftOnExactDayDAO.getShiftsOnExactDay(roster.getFrom(), roster.getTill());
+        List<SingleShift> shiftsOnExactDay = singleShiftDAO.getShiftsOnExactDay(roster.getFrom(), roster.getTill());
 
-        for (ShiftOnExactDay shiftOnExactDay : shiftsOnExactDay) {
+        for (SingleShift singleShift : shiftsOnExactDay) {
 
-            setShift(shiftOnExactDay.getUserId(), shiftOnExactDay.getShift(), Dates.toEpochDay(shiftOnExactDay.getDate()));
+            setShift(singleShift.getUserId(), singleShift.getShift(), Dates.toEpochDay(singleShift.getDate()));
 
         }
 

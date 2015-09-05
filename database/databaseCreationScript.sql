@@ -41,12 +41,12 @@ CREATE  TABLE IF NOT EXISTS `rosterdb`.`user_patterns` (
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Table `rosterdb`.`shifts_on_exact_day`
+-- Table `rosterdb`.`single_shifts`
 -- -----------------------------------------------------
 
-DROP TABLE IF EXISTS `rosterdb`.`shifts_on_exact_day` ;
+DROP TABLE IF EXISTS `rosterdb`.`single_shifts` ;
 
-CREATE TABLE IF NOT EXISTS `rosterdb`.`shifts_on_exact_day` (
+CREATE TABLE IF NOT EXISTS `rosterdb`.`single_shifts` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `userId` BIGINT(20) NOT NULL,
   `date` DATE NOT NULL,

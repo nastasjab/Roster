@@ -1,10 +1,10 @@
 package lv.javaguru.java2.servlet.mvc.controller.roster;
 
 import lv.javaguru.java2.database.shift.ShiftDAO;
-import lv.javaguru.java2.database.roster.ShiftOnExactDayDAO;
+import lv.javaguru.java2.database.roster.SingleShiftDAO;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.domain.shift.Shift;
-import lv.javaguru.java2.domain.roster.ShiftOnExactDay;
+import lv.javaguru.java2.domain.roster.SingleShift;
 import lv.javaguru.java2.servlet.mvc.*;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
 import lv.javaguru.java2.servlet.mvc.data.ShiftOnExactDayControllerData;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 
 @Component
-public class ShiftOnExactDayController extends GenericEditMVCController<ShiftOnExactDayDAO, ShiftOnExactDay> implements MVCController {
+public class SingleShiftController extends GenericEditMVCController<SingleShiftDAO, SingleShift> implements MVCController {
 
     @Autowired
     private UserDAO userDAO;
@@ -24,7 +24,7 @@ public class ShiftOnExactDayController extends GenericEditMVCController<ShiftOnE
     private ShiftDAO shiftDAO;
 
     @Autowired
-    private ShiftOnExactDayDAO shiftOnExactDayDAO;
+    private SingleShiftDAO singleShiftDAO;
 
     @Override
     protected MVCModel listObject(HttpServletRequest req) {
@@ -44,20 +44,20 @@ public class ShiftOnExactDayController extends GenericEditMVCController<ShiftOnE
         }
 
         try {
-            result.setShiftOnExactDay(shiftOnExactDayDAO.getShiftOnExactDay(getUserId(req), getDate(req)));
+            result.setSingleShift(singleShiftDAO.getShiftOnExactDay(getUserId(req), getDate(req)));
         } catch (IndexOutOfBoundsException e) {
-            ShiftOnExactDay shiftOnExactDay = new ShiftOnExactDay();
-            shiftOnExactDay.setDate(getDate(req));
-            shiftOnExactDay.setUserId(getUserId(req));
+            SingleShift singleShift = new SingleShift();
+            singleShift.setDate(getDate(req));
+            singleShift.setUserId(getUserId(req));
             try {
-                shiftOnExactDay.setShift(result.getShiftById(getShift(req)));
+                singleShift.setShift(result.getShiftById(getShift(req)));
             } catch (Exception e1) {
-                shiftOnExactDay.setShift(new Shift());
+                singleShift.setShift(new Shift());
             }
-            result.setShiftOnExactDay(shiftOnExactDay);
+            result.setSingleShift(singleShift);
         }
 
-        return new MVCModel(result, "/shiftOnExactDay.jsp");
+        return new MVCModel(result, "/singleShift.jsp");
 
     }
 
@@ -84,7 +84,7 @@ public class ShiftOnExactDayController extends GenericEditMVCController<ShiftOnE
 
     @Override
     protected String getEditPageAddressJSP() {
-        return "/shiftOnExactDay.jsp";
+        return "/singleShift.jsp";
     }
 
     @Override
@@ -93,23 +93,23 @@ public class ShiftOnExactDayController extends GenericEditMVCController<ShiftOnE
     }
 
     @Override
-    protected ShiftOnExactDay getNewInstance() {
-        return new ShiftOnExactDay();
+    protected SingleShift getNewInstance() {
+        return new SingleShift();
     }
 
     @Override
-    protected void fillParameters(HttpServletRequest req, ShiftOnExactDay shiftOnExactDay) throws Exception {
-        shiftOnExactDay.setUserId(getUserId(req));
-        shiftOnExactDay.setDate(getDate(req));
-        shiftOnExactDay.setShift(shiftDAO.getById(getNewShift(req)));
+    protected void fillParameters(HttpServletRequest req, SingleShift singleShift) throws Exception {
+        singleShift.setUserId(getUserId(req));
+        singleShift.setDate(getDate(req));
+        singleShift.setShift(shiftDAO.getById(getNewShift(req)));
     }
 
     @Override
     protected MVCModel updateObject(HttpServletRequest req) throws Exception {
-        ShiftOnExactDay shiftOnExactDay = getNewInstance();
-        fillParameters(req, shiftOnExactDay);
+        SingleShift singleShift = getNewInstance();
+        fillParameters(req, singleShift);
 
-        shiftOnExactDayDAO.setShiftOnExactDay(shiftOnExactDay);
+        singleShiftDAO.setShiftOnExactDay(singleShift);
 
         return new MVCModel(
                 new MessageContents(
