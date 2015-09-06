@@ -7,13 +7,13 @@ import lv.javaguru.java2.domain.user.User;
 
 import java.util.List;
 
-public class ShiftOnExactDayControllerData {
+public class SingleShiftsControllerData {
 
     User user;
     List<Shift> shifts;
     SingleShift singleShift;
 
-    public ShiftOnExactDayControllerData() {
+    public SingleShiftsControllerData() {
     }
 
     public SingleShift getSingleShift() {

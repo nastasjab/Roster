@@ -39,8 +39,8 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
                 .add(Restrictions.eq("userId", userId))
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .add(Restrictions.and(
-                        Restrictions.ge("startDay", date),
-                        Restrictions.le("endDay", date)))
+                        Restrictions.le("startDay", date),
+                        Restrictions.ge("endDay", date)))
                 .setMaxResults(1)
                 .list().get(0);
     }
@@ -52,7 +52,6 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
                 .add(Restrictions.and(
                         Restrictions.ge("startDay", date),
                         Restrictions.le("endDay", date)))
-                .setMaxResults(1)
                 .list();
     }
 
@@ -61,7 +60,8 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
         return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .addOrder(Order.asc("startDay"))
-                .add(Restrictions.or(Restrictions.between("startDay", startDate, endDate),
+                .add(Restrictions.or(
+                        Restrictions.between("startDay", startDate, endDate),
                         Restrictions.between("endDay", startDate, endDate),
                         Restrictions.and(
                                 Restrictions.lt("startDay", startDate), Restrictions.gt("endDay", endDate))))
@@ -73,7 +73,8 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
         return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .add(Restrictions.eq("userId", userId))
-                .add(Restrictions.or(Restrictions.between("startDay", startDate, endDate),
+                .add(Restrictions.or(
+                        Restrictions.between("startDay", startDate, endDate),
                         Restrictions.between("endDay", startDate, endDate),
                         Restrictions.and(
                                 Restrictions.lt("startDay", startDate), Restrictions.gt("endDay", endDate))))

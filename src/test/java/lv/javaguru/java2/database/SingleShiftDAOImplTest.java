@@ -22,8 +22,8 @@ public class SingleShiftDAOImplTest extends GenericSpringTest {
 
     @Before
     public void init()  {
-        singleShift = createShiftOnExactDay(1, Date.valueOf("2015-08-15"), 1);
-        singleShift2 = createShiftOnExactDay(2, Date.valueOf("2015-08-25"), 2);
+        singleShift = createSingleShift(1, Date.valueOf("2015-08-15"), 1);
+        singleShift2 = createSingleShift(2, Date.valueOf("2015-08-25"), 2);
     }
 
     @Test
@@ -97,53 +97,53 @@ public class SingleShiftDAOImplTest extends GenericSpringTest {
     }
 
     @Test (expected = IndexOutOfBoundsException.class)
-    public void testGetShiftOnExactDay()  {
+    public void testGetSingleShift()  {
         singleShiftDAO.create(singleShift);
         singleShiftDAO.create(singleShift2);
 
-        SingleShift shift = singleShiftDAO.getShiftOnExactDay(1, Date.valueOf("2015-08-15"));
+        SingleShift shift = singleShiftDAO.getSingleShift(1, Date.valueOf("2015-08-15"));
         assertEquals(1, shift.getShift().getId());
 
-        shift = singleShiftDAO.getShiftOnExactDay(2, Date.valueOf("2015-08-15"));
+        shift = singleShiftDAO.getSingleShift(2, Date.valueOf("2015-08-15"));
     }
 
     @Test
-    public void testSetShiftOnExactDay()  {
-        singleShiftDAO.setShiftOnExactDay(singleShift);
+    public void testSetSingleShift()  {
+        singleShiftDAO.setSingleShift(singleShift);
 
         SingleShift singleShiftFromDB = singleShiftDAO.getById(singleShift.getId());
         assertEquals(singleShift.getShift().getId(), singleShiftFromDB.getShift().getId());
 
         singleShift.getShift().setId(3);
-        singleShiftDAO.setShiftOnExactDay(singleShift);
+        singleShiftDAO.setSingleShift(singleShift);
 
         singleShiftFromDB = singleShiftDAO.getById(singleShift.getId());
         assertEquals(3, singleShiftFromDB.getShift().getId());
     }
 
     @Test
-    public void testGetShiftsOnExactDay()  {
+    public void testGetSingleShifts()  {
         singleShiftDAO.create(singleShift);
         singleShiftDAO.create(singleShift2);
 
-        List<SingleShift> shiftsOnExactDays = singleShiftDAO.getShiftsOnExactDay(
-                Date.valueOf("2015-08-15"),Date.valueOf("2015-08-25"));
+        List<SingleShift> shiftsOnExactDays = singleShiftDAO.getSingleShift(
+                Date.valueOf("2015-08-15"), Date.valueOf("2015-08-25"));
         assertEquals(2, shiftsOnExactDays.size());
 
-        shiftsOnExactDays = singleShiftDAO.getShiftsOnExactDay(
-                Date.valueOf("2015-08-15"),Date.valueOf("2015-08-22"));
+        shiftsOnExactDays = singleShiftDAO.getSingleShift(
+                Date.valueOf("2015-08-15"), Date.valueOf("2015-08-22"));
         assertEquals(1, shiftsOnExactDays.size());
 
-        shiftsOnExactDays = singleShiftDAO.getShiftsOnExactDay(
-                Date.valueOf("2015-08-15"),Date.valueOf("2015-08-15"));
+        shiftsOnExactDays = singleShiftDAO.getSingleShift(
+                Date.valueOf("2015-08-15"), Date.valueOf("2015-08-15"));
         assertEquals(1, shiftsOnExactDays.size());
 
-        shiftsOnExactDays = singleShiftDAO.getShiftsOnExactDay(
-                Date.valueOf("2015-08-10"),Date.valueOf("2015-08-14"));
+        shiftsOnExactDays = singleShiftDAO.getSingleShift(
+                Date.valueOf("2015-08-10"), Date.valueOf("2015-08-14"));
         assertEquals(0, shiftsOnExactDays.size());
     }
 
-    private SingleShift createShiftOnExactDay(long userId, Date date, long shiftId) {
+    private SingleShift createSingleShift(long userId, Date date, long shiftId) {
         SingleShift singleShift = new SingleShift();
         singleShift.setUserId(userId);
         singleShift.setDate(date);

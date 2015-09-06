@@ -54,13 +54,13 @@ public class RosterServiceImpl implements RosterService {
 
         fillWithUserPatterns();
 
-        fillWithShiftsOnExactDay();
+        fillWithSingleShifts();
 
         return roster;
 
     }
 
-    public Shift getShift(Roster roster, Date date, long userId) {
+    public Shift getShift(Date date, long userId) {
         try {
             return getSingleShift(date, userId);
         } catch (IndexOutOfBoundsException e) {
@@ -72,21 +72,20 @@ public class RosterServiceImpl implements RosterService {
         try {
             return getUserPattern(date, userId).getPattern().getPatternShifts()
                     .get((int) getPatternOffset(getUserPattern(date, userId), date)).getShift();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IndexOutOfBoundsException e) {
             return new Shift();
         }
     }
 
-    private UserPattern getUserPattern(Date date, long userId)  {
+    private UserPattern getUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
         return userPatternDAO.get(date, userId);
     }
 
     private Shift getSingleShift(Date date, long userId) {
-        return singleShiftDAO.getShiftOnExactDay(userId, date).getShift();
+        return singleShiftDAO.getSingleShift(userId, date).getShift();
     }
 
-    public void setSingleShift(Roster roster, Date date, long userId, long shiftId) {
+    public void setShift(Roster roster, Date date, long userId, long shiftId) {
 
     }
 
@@ -127,7 +126,8 @@ public class RosterServiceImpl implements RosterService {
     }
 
     private long getPatternOffset(UserPattern userPattern, long epochDayFrom) {
-        return epochDayFrom - Dates.toEpochDay(userPattern.getStartDay()) + (long) userPattern.getPatternStartDay() - 1;
+        return (epochDayFrom - Dates.toEpochDay(userPattern.getStartDay()) + (long) userPattern.getPatternStartDay() - 1)
+                % userPattern.getPattern().getSize();
     }
 
     private long getPatternOffset(UserPattern userPattern, Date date) {
@@ -172,9 +172,9 @@ public class RosterServiceImpl implements RosterService {
 
     }
 
-    private void fillWithShiftsOnExactDay() {
+    private void fillWithSingleShifts() {
 
-        List<SingleShift> shiftsOnExactDay = singleShiftDAO.getShiftsOnExactDay(roster.getFrom(), roster.getTill());
+        List<SingleShift> shiftsOnExactDay = singleShiftDAO.getSingleShift(roster.getFrom(), roster.getTill());
 
         for (SingleShift singleShift : shiftsOnExactDay) {
 

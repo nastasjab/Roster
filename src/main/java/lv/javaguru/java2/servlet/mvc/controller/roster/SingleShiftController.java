@@ -7,7 +7,7 @@ import lv.javaguru.java2.domain.shift.Shift;
 import lv.javaguru.java2.domain.roster.SingleShift;
 import lv.javaguru.java2.servlet.mvc.*;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
-import lv.javaguru.java2.servlet.mvc.data.ShiftOnExactDayControllerData;
+import lv.javaguru.java2.servlet.mvc.data.SingleShiftsControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +29,7 @@ public class SingleShiftController extends GenericEditMVCController<SingleShiftD
     @Override
     protected MVCModel listObject(HttpServletRequest req) {
 
-        ShiftOnExactDayControllerData result = new ShiftOnExactDayControllerData();
+        SingleShiftsControllerData result = new SingleShiftsControllerData();
 
         try {
             result.setUser(userDAO.getById(getUserId(req)));
@@ -44,7 +44,7 @@ public class SingleShiftController extends GenericEditMVCController<SingleShiftD
         }
 
         try {
-            result.setSingleShift(singleShiftDAO.getShiftOnExactDay(getUserId(req), getDate(req)));
+            result.setSingleShift(singleShiftDAO.getSingleShift(getUserId(req), getDate(req)));
         } catch (IndexOutOfBoundsException e) {
             SingleShift singleShift = new SingleShift();
             singleShift.setDate(getDate(req));
@@ -109,7 +109,7 @@ public class SingleShiftController extends GenericEditMVCController<SingleShiftD
         SingleShift singleShift = getNewInstance();
         fillParameters(req, singleShift);
 
-        singleShiftDAO.setShiftOnExactDay(singleShift);
+        singleShiftDAO.setSingleShift(singleShift);
 
         return new MVCModel(
                 new MessageContents(

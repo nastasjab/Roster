@@ -7,9 +7,9 @@ import java.sql.Date;
 import java.util.List;
 
 public interface SingleShiftDAO extends GenericDAO<SingleShift> {
-    SingleShift getShiftOnExactDay(long userId, Date date);
+    SingleShift getSingleShift(long userId, Date date);
 
-    void setShiftOnExactDay(SingleShift singleShift);
+    void setSingleShift(SingleShift singleShift);
 
-    List<SingleShift> getShiftsOnExactDay(Date from, Date till);
+    List<SingleShift> getSingleShift(Date from, Date till);
 }

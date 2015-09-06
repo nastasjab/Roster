@@ -2,6 +2,7 @@ package lv.javaguru.java2.database;
 
 import lv.javaguru.java2.GenericSpringTest;
 import lv.javaguru.java2.database.user.UserPatternDAO;
+import lv.javaguru.java2.domain.pattern.Pattern;
 import lv.javaguru.java2.domain.user.UserPattern;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,20 +53,17 @@ public class UserPatternDAOImplTest extends GenericSpringTest {
     @Test
      public void testDelete()  {
         List<UserPattern> userPatterns = userPatternDAO.getAll();
-        int userPatternsCount = userPatterns==null ? 0 : userPatterns.size();
+        int userPatternsCount = userPatterns == null ? 0 : userPatterns.size();
 
         userPatternDAO.create(userPattern);
         userPatternDAO.create(userPattern2);
-        userPatterns = userPatternDAO.getAll();
-        assertEquals(2, userPatterns.size()-userPatternsCount);
+        assertEquals(2, userPatternDAO.getAll().size() - userPatternsCount);
 
         userPatternDAO.delete(userPattern.getId());
-        userPatterns = userPatternDAO.getAll();
-        assertEquals(1, userPatterns.size()-userPatternsCount);
+        assertEquals(1, userPatternDAO.getAll().size() - userPatternsCount);
 
         userPatternDAO.delete(userPattern2.getId());
-        userPatterns = userPatternDAO.getAll();
-        assertEquals(0, userPatterns.size()-userPatternsCount);
+        assertEquals(0, userPatternDAO.getAll().size() - userPatternsCount);
     }
 
     @Test
@@ -106,13 +104,25 @@ public class UserPatternDAOImplTest extends GenericSpringTest {
     @Test
     public void testGetByUserId()  {
         userPatternDAO.create(userPattern);
-        userPatternDAO.create(userPattern2);
-        List<UserPattern> userPatterns = userPatternDAO.getByUserId(1);
-        assertEquals(1, userPatterns.size());
-        assertEquals(1, userPatterns.get(0).getUserId());
 
-        userPatterns = userPatternDAO.getByUserId(3);
-        assertEquals(0, userPatterns.size());
+        userPattern = userPatternDAO.getById(userPattern.getId());
+
+        userPattern.setUserId(userPattern2.getUserId());
+        userPattern.setStartDay(userPattern2.getStartDay());
+        userPattern.setEndDay(userPattern2.getEndDay());
+        userPattern.setPatternStartDay(userPattern2.getPatternStartDay());
+        userPattern.setPattern(userPattern2.getPattern());
+
+        userPatternDAO.update(userPattern);
+
+        UserPattern shiftFromDB = userPatternDAO.getById(userPattern.getId());
+
+        assertNotNull(shiftFromDB);
+        assertEquals(userPattern2.getUserId(), shiftFromDB.getUserId());
+        assertEquals(userPattern2.getStartDay(), shiftFromDB.getStartDay());
+        assertEquals(userPattern2.getEndDay(), shiftFromDB.getEndDay());
+        assertEquals(userPattern2.getPatternStartDay(), shiftFromDB.getPatternStartDay());
+        assertEquals(userPattern2.getPattern(), shiftFromDB.getPattern());
     }
 
     @Test

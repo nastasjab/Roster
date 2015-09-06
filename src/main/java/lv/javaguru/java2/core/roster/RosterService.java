@@ -10,6 +10,6 @@ import java.util.List;
 public interface RosterService {
     Roster getRoster(Roster roster);
     Roster getRoster(Roster roster, List<User> forUsers);
-    Shift getShift(Roster roster, Date date, long userId);
-    void setSingleShift(Roster roster, Date date, long userId, long shiftId);
+    Shift getShift(Date date, long userId);
+    void setShift(Roster roster, Date date, long userId, long shiftId);
 }

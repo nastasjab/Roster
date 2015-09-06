@@ -13,7 +13,7 @@ import java.util.List;
 public class SingleShiftDAOImpl extends GenericHibernateDAOImpl<SingleShift> implements SingleShiftDAO {
 
     @Transactional
-    public SingleShift getShiftOnExactDay(long userId, Date date) throws IndexOutOfBoundsException {
+    public SingleShift getSingleShift(long userId, Date date) throws IndexOutOfBoundsException {
 
         return (SingleShift) sessionFactory.getCurrentSession().createCriteria(SingleShift.class)
                 .add(Restrictions.eq("userId", userId))
@@ -22,12 +22,12 @@ public class SingleShiftDAOImpl extends GenericHibernateDAOImpl<SingleShift> imp
     }
 
     @Transactional
-    public void setShiftOnExactDay(SingleShift singleShift) {
+    public void setSingleShift(SingleShift singleShift) {
         sessionFactory.getCurrentSession().saveOrUpdate(singleShift);
     }
 
     @Transactional
-    public List<SingleShift> getShiftsOnExactDay(Date from, Date till) {
+    public List<SingleShift> getSingleShift(Date from, Date till) {
         return sessionFactory.getCurrentSession().createCriteria(SingleShift.class)
                 .add(Restrictions.between("date", from, till))
                 .list();

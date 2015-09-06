@@ -2,9 +2,9 @@
 <%@ page import="java.sql.Date" %>
 <%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page import="java.util.List" %>
-<%@ page import="lv.javaguru.java2.servlet.mvc.data.ShiftOnExactDayControllerData" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.SingleShiftsControllerData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%  ShiftOnExactDayControllerData data = (ShiftOnExactDayControllerData) request.getAttribute("model");
+<%  SingleShiftsControllerData data = (SingleShiftsControllerData) request.getAttribute("model");
     User user = data.getUser();
     Date date = data.getSingleShift().getDate();
     long shiftOnExactDayId = data.getSingleShift().getId();
