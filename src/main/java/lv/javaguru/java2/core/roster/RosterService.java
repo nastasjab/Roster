@@ -11,5 +11,5 @@ public interface RosterService {
     Roster getRoster(Roster roster);
     Roster getRoster(Roster roster, List<User> forUsers);
     Shift getShift(Date date, long userId);
-    void setShift(Roster roster, Date date, long userId, long shiftId);
+    void setShift(Date date, long userId, long shiftId);
 }

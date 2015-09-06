@@ -82,10 +82,33 @@ public class RosterServiceImpl implements RosterService {
     }
 
     private Shift getSingleShift(Date date, long userId) {
-        return singleShiftDAO.getSingleShift(userId, date).getShift();
+        try {
+            return singleShiftDAO.getSingleShift(userId, date).getShift();
+        } catch (IndexOutOfBoundsException e) {
+            return new Shift();
+        }
     }
 
-    public void setShift(Roster roster, Date date, long userId, long shiftId) {
+    public void setShift(Date date, long userId, long shiftId) {
+
+        Shift shiftFromUserPattern = getShiftFromUserPattern(date, userId);
+        Shift shiftFromSingleShifts = getSingleShift(date, userId);
+
+        if (shiftFromSingleShifts.getId() == 0 && shiftId != shiftFromUserPattern.getId()) {
+            SingleShift singleShift = new SingleShift();
+            singleShift.setDate(date);
+            singleShift.getShift().setId(shiftId);
+            singleShift.setUserId(userId);
+            singleShiftDAO.create(singleShift);
+        } else if (shiftFromSingleShifts.getId() != shiftId && shiftId != shiftFromUserPattern.getId()) {
+            SingleShift singleShift = new SingleShift();
+            singleShift.setDate(date);
+            singleShift.getShift().setId(shiftId);
+            singleShift.setUserId(userId);
+            singleShiftDAO.update(singleShift);
+        } else if (shiftFromUserPattern.getId() == shiftId) {
+            singleShiftDAO.delete(shiftFromSingleShifts.getId());
+        }
 
     }
 
