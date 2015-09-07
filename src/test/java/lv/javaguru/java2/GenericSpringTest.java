@@ -1,6 +1,6 @@
 package lv.javaguru.java2;
 
-import lv.javaguru.java2.servlet.mvc.SpringConfig;
+import lv.javaguru.java2.servlet.mvc.config.SpringConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

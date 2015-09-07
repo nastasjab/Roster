@@ -3,12 +3,13 @@ package lv.javaguru.java2.servlet.mvc.controller.shift;
 import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.core.shift.ShiftService;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.shift.Shift;
 import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
+
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 
 @Component
 public class ShiftEditController
@@ -18,11 +19,11 @@ public class ShiftEditController
 
     @Override
     protected Generic fillParameters(HttpServletRequest req) throws Exception{
-        Shift shift = new Shift();
-        shift.setName(req.getParameter("name"));
-        shift.setShiftStarts(req.getParameter("shiftstarts"));
-        shift.setShiftEnds(req.getParameter("shiftends"));
-        return shift;
+        return createShift()
+                .withName(req.getParameter("name"))
+                .withShiftStarts(req.getParameter("shiftstarts"))
+                .withShiftEnds(req.getParameter("shiftends"))
+                .build();
     }
 
     @Override

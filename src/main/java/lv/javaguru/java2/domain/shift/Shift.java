@@ -11,16 +11,16 @@ public class Shift extends Generic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private long id;
+    protected long id;
 
     @Column(name = "name")
-    private String name = "";
+    protected String name = "";
 
     @Column(name = "start")
-    private String shiftStarts = "";
+    protected String shiftStarts = "";
 
     @Column(name = "end")
-    private String shiftEnds = "";
+    protected String shiftEnds = "";
 
 
     public Shift() {

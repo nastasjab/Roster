@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servlet.mvc;
 
+import lv.javaguru.java2.servlet.mvc.config.SpringConfig;
 import lv.javaguru.java2.servlet.mvc.controller.*;
 import lv.javaguru.java2.servlet.mvc.controller.pattern.*;
 import lv.javaguru.java2.servlet.mvc.controller.roster.*;
