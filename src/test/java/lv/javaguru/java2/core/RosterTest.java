@@ -18,6 +18,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 import static org.junit.Assert.assertEquals;
 
 public class RosterTest extends GenericSpringTest{
@@ -39,13 +40,9 @@ public class RosterTest extends GenericSpringTest{
 
     @Test
     public void getShiftTest() {
-        Shift shift1 = new Shift();
-        Shift shift2 = new Shift();
-        Shift shift3 = new Shift();
-
-        shift1.setName("test1");
-        shift1.setName("test2");
-        shift1.setName("test3");
+        Shift shift1 = createShift().withName("test1").build();
+        Shift shift2 = createShift().withName("test2").build();
+        Shift shift3 = createShift().withName("test3").build();
 
         List<Shift> shifts = shiftDAO.getAll();
         int shiftsCount = shifts == null ? 0 : shifts.size();
@@ -122,13 +119,9 @@ public class RosterTest extends GenericSpringTest{
 
     @Test
     public void setShiftTest() {
-        Shift shift1 = new Shift();
-        Shift shift2 = new Shift();
-        Shift shift3 = new Shift();
-
-        shift1.setName("test1");
-        shift1.setName("test2");
-        shift1.setName("test3");
+        Shift shift1 = createShift().withName("test1").build();
+        Shift shift2 = createShift().withName("test2").build();
+        Shift shift3 = createShift().withName("test3").build();
 
         List<Shift> shifts = shiftDAO.getAll();
         int shiftsCount = shifts == null ? 0 : shifts.size();

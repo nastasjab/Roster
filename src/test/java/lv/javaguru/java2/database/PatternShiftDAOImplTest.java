@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 import static org.junit.Assert.*;
 
 
@@ -34,8 +35,12 @@ public class PatternShiftDAOImplTest extends GenericSpringTest {
 
     @Before
     public void init()  {
-        Shift shift1 = ShiftDAOImplTest.createShift("shift#name", "07:00:00", "15:00:00");
-        Shift shift2 = ShiftDAOImplTest.createShift("shift#name2", "07:00:00", "15:00:00");
+        Shift shift1 = createShift()
+                .withName("shift#name").withShiftStarts("07:00:00").withShiftEnds("15:00:00")
+                .build();
+        Shift shift2 = createShift()
+                .withName("shift#name2").withShiftStarts("07:00:00").withShiftEnds("15:00:00")
+                .build();
         shiftDAO.create(shift1);
         shiftDAO.create(shift2);
 

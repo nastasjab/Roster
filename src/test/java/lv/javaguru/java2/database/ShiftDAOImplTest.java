@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 import static org.junit.Assert.*;
 
 public class ShiftDAOImplTest extends GenericSpringTest {
@@ -20,8 +21,12 @@ public class ShiftDAOImplTest extends GenericSpringTest {
 
     @Before
     public void init()  {
-        shift = createShift("ssssss1", "07:00:00", "15:00:00");
-        shift2 = createShift("sssssss2", "15:00:00", "23:00:00");
+        shift = createShift()
+                .withName("ssssss1").withShiftStarts("07:00:00").withShiftEnds("15:00:00")
+                .build();
+        shift2 = createShift()
+                .withName("ssssss2").withShiftStarts("15:00:00").withShiftEnds("23:00:00")
+                .build();
     }
 
     @Test
@@ -100,14 +105,6 @@ public class ShiftDAOImplTest extends GenericSpringTest {
 
         shiftDAO.delete(shift.getId());
         assertNull(shiftDAO.getByObjectName(shift.getName()));
-    }
-
-    public static Shift createShift(String name, String shiftStarts, String shiftEnds) {
-        Shift shift = new Shift();
-        shift.setName(name);
-        shift.setShiftStarts(shiftStarts);
-        shift.setShiftEnds(shiftEnds);
-        return shift;
     }
 
 }
