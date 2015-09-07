@@ -11,6 +11,13 @@
     <% for (MenuItem menuItem : menu.getMenu()) { %>
     <tr><td align="center"><a href="<%= menuItem.getUrl() %>"><%= menuItem.getCaption() %></a></td></tr>
     <% } %>
+    <tr><td> </td></tr>
+    <tr><td> </td></tr>
+    <tr><td> </td></tr>
+    <tr><td> </td></tr>
+    <tr><td> </td></tr>
+    <tr><td align="center"><a href="/roster/logout">Logout</a></td></tr>
+
 </table>
 </body>
 </html>
