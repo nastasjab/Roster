@@ -21,6 +21,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -57,8 +58,7 @@ public class RosterTest extends GenericSpringTest{
         pattern.setName("test");
 
         for (int i = 0; i < 5; i++) {
-            Shift shift = new Shift();
-            shift.setName("T" + i);
+            Shift shift = createShift().withName("T" + i).build();
             shiftList.add(shift);
             shiftDAO.create(shift);
 
