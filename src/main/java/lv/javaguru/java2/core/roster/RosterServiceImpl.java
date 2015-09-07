@@ -1,5 +1,6 @@
 package lv.javaguru.java2.core.roster;
 
+import lv.javaguru.java2.core.NoShiftFoundException;
 import lv.javaguru.java2.database.pattern.PatternShiftDAO;
 import lv.javaguru.java2.database.roster.SingleShiftDAO;
 import lv.javaguru.java2.database.user.UserDAO;
@@ -60,54 +61,67 @@ public class RosterServiceImpl implements RosterService {
 
     }
 
-    public Shift getShift(Date date, long userId) {
+    public Shift getShift(Date date, long userId) throws NoShiftFoundException {
         try {
-            return getSingleShift(date, userId);
-        } catch (IndexOutOfBoundsException e) {
-            return getShiftFromUserPattern(date, userId);
+            return getSingleShift(date, userId).getShift();
+        } catch (NoShiftFoundException e) {
+            try {
+                return getShiftFromUserPattern(date, userId);
+            } catch (IndexOutOfBoundsException e1) {
+                throw new NoShiftFoundException();
+            }
         }
     }
 
-    private Shift getShiftFromUserPattern(Date date, long userId) {
-        try {
-            return getUserPattern(date, userId).getPattern().getPatternShifts()
-                    .get((int) getPatternOffset(getUserPattern(date, userId), date)).getShift();
-        } catch (IndexOutOfBoundsException e) {
-            return new Shift();
-        }
+    private Shift getShiftFromUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
+        return getUserPattern(date, userId).getPattern().getPatternShifts()
+                .get((int) getPatternOffset(getUserPattern(date, userId), date)).getShift();
     }
 
     private UserPattern getUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
         return userPatternDAO.get(date, userId);
     }
 
-    private Shift getSingleShift(Date date, long userId) {
+    private SingleShift getSingleShift(Date date, long userId) throws NoShiftFoundException{
         try {
-            return singleShiftDAO.getSingleShift(userId, date).getShift();
+            return singleShiftDAO.getSingleShift(userId, date);
         } catch (IndexOutOfBoundsException e) {
-            return new Shift();
+            throw new NoShiftFoundException();
         }
     }
 
-    public void setShift(Date date, long userId, long shiftId) {
+    public void setShift(Date date, long userId, long shiftId) throws InvalidShiftException {
 
-        Shift shiftFromUserPattern = getShiftFromUserPattern(date, userId);
-        Shift shiftFromSingleShifts = getSingleShift(date, userId);
+        Shift shiftFromUserPattern;
+        try {
+            shiftFromUserPattern = getShiftFromUserPattern(date, userId);
+        } catch (IndexOutOfBoundsException e) {
+            shiftFromUserPattern = new Shift();
+        }
 
-        if (shiftFromSingleShifts.getId() == 0 && shiftId != shiftFromUserPattern.getId()) {
-            SingleShift singleShift = new SingleShift();
-            singleShift.setDate(date);
-            singleShift.getShift().setId(shiftId);
-            singleShift.setUserId(userId);
-            singleShiftDAO.create(singleShift);
-        } else if (shiftFromSingleShifts.getId() != shiftId && shiftId != shiftFromUserPattern.getId()) {
-            SingleShift singleShift = new SingleShift();
-            singleShift.setDate(date);
-            singleShift.getShift().setId(shiftId);
-            singleShift.setUserId(userId);
-            singleShiftDAO.update(singleShift);
-        } else if (shiftFromUserPattern.getId() == shiftId) {
-            singleShiftDAO.delete(shiftFromSingleShifts.getId());
+        SingleShift singleShift;
+        try {
+            singleShift = getSingleShift(date, userId);
+        } catch (NoShiftFoundException e) {
+            singleShift = new SingleShift();
+        }
+
+        if (shiftId == 0) {
+            if (shiftFromUserPattern.getId() != 0)
+                throw new InvalidShiftException();
+            else if (singleShift.getId() != 0)
+                singleShiftDAO.delete(singleShift.getId());
+        } else if (shiftId != shiftFromUserPattern.getId() && shiftId != singleShift.getShift().getId()) {
+            SingleShift newSingleShift = new SingleShift();
+            newSingleShift.setDate(date);
+            newSingleShift.getShift().setId(shiftId);
+            newSingleShift.setUserId(userId);
+            if (singleShift.getShift().getId() == 0)
+                singleShiftDAO.create(newSingleShift);
+            else
+                singleShiftDAO.update(newSingleShift);
+        } else if (shiftFromUserPattern.getId() == shiftId && singleShift.getId() != 0) {
+            singleShiftDAO.delete(singleShift.getId());
         }
 
     }

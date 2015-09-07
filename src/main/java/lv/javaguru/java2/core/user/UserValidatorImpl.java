@@ -33,9 +33,10 @@ public class UserValidatorImpl implements UserValidator {
         if (lastName == null || lastName.length() < 1)
             throw new Exception("Last name cannot be empty");
 
-        for (User user : userDAO.getAll())
-            if (firtsName.equals(user.getFirstName()) && lastName.equals(user.getLastName()))
-                throw new ObjectExistException("user with such first and last name");
+        if (add)
+            for (User user : userDAO.getAll())
+                if (firtsName.equals(user.getFirstName()) && lastName.equals(user.getLastName()))
+                    throw new ObjectExistException("user with such first and last name");
     }
 
     /*
