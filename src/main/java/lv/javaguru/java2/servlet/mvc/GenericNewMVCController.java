@@ -22,7 +22,7 @@ public abstract class GenericNewMVCController  {
                             e.getSQLException().getMessage(),
                             e.getSQLException().getMessage(),
                             getListPageAddress(),
-                            "Back"), "/message.jsp");
+                            "Back"), "/error.jsp");
         }
 
         catch (Exception e){
@@ -31,7 +31,7 @@ public abstract class GenericNewMVCController  {
                             e.getMessage(),
                             e.getMessage(),
                             getListPageAddress(),
-                            "Back"), "/message.jsp");
+                            "Back"), "/error.jsp");
         }
 
         return new MVCModel(list, getListPageAddress());
