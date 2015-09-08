@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Date;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.roster.SingleShiftBuilder.createSingleShift;
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 import static org.junit.Assert.*;
 
 
@@ -22,8 +24,20 @@ public class SingleShiftDAOImplTest extends GenericSpringTest {
 
     @Before
     public void init()  {
-        singleShift = createSingleShift(1, Date.valueOf("2015-08-15"), 1);
-        singleShift2 = createSingleShift(2, Date.valueOf("2015-08-25"), 2);
+        singleShift = createSingleShift()
+                .withUserId(1)
+                .withDate(Date.valueOf("2015-08-15"))
+                .withShift(createShift()
+                        .withId(1L)
+                        .build())
+                .build();
+        singleShift2 = createSingleShift()
+                .withUserId(2)
+                .withDate(Date.valueOf("2015-08-25"))
+                .withShift(createShift()
+                        .withId(2L)
+                        .build())
+                .build();
     }
 
     @Test
@@ -60,11 +74,11 @@ public class SingleShiftDAOImplTest extends GenericSpringTest {
         singleShiftDAO.create(singleShift);
         singleShiftDAO.create(singleShift2);
         shiftsOnExactDays = singleShiftDAO.getAll();
-        assertEquals(2, shiftsOnExactDays.size()-shiftOnExactDaysCount);
+        assertEquals(2, shiftsOnExactDays.size() - shiftOnExactDaysCount);
 
         singleShiftDAO.delete(singleShift.getId());
         shiftsOnExactDays = singleShiftDAO.getAll();
-        assertEquals(1, shiftsOnExactDays.size()-shiftOnExactDaysCount);
+        assertEquals(1, shiftsOnExactDays.size() - shiftOnExactDaysCount);
 
         singleShiftDAO.delete(singleShift2.getId());
         shiftsOnExactDays = singleShiftDAO.getAll();
@@ -141,14 +155,6 @@ public class SingleShiftDAOImplTest extends GenericSpringTest {
         shiftsOnExactDays = singleShiftDAO.getSingleShift(
                 Date.valueOf("2015-08-10"), Date.valueOf("2015-08-14"));
         assertEquals(0, shiftsOnExactDays.size());
-    }
-
-    private SingleShift createSingleShift(long userId, Date date, long shiftId) {
-        SingleShift singleShift = new SingleShift();
-        singleShift.setUserId(userId);
-        singleShift.setDate(date);
-        singleShift.getShift().setId(shiftId);
-        return singleShift;
     }
 
 }

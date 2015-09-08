@@ -13,23 +13,23 @@ public class UserPattern extends Generic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private long id;
+    protected long id;
 
     @Column(name = "userId")
-    private long userId;
+    protected long userId;
 
     @Column(name = "startDay", columnDefinition = "DATETIME")
-    private Date startDay;
+    protected Date startDay;
 
     @Column(name = "endDay", columnDefinition = "DATETIME")
-    private Date endDay;
+    protected Date endDay;
 
     @Column(name = "patternStartDay")
-    private int patternStartDay;
+    protected int patternStartDay;
 
     @OneToOne (fetch=FetchType.EAGER)
     @JoinColumn(name = "patternId")
-    private Pattern pattern;
+    protected Pattern pattern;
 
     public UserPattern() {
         super();

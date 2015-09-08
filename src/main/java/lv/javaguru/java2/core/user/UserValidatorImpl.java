@@ -39,19 +39,20 @@ public class UserValidatorImpl implements UserValidator {
                     throw new ObjectExistException("user with such first and last name");
     }
 
-    /*
-    private boolean isValidPhone(String phone) {
+    public void validatePhone(String phone) throws InvalidPhoneException {
         String ePattern = "^[0-9 +#-]+$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(phone);
-        return m.matches();
+        if (phone.length() != 0 && m.matches() == false)
+            throw new InvalidPhoneException();
     }
 
-    private boolean isValidEmailAddress(String email) {
+    public void validateEmail(String email) throws InvalidEmailException {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
-        return m.matches();
+        if (email.length() !=0 && m.matches() == false)
+            throw new InvalidEmailException();
     }
-    */
+
 }

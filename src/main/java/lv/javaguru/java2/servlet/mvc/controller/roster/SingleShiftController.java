@@ -1,10 +1,15 @@
 package lv.javaguru.java2.servlet.mvc.controller.roster;
 
-import lv.javaguru.java2.database.shift.ShiftDAO;
-import lv.javaguru.java2.database.roster.SingleShiftDAO;
-import lv.javaguru.java2.database.user.UserDAO;
-import lv.javaguru.java2.domain.shift.Shift;
+import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.NoShiftFoundException;
+import lv.javaguru.java2.core.roster.InvalidShiftException;
+import lv.javaguru.java2.core.roster.RosterService;
+import lv.javaguru.java2.core.shift.ShiftFactory;
+import lv.javaguru.java2.core.user.UserService;
+import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.roster.SingleShift;
+import lv.javaguru.java2.domain.shift.Shift;
+import lv.javaguru.java2.domain.user.User;
 import lv.javaguru.java2.servlet.mvc.*;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
 import lv.javaguru.java2.servlet.mvc.data.SingleShiftsControllerData;
@@ -13,60 +18,63 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
+import static lv.javaguru.java2.domain.roster.SingleShiftBuilder.createSingleShift;
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 
 @Component
-public class SingleShiftController extends GenericEditMVCController<SingleShiftDAO, SingleShift> implements MVCController {
+public class SingleShiftController implements MVCController {
 
     @Autowired
-    private UserDAO userDAO;
+    private UserService userService;
 
     @Autowired
-    private ShiftDAO shiftDAO;
+    private ShiftFactory shiftFactory;
 
     @Autowired
-    private SingleShiftDAO singleShiftDAO;
+    private RosterService rosterService;
 
-    @Override
-    protected MVCModel listObject(HttpServletRequest req) {
+    public MVCModel processRequest(HttpServletRequest req) {
+
+        if (req.getParameter("act_update") != null)
+            update(req);
 
         SingleShiftsControllerData result = new SingleShiftsControllerData();
 
+        result.setDate(getDate(req));
+
         try {
-            result.setUser(userDAO.getById(getUserId(req)));
+            result.setUser((User) userService.getObject(getUserId(req)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        List<Shift> shifts = new ArrayList<Shift>();
+        shifts.add(createShift()
+                .withId(0L)
+                .withName("Empty Shift")
+                .build());
+        try {
+            for (Generic g : shiftFactory.getAll())
+                shifts.add((Shift) g);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         try {
-            result.setShifts(shiftDAO.getAll());
-        } catch (Exception e) {
-            e.printStackTrace();
+            result.setCurrentShiftId(rosterService.getShift(getDate(req), getUserId(req)).getId());
+        } catch (NoShiftFoundException e) {
+            result.setCurrentShiftId(0);
         }
 
-        try {
-            result.setSingleShift(singleShiftDAO.getSingleShift(getUserId(req), getDate(req)));
-        } catch (IndexOutOfBoundsException e) {
-            SingleShift singleShift = new SingleShift();
-            singleShift.setDate(getDate(req));
-            singleShift.setUserId(getUserId(req));
-            try {
-                singleShift.setShift(result.getShiftById(getShift(req)));
-            } catch (Exception e1) {
-                singleShift.setShift(new Shift());
-            }
-            result.setSingleShift(singleShift);
-        }
-
-        return new MVCModel(result, "/singleShift.jsp");
+        return new MVCModel(result, "/setShift.jsp");
 
     }
 
     private Long getShift(HttpServletRequest req) {
         return Long.valueOf(req.getParameter("shift"));
-    }
-
-    private Long getNewShift(HttpServletRequest req) {
-        return Long.valueOf(req.getParameter("shift_new"));
     }
 
     private Date getDate(HttpServletRequest req) {
@@ -77,45 +85,24 @@ public class SingleShiftController extends GenericEditMVCController<SingleShiftD
         return Long.decode(req.getParameter("user"));
     }
 
-    @Override
-    protected String getObjectName() {
-        return "Shift";
-    }
+    protected MVCModel update(HttpServletRequest req) {
 
-    @Override
-    protected String getEditPageAddressJSP() {
-        return "/singleShift.jsp";
-    }
-
-    @Override
-    protected String getListPageAddress(HttpServletRequest req) {
-        return "/roster/roster";
-    }
-
-    @Override
-    protected SingleShift getNewInstance() {
-        return new SingleShift();
-    }
-
-    @Override
-    protected void fillParameters(HttpServletRequest req, SingleShift singleShift) throws Exception {
-        singleShift.setUserId(getUserId(req));
-        singleShift.setDate(getDate(req));
-        singleShift.setShift(shiftDAO.getById(getNewShift(req)));
-    }
-
-    @Override
-    protected MVCModel updateObject(HttpServletRequest req) throws Exception {
-        SingleShift singleShift = getNewInstance();
-        fillParameters(req, singleShift);
-
-        singleShiftDAO.setSingleShift(singleShift);
+        try {
+            rosterService.setShift(getDate(req), getUserId(req), getShift(req));
+        } catch (InvalidShiftException e) {
+            return new MVCModel(
+                    new MessageContents(
+                            "Invalid Shift",
+                            "Invalid Shift",
+                            "/roster/roster",
+                            "Back to Roster"), "/error.jsp");
+        }
 
         return new MVCModel(
                 new MessageContents(
-                        getObjectName()+" changed",
-                        getObjectName()+" changed",
-                        getListPageAddress(req),
+                        "Shift changed",
+                        "Shift changed",
+                        "/roster/roster",
                         "Back to Roster"), "/message.jsp");
     }
 

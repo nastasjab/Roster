@@ -23,7 +23,9 @@ import java.util.List;
 
 import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
 import static lv.javaguru.java2.domain.pattern.PatternShiftBuilder.createPatternShift;
+import static lv.javaguru.java2.domain.roster.SingleShiftBuilder.createSingleShift;
 import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
+import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -70,25 +72,28 @@ public class RosterTest extends GenericSpringTest{
         pattern.setPatternShifts(patternShifts);
         patternDAO.create(pattern);
 
-        userPattern = new UserPattern();
-        userPattern.setPatternStartDay(1);
-        userPattern.setPattern(pattern);
-        userPattern.setStartDay(Date.valueOf("1970-01-03"));
-        userPattern.setEndDay(Date.valueOf("1970-01-05"));
-        userPattern.setUserId(userId);
+        userPattern = createUserPattern()
+                .withUserId(userId)
+                .withStartDay(Date.valueOf("1970-01-03"))
+                .withEndDay(Date.valueOf("1970-01-05"))
+                .withPatternStartDay(1)
+                .withPattern(pattern)
+                .build();
 
         userPatternDAO.create(userPattern);
 
-        SingleShift singleShift1 = new SingleShift();
-        singleShift1.setUserId(userId);
-        singleShift1.setDate(Date.valueOf("1970-01-02"));
-        singleShift1.setShift(shiftList.get(2));
+        SingleShift singleShift1 = createSingleShift()
+                .withUserId(userId)
+                .withDate(Date.valueOf("1970-01-02"))
+                .withShift(shiftList.get(2))
+                .build();
         singleShiftDAO.create(singleShift1);
 
-        SingleShift singleShift2 = new SingleShift();
-        singleShift2.setUserId(userId);
-        singleShift2.setDate(Date.valueOf("1970-01-05"));
-        singleShift2.setShift(shiftList.get(0));
+        SingleShift singleShift2 = createSingleShift()
+                .withUserId(userId)
+                .withDate(Date.valueOf("1970-01-05"))
+                .withShift(shiftList.get(0))
+                .build();
         singleShiftDAO.create(singleShift2);
 
     }

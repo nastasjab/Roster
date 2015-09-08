@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
 import static org.junit.Assert.*;
 
 public class UserDAOImplTest extends GenericSpringTest {
@@ -19,8 +20,24 @@ public class UserDAOImplTest extends GenericSpringTest {
 
     @Before
     public void init()  {
-        user = createUser("userrrrr", "encryptedPassword", "U", "dima", "pavlov", "dima@pavlov.lv", "29295656");
-        user2 = createUser("adminnnn", "encryptedPassword2", "A", "ivan", "petrov", "ivan@petrov.lv", "29299898");
+        user = createUser()
+                .withLogin("userrrrr")
+                .withPassword("encryptedPassword")
+                .withUsertype("U")
+                .withFirstname("dima")
+                .withLastName("pavlov")
+                .withEmail("dima@pavlov.lv")
+                .withPhone("29295656")
+                .build();
+        user2 = createUser()
+                .withLogin("adminnnn")
+                .withPassword("encryptedPassword2")
+                .withUsertype("A")
+                .withFirstname("ivan")
+                .withLastName("petrov")
+                .withEmail("ivan@petrov.lv")
+                .withPhone("29299898")
+                .build();
     }
 
     @Test
@@ -98,17 +115,6 @@ public class UserDAOImplTest extends GenericSpringTest {
         assertEquals(user2.getPhone(), userFromDB.getPhone());
     }
 
-    private User createUser(String login, String password, String userType,
-                            String firstName, String lastName, String email, String phone) {
-        User user = new User();
-        user.setLogin(login);
-        user.setPassword(password);
-        user.setUserType(userType);
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
-        user.setEmail(email);
-        user.setPhone(phone);
-        return user;
-    }
+
 
 }

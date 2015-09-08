@@ -7,6 +7,9 @@ import lv.javaguru.java2.domain.user.UserPattern;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
+import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern;
+
 public class UserPatternEditControllerData {
 
     private User user;
@@ -14,8 +17,8 @@ public class UserPatternEditControllerData {
     private List<Pattern> patterns;
 
     public UserPatternEditControllerData() {
-        this.user = new User();
-        this.userPattern = new UserPattern();
+        this.user = createUser().build();
+        this.userPattern = createUserPattern().build();
         this.patterns = new ArrayList<Pattern>();
     }
 

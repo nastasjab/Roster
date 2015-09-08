@@ -2,7 +2,6 @@ package lv.javaguru.java2.database;
 
 import lv.javaguru.java2.GenericSpringTest;
 import lv.javaguru.java2.database.user.UserPatternDAO;
-import lv.javaguru.java2.domain.pattern.Pattern;
 import lv.javaguru.java2.domain.user.UserPattern;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.sql.Date;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
+import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern;
 import static org.junit.Assert.*;
 
 public class UserPatternDAOImplTest extends GenericSpringTest {
@@ -21,8 +22,20 @@ public class UserPatternDAOImplTest extends GenericSpringTest {
 
     @Before
     public void init()  {
-        userPattern = createUserPattern(1, 1, Date.valueOf("2015-07-01"), Date.valueOf("2015-07-31"), 1);
-        userPattern2 = createUserPattern(2, 2, Date.valueOf("2015-08-01"), Date.valueOf("2015-08-31"), 2);
+        userPattern = createUserPattern()
+                .withUserId(1)
+                .withPattern(createPattern().withId(1L).build())
+                .withStartDay(Date.valueOf("2015-07-01"))
+                .withEndDay(Date.valueOf("2015-07-31"))
+                .withPatternStartDay(1)
+                .build();
+        userPattern2 = createUserPattern()
+                .withUserId(2)
+                .withPattern(createPattern().withId(2L).build())
+                .withStartDay(Date.valueOf("2015-08-01"))
+                .withEndDay(Date.valueOf("2015-08-31"))
+                .withPatternStartDay(2)
+                .build();
     }
 
     @Test
@@ -88,17 +101,6 @@ public class UserPatternDAOImplTest extends GenericSpringTest {
         assertEquals(userPattern2.getStartDay(), userFromDB.getStartDay());
         assertEquals(userPattern2.getEndDay(), userFromDB.getEndDay());
         assertEquals(userPattern2.getPatternStartDay(), userFromDB.getPatternStartDay());
-    }
-
-    private UserPattern createUserPattern(long userId, long shiftPatternId,
-                            Date startDay, Date endDay, int shiftPatternStartDay) {
-        UserPattern userPattern = new UserPattern();
-        userPattern.setUserId(userId);
-        userPattern.getPattern().setId(shiftPatternId);
-        userPattern.setStartDay(startDay);
-        userPattern.setEndDay(endDay);
-        userPattern.setPatternStartDay(shiftPatternStartDay);
-        return userPattern;
     }
 
     @Test

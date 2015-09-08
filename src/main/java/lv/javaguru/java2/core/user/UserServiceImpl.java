@@ -7,6 +7,8 @@ import lv.javaguru.java2.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
+
 @Component
 public class UserServiceImpl extends GenericServiceImpl<UserDAO, User> implements UserService {
 
@@ -19,10 +21,13 @@ public class UserServiceImpl extends GenericServiceImpl<UserDAO, User> implement
 
         userValidator.validateLogin(user.getLogin(), add);
         userValidator.validateFirstAndLastNames(user.getFirstName(), user.getLastName(), add);
+        userValidator.validatePhone(user.getPhone());
+        userValidator.validateEmail(user.getEmail());
+
     }
 
     @Override
     public User getNewInstance() {
-        return new User();
+        return createUser().build();
     }
 }

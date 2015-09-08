@@ -12,34 +12,34 @@ public class User extends Generic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private long id;
+    protected long id;
 
     @Column(name = "login")
-    private String login = "";
+    protected String login;
 
     @Column(name = "password")
-    private String password = "";
+    protected String password;
 
     @Column(name = "userType", columnDefinition = "CHAR")
-    private String userType = "";
+    protected String userType;
 
     @Column(name = "firstName")
-    private String firstName = "";
+    protected String firstName;
 
     @Column(name = "lastName")
-    private String lastName = "";
+    protected String lastName;
 
     @Column(name = "email")
-    private String email = "";
+    protected String email;
 
     @Column(name = "phone")
-    private String phone = "";
+    protected String phone;
 
     @Column(name = "rosterShowStartDate", columnDefinition = "DATETIME")
-    private Date rosterShowStartDate;
+    protected Date rosterShowStartDate;
 
     @Column(name = "rosterShowEndDate", columnDefinition = "DATETIME")
-    private Date rosterShowEndDate;
+    protected Date rosterShowEndDate;
 
     public User() {
         super();

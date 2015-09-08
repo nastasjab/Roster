@@ -16,6 +16,9 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
+import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern;
+
 @Component
 public class UserPatternEditController extends GenericNewEditMVCController implements MVCController {
 
@@ -74,13 +77,15 @@ public class UserPatternEditController extends GenericNewEditMVCController imple
 
     @Override
     protected Generic fillParameters(HttpServletRequest req) throws Exception {
-        UserPattern userPattern = new UserPattern();
-        userPattern.setUserId(Long.valueOf(req.getParameter("user")));
-        userPattern.setPatternStartDay(Integer.valueOf(req.getParameter("patternstartday")));
-        userPattern.getPattern().setId(Long.valueOf(req.getParameter("pattern")));
-        userPattern.setStartDay(Date.valueOf(req.getParameter("startday")));
-        userPattern.setEndDay(Date.valueOf(req.getParameter("endday")));
-        return userPattern;
+        return createUserPattern()
+                .withUserId(Long.valueOf(req.getParameter("user")))
+                .withPatternStartDay(Integer.valueOf(req.getParameter("patternstartday")))
+                .withPattern(createPattern()
+                        .withId(Long.valueOf(req.getParameter("pattern")))
+                        .build())
+                .withStartDay(Date.valueOf(req.getParameter("startday")))
+                .withEndDay(Date.valueOf(req.getParameter("endday")))
+                .build();
     }
 
 }

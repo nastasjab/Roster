@@ -6,6 +6,8 @@ import lv.javaguru.java2.domain.shift.Shift;
 import javax.persistence.*;
 import java.sql.Date;
 
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
+
 @Entity
 @Table(name = "single_shifts")
 public class SingleShift extends Generic {
@@ -13,17 +15,17 @@ public class SingleShift extends Generic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private long id;
+    protected long id;
 
     @Column(name = "userId")
-    private long userId;
+    protected long userId;
 
     @Column(name = "date")
-    private Date date;
+    protected Date date;
 
     @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "shiftId")
-    private Shift shift;
+    protected Shift shift;
 
     public SingleShift() {
         super();
@@ -56,7 +58,7 @@ public class SingleShift extends Generic {
     }
 
     public Shift getShift() {
-        if (shift==null) shift = new Shift();
+        if (shift==null) shift = createShift();
 
         return shift;
     }

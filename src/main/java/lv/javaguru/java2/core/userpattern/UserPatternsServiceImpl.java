@@ -12,6 +12,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern;
+
 
 @Component
 public class UserPatternsServiceImpl
@@ -28,7 +30,7 @@ public class UserPatternsServiceImpl
         try {
             return userPatternDAO.get(date, userId);
         } catch (Exception e) {
-            return new UserPattern();
+            return createUserPattern().build();
         }
     }
 
@@ -64,6 +66,6 @@ public class UserPatternsServiceImpl
 
     @Override
     public UserPattern getNewInstance() {
-        return new UserPattern();
+        return createUserPattern().build();
     }
 }

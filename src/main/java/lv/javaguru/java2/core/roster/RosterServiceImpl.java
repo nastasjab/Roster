@@ -20,6 +20,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.roster.SingleShiftBuilder.createSingleShift;
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
+
 @Component
 public class RosterServiceImpl implements RosterService {
 
@@ -96,14 +99,14 @@ public class RosterServiceImpl implements RosterService {
         try {
             shiftFromUserPattern = getShiftFromUserPattern(date, userId);
         } catch (IndexOutOfBoundsException e) {
-            shiftFromUserPattern = new Shift();
+            shiftFromUserPattern = createShift().build();
         }
 
         SingleShift singleShift;
         try {
             singleShift = getSingleShift(date, userId);
         } catch (NoShiftFoundException e) {
-            singleShift = new SingleShift();
+            singleShift = createSingleShift().build();
         }
 
         if (shiftId == 0) {
@@ -112,7 +115,7 @@ public class RosterServiceImpl implements RosterService {
             else if (singleShift.getId() != 0)
                 singleShiftDAO.delete(singleShift.getId());
         } else if (shiftId != shiftFromUserPattern.getId() && shiftId != singleShift.getShift().getId()) {
-            SingleShift newSingleShift = new SingleShift();
+            SingleShift newSingleShift = createSingleShift().build();
             newSingleShift.setDate(date);
             newSingleShift.getShift().setId(shiftId);
             newSingleShift.setUserId(userId);

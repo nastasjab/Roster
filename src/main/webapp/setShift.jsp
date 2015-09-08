@@ -6,9 +6,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  SingleShiftsControllerData data = (SingleShiftsControllerData) request.getAttribute("model");
     User user = data.getUser();
-    Date date = data.getSingleShift().getDate();
-    long shiftOnExactDayId = data.getSingleShift().getId();
-    long currentShiftId = data.getSingleShift().getShift().getId();
+    Date date = data.getDate();
+    long currentShiftId = data.getCurrentShiftId();
     List<Shift> shifts = data.getShifts();
 %>
 <html>
@@ -21,7 +20,6 @@
     <a href="/roster/roster">back to Roster without saving changes</a><br>
 <form method="post">
     <select name="shift_new">
-        <option value="0">Select Shift</option>
         <% for (Shift shift : shifts) { %>
         <option <% if (shift.getId() == currentShiftId) { %> selected <% } %> value = "<%= shift.getId()%>">
             <%= shift.getName()%>
@@ -29,8 +27,6 @@
         <% } %>
     </select>
     <input type="submit" name="act_update" value="Change">
-    <input type="hidden" name="id" value="<%= shiftOnExactDayId%>">
-    <input type="submit" name="act_delete" value="Delete">
 </form>
 </div>
 </body>

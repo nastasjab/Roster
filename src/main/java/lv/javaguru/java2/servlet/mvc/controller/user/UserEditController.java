@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
+
 @Component
 public class UserEditController extends GenericNewEditMVCController implements MVCController {
 
@@ -36,15 +38,15 @@ public class UserEditController extends GenericNewEditMVCController implements M
 
     @Override
     protected Generic fillParameters(HttpServletRequest req) throws Exception {
-        User user = new User();
-        user.setLogin(req.getParameter("login"));
-        user.setPassword(req.getParameter("password"));
-        user.setUserType(req.getParameter("usertype"));
-        user.setFirstName(req.getParameter("firstname"));
-        user.setLastName(req.getParameter("lastname"));
-        user.setEmail(req.getParameter("email"));
-        user.setPhone(req.getParameter("phone"));
-        return user;
+        return createUser()
+                .withLogin(req.getParameter("login"))
+                .withPassword(req.getParameter("password"))
+                .withUsertype(req.getParameter("usertype"))
+                .withFirstname(req.getParameter("firstname"))
+                .withLastName(req.getParameter("lastname"))
+                .withEmail(req.getParameter("email"))
+                .withPhone(req.getParameter("phone"))
+                .build();
     }
 
     @Override
