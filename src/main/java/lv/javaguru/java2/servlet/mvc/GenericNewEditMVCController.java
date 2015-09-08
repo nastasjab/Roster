@@ -28,7 +28,7 @@ public abstract class GenericNewEditMVCController {
                             e.getSQLException().getMessage(),
                             e.getSQLException().getMessage(),
                             "javascript:history.back()",
-                            "Back"), "/message.jsp");
+                            "Back"), "/error.jsp");
         }
         catch (Exception e){
             return new MVCModel(
@@ -36,7 +36,7 @@ public abstract class GenericNewEditMVCController {
                             e.getMessage(),
                             e.getMessage(),
                             "javascript:history.back()",
-                            "Back"), "/message.jsp");
+                            "Back"), "/error.jsp");
         }
     }
 
