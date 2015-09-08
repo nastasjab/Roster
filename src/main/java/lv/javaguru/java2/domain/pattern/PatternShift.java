@@ -5,6 +5,9 @@ import lv.javaguru.java2.domain.shift.Shift;
 
 import javax.persistence.*;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
+
 @Entity
 @Table(name ="patterns_shifts")
 public class PatternShift extends Generic {
@@ -12,18 +15,18 @@ public class PatternShift extends Generic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private long id;
+    protected long id;
 
     @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "shiftId")
-    private Shift shift;
+    protected Shift shift;
 
     @Column(name = "seqNo")
-    private int seqNo;
+    protected int seqNo;
 
     @ManyToOne (fetch=FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name="patternId")
-    private Pattern pattern;
+    protected Pattern pattern;
 
     public PatternShift() {
     }
@@ -38,15 +41,12 @@ public class PatternShift extends Generic {
 
     public Pattern getPattern() {
         if (this.pattern == null)
-            this.pattern = new Pattern();
+            this.pattern = createPattern().build();
         return pattern;
     }
 
     public void setPattern(Pattern pattern) {
-        if (this.pattern == null)
-            this.pattern = new Pattern();
-
-        this.pattern = pattern;
+            this.pattern = pattern;
     }
 
     public int getSeqNo() {
@@ -59,7 +59,7 @@ public class PatternShift extends Generic {
 
     public Shift getShift() {
         if (shift == null)
-            shift =  new Shift();
+            shift = createShift().build();
 
         return shift;
     }

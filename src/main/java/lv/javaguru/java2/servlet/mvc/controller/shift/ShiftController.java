@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servlet.mvc.controller.shift;
 
 import lv.javaguru.java2.core.GenericService;
-import lv.javaguru.java2.core.shift.ShiftService;
+import lv.javaguru.java2.core.shift.ShiftFactory;
 import lv.javaguru.java2.servlet.mvc.GenericNewMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ public class ShiftController  extends GenericNewMVCController
         implements MVCController {
 
     @Autowired
-    ShiftService shiftService;
+    ShiftFactory shiftFactory;
 
     @Override
     protected String getListPageAddress() {
@@ -21,6 +21,6 @@ public class ShiftController  extends GenericNewMVCController
 
     @Override
     protected GenericService getService() {
-        return shiftService;
+        return shiftFactory;
     }
 }

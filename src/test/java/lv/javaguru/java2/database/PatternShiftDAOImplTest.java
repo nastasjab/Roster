@@ -12,6 +12,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
+import static lv.javaguru.java2.domain.pattern.PatternShiftBuilder.createPatternShift;
 import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 import static org.junit.Assert.*;
 
@@ -44,17 +46,20 @@ public class PatternShiftDAOImplTest extends GenericSpringTest {
         shiftDAO.create(shift1);
         shiftDAO.create(shift2);
 
-        Pattern pattern  = PatternDAOImplTest.createPattern("shift#pattern1");
-        Pattern pattern2 = PatternDAOImplTest.createPattern("shift#pattern2");
+        Pattern pattern  = createPattern().withName("shift#pattern1").build();
+        Pattern pattern2 = createPattern().withName("shift#pattern2").build();
         patternDAO.create(pattern);
         patternDAO.create(pattern2);
 
         PATTERN_ID = pattern.getId();
         PATTERN_ID2 = pattern2.getId();
 
-        patternShift = createPatternShift(PATTERN_ID, shift1.getId(), 1);
-        patternShift2 = createPatternShift(PATTERN_ID, shift2.getId(), 2);
-        patternShift3 = createPatternShift(PATTERN_ID2, shift1.getId(), 2);
+        patternShift = createPatternShift()
+                .withPatternId(PATTERN_ID).withShiftId(shift1.getId()).withSeqNo(1).build();
+        patternShift2 = createPatternShift()
+                .withPatternId(PATTERN_ID).withShiftId(shift2.getId()).withSeqNo(2).build();
+        patternShift3 = createPatternShift()
+                .withPatternId(PATTERN_ID2).withShiftId(shift1.getId()).withSeqNo(2).build();
     }
 
     @Test
@@ -134,7 +139,7 @@ public class PatternShiftDAOImplTest extends GenericSpringTest {
         assertEquals(2, patternShifts.size());
 
         patternShifts = patternShiftDAO.getAll();
-        assertEquals(3, patternShifts.size()-patternShiftCount);
+        assertEquals(3, patternShifts.size() - patternShiftCount);
 
         patternShiftDAO.deleteByPatternId(PATTERN_ID);
         patternShifts = patternShiftDAO.getAll(PATTERN_ID);
@@ -163,14 +168,4 @@ public class PatternShiftDAOImplTest extends GenericSpringTest {
         assertEquals(patternShift2.getSeqNo(), patternShiftFromDB.getSeqNo());
         assertEquals(patternShift2.getShift().getName(), patternShiftFromDB.getShift().getName());
     }
-
-
-    private PatternShift createPatternShift(long patternId, long shiftId, int seqNo) {
-        PatternShift patternShift = new PatternShift();
-        patternShift.getPattern().setId(patternId);
-        patternShift.getShift().setId(shiftId);
-        patternShift.setSeqNo(seqNo);
-        return patternShift;
-    }
-
 }

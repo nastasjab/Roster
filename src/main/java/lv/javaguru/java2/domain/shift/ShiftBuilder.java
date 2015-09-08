@@ -11,8 +11,17 @@ public class ShiftBuilder extends Shift{
     public Shift build() {
         Shift shift = new Shift();
         shift.setId(id);
-        shift.setName(name);
-        shift.setShiftStarts(shiftStarts);
+        if (name==null)
+            shift.setName("");
+        else
+            shift.setName(name);
+        if (shiftStarts==null)
+            shift.setShiftStarts("");
+        else
+            shift.setShiftStarts(shiftStarts);
+        if (shiftEnds==null)
+            shift.setShiftEnds("");
+        else
         shift.setShiftEnds(shiftEnds);
         return shift;
     }

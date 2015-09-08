@@ -9,9 +9,11 @@ import lv.javaguru.java2.servlet.mvc.data.PatternShiftEditControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static lv.javaguru.java2.domain.pattern.PatternShiftBuilder.createPatternShift;
+
 @Component
-public class PatternShiftServiceImpl
-        extends GenericServiceImpl<PatternShiftDAO, PatternShift> implements PatternShiftService {
+public class PatternShiftFactoryImpl
+        extends GenericServiceImpl<PatternShiftDAO, PatternShift> implements PatternShiftFactory {
 
     @Autowired
     private PatternShiftDAO patternShiftDAO;
@@ -45,7 +47,7 @@ public class PatternShiftServiceImpl
 
     @Override
     public PatternShift getNewInstance() {
-        return new PatternShift();
+        return createPatternShift().build();
     }
 
     @Override

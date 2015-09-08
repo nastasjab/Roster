@@ -12,13 +12,13 @@ public class Pattern extends Generic {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    private long id;
+    protected long id;
 
     @Column(name = "name")
-    private String name = "";
+    protected String name;
 
     @OneToMany(mappedBy="pattern", fetch=FetchType.EAGER)
-    private List<PatternShift> patternShifts;
+    protected List<PatternShift> patternShifts;
 
     public Pattern() {
     }

@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servlet.mvc.controller.shift;
 
 import lv.javaguru.java2.core.GenericService;
-import lv.javaguru.java2.core.shift.ShiftService;
+import lv.javaguru.java2.core.shift.ShiftFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
@@ -15,7 +15,7 @@ import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 public class ShiftEditController
         extends GenericNewEditMVCController implements MVCController  {
     @Autowired
-    ShiftService shiftService;
+    ShiftFactory shiftFactory;
 
     @Override
     protected Generic fillParameters(HttpServletRequest req) throws Exception{
@@ -28,7 +28,7 @@ public class ShiftEditController
 
     @Override
     protected GenericService getService() {
-        return shiftService;
+        return shiftFactory;
     }
 
     @Override

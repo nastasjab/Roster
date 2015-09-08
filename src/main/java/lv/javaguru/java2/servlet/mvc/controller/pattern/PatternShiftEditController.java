@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servlet.mvc.controller.pattern;
 
 import lv.javaguru.java2.core.GenericService;
-import lv.javaguru.java2.core.pattern.PatternShiftService;
+import lv.javaguru.java2.core.pattern.PatternShiftFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.pattern.PatternShift;
 import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
@@ -12,28 +12,31 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static lv.javaguru.java2.domain.pattern.PatternShiftBuilder.createPatternShift;
+
 @Component
 public class PatternShiftEditController extends
         GenericNewEditMVCController implements MVCController {
 
     @Autowired
-    private PatternShiftService patternShiftServiceService;
+    private PatternShiftFactory patternShiftFactory;
 
     @Override
     public MVCModel listObject(HttpServletRequest req) throws Exception{
 
-        return new MVCModel(patternShiftServiceService.getObject(getId(req), getPatternId(req)),
+        return new MVCModel(patternShiftFactory.getObject(getId(req), getPatternId(req)),
                 getEditPageAddressJSP());
     }
 
     @Override
     protected Generic fillParameters(HttpServletRequest req) throws Exception {
-        PatternShift object = new PatternShift();
-        object.getPattern().setId(getPatternId(req));
-        object.getShift().setId(Long.valueOf(req.getParameter("shift")));
-        object.setSeqNo(Integer.valueOf(req.getParameter("seqno")));
+        PatternShift object = createPatternShift()
+                .withPatternId(getPatternId(req))
+                .withShiftId(Long.valueOf(req.getParameter("shift")))
+                .withSeqNo(Integer.valueOf(req.getParameter("seqno"))).build();
+
         if (object.getSeqNo() == 0)
-            object.setSeqNo(patternShiftServiceService.getNextSequence(object.getPattern().getId()));
+            object.setSeqNo(patternShiftFactory.getNextSequence(object.getPattern().getId()));
         return  object;
     }
 
@@ -49,7 +52,7 @@ public class PatternShiftEditController extends
 
     @Override
     protected GenericService getService() {
-        return patternShiftServiceService;
+        return patternShiftFactory;
     }
 
     @Override

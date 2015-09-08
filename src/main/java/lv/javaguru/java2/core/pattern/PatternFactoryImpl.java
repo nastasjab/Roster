@@ -7,16 +7,18 @@ import lv.javaguru.java2.domain.pattern.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
+
 @Component
-public class PatternServiceImpl
-        extends GenericServiceImpl<PatternDAO, Pattern> implements PatternService {
+public class PatternFactoryImpl
+        extends GenericServiceImpl<PatternDAO, Pattern> implements PatternFactory {
 
     @Autowired
     PatternValidator patternValidator;
 
     @Override
     public Pattern getNewInstance() {
-        return new Pattern();
+        return createPattern().build();
     }
 
     @Override

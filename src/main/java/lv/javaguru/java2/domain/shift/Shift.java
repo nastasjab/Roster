@@ -14,13 +14,13 @@ public class Shift extends Generic {
     protected long id;
 
     @Column(name = "name")
-    protected String name = "";
+    protected String name;
 
     @Column(name = "start")
-    protected String shiftStarts = "";
+    protected String shiftStarts;
 
     @Column(name = "end")
-    protected String shiftEnds = "";
+    protected String shiftEnds;
 
 
     public Shift() {

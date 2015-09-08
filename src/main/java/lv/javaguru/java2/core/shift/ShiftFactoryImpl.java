@@ -7,18 +7,18 @@ import lv.javaguru.java2.domain.shift.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.regex.Pattern;
+import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 
 @Component
-public class ShiftServiceImpl
-        extends GenericServiceImpl<ShiftDAO, Shift> implements ShiftService {
+public class ShiftFactoryImpl
+        extends GenericServiceImpl<ShiftDAO, Shift> implements ShiftFactory {
 
     @Autowired
     ShiftValidator shiftValidator;
 
     @Override
     public Shift getNewInstance() {
-        return new Shift();
+        return createShift().build();
     }
 
     @Override

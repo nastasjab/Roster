@@ -15,6 +15,8 @@ import javax.transaction.Transactional;
 import java.math.BigInteger;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
+
 @Component
 public class PatternShiftDAOImpl extends GenericHibernateDAOImpl<PatternShift> implements PatternShiftDAO {
 
@@ -26,8 +28,7 @@ public class PatternShiftDAOImpl extends GenericHibernateDAOImpl<PatternShift> i
 
     @Transactional
     public List<PatternShift> getAll(long patternId) throws JDBCException {
-        Pattern pattern = new Pattern();
-        pattern.setId(patternId);
+        Pattern pattern = createPattern().withId(patternId).build();
         return sessionFactory.getCurrentSession().createCriteria(PatternShift.class)
                 .add(Restrictions.eq("pattern", pattern))
                 .addOrder(Order.asc("seqNo")).list();

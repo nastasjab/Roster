@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
 import static org.junit.Assert.*;
 
 public class PatternDAOImplTest extends GenericSpringTest {
@@ -21,8 +22,8 @@ public class PatternDAOImplTest extends GenericSpringTest {
 
     @Before
     public void init() {
-        pattern = createPattern("pattern1ssss");
-        pattern2 = createPattern("pattern2ssss");
+        pattern = createPattern().withName("pattern1ssss").build();
+        pattern2 = createPattern().withName("pattern2ssss").build();
     }
 
     @Test
@@ -95,12 +96,6 @@ public class PatternDAOImplTest extends GenericSpringTest {
 
         patternDAO.delete(pattern.getId());
         assertNull(patternDAO.getByObjectName(pattern.getName()));
-    }
-
-    public static Pattern createPattern(String name) {
-        Pattern pattern = new Pattern();
-        pattern.setName(name);
-        return pattern;
     }
 
 }

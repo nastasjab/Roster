@@ -21,6 +21,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
+import static lv.javaguru.java2.domain.pattern.PatternShiftBuilder.createPatternShift;
 import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -54,19 +56,15 @@ public class RosterTest extends GenericSpringTest{
 
         userId = 9999;
 
-        pattern = new Pattern();
-        pattern.setName("test");
+        pattern = createPattern().withName("test").build();
 
         for (int i = 0; i < 5; i++) {
             Shift shift = createShift().withName("T" + i).build();
             shiftList.add(shift);
             shiftDAO.create(shift);
 
-            PatternShift patternShift = new PatternShift();
-            patternShift.setSeqNo(i + 1);
-            patternShift.setShift(shift);
-            patternShift.setPattern(pattern);
-            patternShifts.add(patternShift);
+            patternShifts.add(createPatternShift()
+                    .withShift(shift).withSeqNo(i+1).withPattern(pattern).build());
         }
 
         pattern.setPatternShifts(patternShifts);
@@ -189,23 +187,16 @@ public class RosterTest extends GenericSpringTest{
         assertEquals(3, shiftDAO.getAll().size() - shiftsCount);
 
 
-        Pattern pattern = new Pattern();
-        pattern.setName("test");
+        Pattern pattern = createPattern().withName("test").build()
 
-        PatternShift patternShift1 = new PatternShift();
-        patternShift1.setShift(shift1);
-        patternShift1.setPattern(pattern);
-        patternShift1.setSeqNo(1);
+        PatternShift patternShift1 = createPatternShift()
+                .withPattern(pattern).withShift(shift1).withSeqNo(1).build();
 
-        PatternShift patternShift2 = new PatternShift();
-        patternShift2.setShift(shift2);
-        patternShift2.setPattern(pattern);
-        patternShift2.setSeqNo(2);
+        PatternShift patternShift2 = createPatternShift()
+                .withPattern(pattern).withShift(shift2).withSeqNo(2).build();
 
-        PatternShift patternShift3 = new PatternShift();
-        patternShift3.setShift(shift3);
-        patternShift3.setPattern(pattern);
-        patternShift3.setSeqNo(3);
+        PatternShift patternShift3 = createPatternShift()
+                .withPattern(pattern).withShift(shift3).withSeqNo(3).build();
 
         List<PatternShift> patternShifts = new ArrayList<PatternShift>();
         patternShifts.add(patternShift1);

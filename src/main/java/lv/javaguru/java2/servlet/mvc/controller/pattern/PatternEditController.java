@@ -1,9 +1,8 @@
 package lv.javaguru.java2.servlet.mvc.controller.pattern;
 
 import lv.javaguru.java2.core.GenericService;
-import lv.javaguru.java2.core.pattern.PatternService;
+import lv.javaguru.java2.core.pattern.PatternFactory;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.pattern.Pattern;
 import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +10,14 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
+
 @Component
 public class PatternEditController
         extends GenericNewEditMVCController implements MVCController {
 
     @Autowired
-    PatternService patternService;
+    PatternFactory patternFactory;
 
     private long getPatternId(HttpServletRequest req) throws Exception {
         try {
@@ -29,7 +30,7 @@ public class PatternEditController
 
     @Override
     protected GenericService getService() {
-        return patternService;
+        return patternFactory;
     }
 
     @Override
@@ -49,9 +50,8 @@ public class PatternEditController
 
     @Override
     protected Generic fillParameters(HttpServletRequest req) throws Exception{
-        Pattern object = new Pattern();
-        object.setName(req.getParameter("name"));
-        return object;
+        return createPattern()
+                .withName(req.getParameter("name")).build();
     }
 
 
