@@ -24,6 +24,7 @@ public class ShiftValidatorTest extends GenericSpringTest {
         shiftValidator.validateStartTime("00:00");
         shiftValidator.validateStartTime("0:00");
         shiftValidator.validateStartTime("23:59");
+        shiftValidator.validateStartTime("");
     }
 
     @Test (expected = InvalidTimeFormatException.class)
@@ -34,11 +35,6 @@ public class ShiftValidatorTest extends GenericSpringTest {
     @Test (expected = InvalidTimeFormatException.class)
     public void testValidateStartTimeError2() throws Exception {
         shiftValidator.validateStartTime("24:00");
-    }
-
-    @Test (expected = InvalidTimeFormatException.class)
-    public void testValidateStartTimeError3() throws Exception {
-        shiftValidator.validateStartTime("");
     }
 
     @Test
