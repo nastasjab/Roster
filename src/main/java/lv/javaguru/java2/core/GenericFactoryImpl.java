@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public abstract class GenericServiceImpl
+public abstract class GenericFactoryImpl
        < T extends GenericDAO,
-        R extends Generic> implements  GenericService {
+        R extends Generic> implements GenericFactory {
     @Autowired
     public T dao;
 

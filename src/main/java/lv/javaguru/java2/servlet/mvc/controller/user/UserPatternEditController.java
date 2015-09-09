@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
-import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.core.userpattern.UserPatternFactory;
 import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.user.UserDAO;
@@ -61,7 +61,7 @@ public class UserPatternEditController extends GenericEditMVCController implemen
     }
 
     @Override
-    protected GenericService getService() {
+    protected GenericFactory getService() {
         return userPatternFactory;
     }
 

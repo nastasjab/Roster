@@ -1,6 +1,6 @@
 package lv.javaguru.java2.core.userpattern;
 
-import lv.javaguru.java2.core.GenericServiceImpl;
+import lv.javaguru.java2.core.GenericFactoryImpl;
 import lv.javaguru.java2.core.ObjectExistException;
 import lv.javaguru.java2.database.user.UserPatternDAO;
 import lv.javaguru.java2.domain.Generic;
@@ -17,7 +17,7 @@ import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern
 
 @Component
 public class UserPatternFactoryImpl
-        extends GenericServiceImpl<UserPatternDAO, UserPattern>
+        extends GenericFactoryImpl<UserPatternDAO, UserPattern>
         implements UserPatternFactory {
 
     @Autowired

@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc.controller.shift;
 
-import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.core.shift.ShiftFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
@@ -27,7 +27,7 @@ public class ShiftEditController
     }
 
     @Override
-    protected GenericService getService() {
+    protected GenericFactory getService() {
         return shiftFactory;
     }
 

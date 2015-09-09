@@ -18,8 +18,9 @@ public class ShiftValidatorImpl implements ShiftValidator {
     ShiftDAO shiftDAO;
 
     public void validateStartTime(String startTime) throws Exception {
-        if (!pattern.matcher(startTime).matches())
-            throw new InvalidTimeFormatException("shift start");
+        if (startTime!=null && !startTime.isEmpty())
+            if (!pattern.matcher(startTime).matches())
+                throw new InvalidTimeFormatException("shift start");
     }
 
     public void validateEndTime(String endTime) throws Exception {

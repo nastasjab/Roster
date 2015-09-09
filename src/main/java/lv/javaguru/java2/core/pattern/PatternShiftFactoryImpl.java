@@ -1,6 +1,6 @@
 package lv.javaguru.java2.core.pattern;
 
-import lv.javaguru.java2.core.GenericServiceImpl;
+import lv.javaguru.java2.core.GenericFactoryImpl;
 import lv.javaguru.java2.database.pattern.PatternShiftDAO;
 import lv.javaguru.java2.database.shift.ShiftDAO;
 import lv.javaguru.java2.domain.Generic;
@@ -13,7 +13,7 @@ import static lv.javaguru.java2.domain.pattern.PatternShiftBuilder.createPattern
 
 @Component
 public class PatternShiftFactoryImpl
-        extends GenericServiceImpl<PatternShiftDAO, PatternShift> implements PatternShiftFactory {
+        extends GenericFactoryImpl<PatternShiftDAO, PatternShift> implements PatternShiftFactory {
 
     @Autowired
     private PatternShiftDAO patternShiftDAO;

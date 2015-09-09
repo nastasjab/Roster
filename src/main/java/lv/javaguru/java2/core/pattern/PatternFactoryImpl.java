@@ -11,7 +11,7 @@ import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
 
 @Component
 public class PatternFactoryImpl
-        extends GenericServiceImpl<PatternDAO, Pattern> implements PatternFactory {
+        extends GenericFactoryImpl<PatternDAO, Pattern> implements PatternFactory {
 
     @Autowired
     PatternValidator patternValidator;

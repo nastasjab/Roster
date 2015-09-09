@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
-import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.core.user.UserFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
@@ -19,7 +19,7 @@ public class UserEditController extends GenericEditMVCController implements MVCC
     private UserFactory userFactory;
 
     @Override
-    protected GenericService getService() {
+    protected GenericFactory getService() {
         return userFactory;
     }
 

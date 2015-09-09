@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc.controller.pattern;
 
-import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.core.pattern.PatternShiftFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.pattern.PatternShift;
@@ -51,7 +51,7 @@ public class PatternShiftEditController extends
     }
 
     @Override
-    protected GenericService getService() {
+    protected GenericFactory getService() {
         return patternShiftFactory;
     }
 

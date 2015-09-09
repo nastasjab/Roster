@@ -4,7 +4,7 @@ import lv.javaguru.java2.domain.Generic;
 
 import java.util.List;
 
-public interface GenericService {
+public interface GenericFactory {
 
     Generic getObject(long id) throws Exception;
     void addObject(Generic object) throws Exception;

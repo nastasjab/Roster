@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
-import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.core.user.UserFactory;
 import lv.javaguru.java2.servlet.mvc.GenericMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
@@ -19,7 +19,7 @@ public class UserController extends GenericMVCController implements MVCControlle
     }
 
     @Override
-    protected GenericService getService() {
+    protected GenericFactory getService() {
         return userFactory;
     }
 

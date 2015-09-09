@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc.controller.pattern;
 
-import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.core.pattern.PatternFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
@@ -29,7 +29,7 @@ public class PatternEditController
     }
 
     @Override
-    protected GenericService getService() {
+    protected GenericFactory getService() {
         return patternFactory;
     }
 

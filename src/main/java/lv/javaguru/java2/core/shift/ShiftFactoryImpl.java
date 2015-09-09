@@ -11,7 +11,7 @@ import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 
 @Component
 public class ShiftFactoryImpl
-        extends GenericServiceImpl<ShiftDAO, Shift> implements ShiftFactory {
+        extends GenericFactoryImpl<ShiftDAO, Shift> implements ShiftFactory {
 
     @Autowired
     ShiftValidator shiftValidator;

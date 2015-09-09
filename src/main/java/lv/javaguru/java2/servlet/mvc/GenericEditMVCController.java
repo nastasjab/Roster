@@ -1,10 +1,9 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
 import org.hibernate.JDBCException;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -28,7 +27,7 @@ public abstract class GenericEditMVCController {
                             e.getSQLException().getMessage(),
                             e.getSQLException().getMessage(),
                             "javascript:history.back()",
-                            "Back"), "/error.jsp");
+                            "Back"), "/message.jsp");
         }
         catch (Exception e){
             return new MVCModel(
@@ -36,11 +35,11 @@ public abstract class GenericEditMVCController {
                             e.getMessage(),
                             e.getMessage(),
                             "javascript:history.back()",
-                            "Back"), "/error.jsp");
+                            "Back"), "/message.jsp");
         }
     }
 
-    protected abstract GenericService getService();
+    protected abstract GenericFactory getService();
     protected abstract String getObjectName();
     protected abstract String getEditPageAddressJSP();
     protected abstract String getListPageAddress(HttpServletRequest req);

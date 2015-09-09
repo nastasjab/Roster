@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc.controller.pattern;
 
-import lv.javaguru.java2.core.GenericService;
+import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.core.pattern.PatternFactory;
 import lv.javaguru.java2.servlet.mvc.GenericMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
@@ -19,7 +19,7 @@ public class PatternController extends GenericMVCController implements MVCContro
     }
 
     @Override
-    protected GenericService getService() {
+    protected GenericFactory getService() {
         return patternFactory;
     }
 }

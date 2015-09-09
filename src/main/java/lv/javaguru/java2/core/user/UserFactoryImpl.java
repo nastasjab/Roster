@@ -1,6 +1,6 @@
 package lv.javaguru.java2.core.user;
 
-import lv.javaguru.java2.core.GenericServiceImpl;
+import lv.javaguru.java2.core.GenericFactoryImpl;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.user.User;
@@ -12,7 +12,7 @@ import java.util.List;
 import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
 
 @Component
-public class UserFactoryImpl extends GenericServiceImpl<UserDAO, User> implements UserFactory {
+public class UserFactoryImpl extends GenericFactoryImpl<UserDAO, User> implements UserFactory {
 
     @Autowired
     private UserValidator userValidator;
