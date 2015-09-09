@@ -17,6 +17,7 @@ import java.util.List;
 @Component
 public class UserPatternValidatorImpl implements UserPatternValidator{
 
+
     @Autowired
     private UserDAO userDAO;
 
@@ -32,6 +33,13 @@ public class UserPatternValidatorImpl implements UserPatternValidator{
     }
 
     public void validateDates(UserPattern userPattern, boolean add) throws Exception {
+
+        if (userPattern.getStartDay() == null)
+            throw new InvalidDateFormatException("pattern start");
+
+        if (userPattern.getEndDay() == null)
+            throw new InvalidDateFormatException("pattern end");
+
         List<UserPattern> overlapsWith = new ArrayList<UserPattern>();
         List<UserPattern> userPatterns = userPatternDAO
                 .getByDateFrame(userPattern.getStartDay(), userPattern.getEndDay(), userPattern.getUserId());

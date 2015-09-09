@@ -35,9 +35,6 @@ public class RosterFactoryImpl implements RosterFactory {
     private SingleShiftDAO singleShiftDAO;
 
     @Autowired
-    private PatternDAO patternDAO;
-
-    @Autowired
     private PatternShiftDAO patternShiftDAO;
 
     @Autowired
@@ -131,13 +128,6 @@ public class RosterFactoryImpl implements RosterFactory {
             shiftList.add(0, createShift().withId(0L).withName("No Shift Set").build());
 
         return shiftList;
-    }
-
-    private Shift getShiftFromUserPattern2(Date date, long userId) throws IndexOutOfBoundsException {
-        return patternDAO.getById(getUserPattern(date, userId).getPattern().getId())
-                .getPatternShifts()
-                .get((int) getPatternOffset(getUserPattern(date, userId), date))
-                .getShift();
     }
 
     private Shift getShiftFromUserPattern(Date date, long userId) throws IndexOutOfBoundsException {

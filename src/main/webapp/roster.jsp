@@ -21,15 +21,6 @@
     <th><input type="date" name="roster_date_till" value="<%= roster.getTill() %>"></th>
     <th><input type="submit" name="roster_dates_refresh" value="Refresh"></th>
 </table></form>
-<form method="post"><table align="center">
-    <td>
-        <select name="roster_year"><option value="2015">2015</option></select>
-        <select name="roster_month"><% for (int i = 1; i <= 12; i++) { %>
-            <option value="<%= i%>"><%= i%></option><% } %>
-        </select>
-        <input type="submit" name="roster_year_month_refresh" value="Refresh">
-    </td>
-</table></form>
 <table border="1" cellpadding="5" align="center">
     <th>User</th>
     <%  for(long epochDay = Dates.toEpochDay(roster.getFrom());
