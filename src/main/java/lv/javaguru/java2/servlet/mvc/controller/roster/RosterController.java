@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servlet.mvc.controller.roster;
 
 
-import lv.javaguru.java2.core.roster.RosterService;
+import lv.javaguru.java2.core.roster.RosterFactory;
 import lv.javaguru.java2.domain.roster.Roster;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
@@ -16,11 +16,11 @@ import java.time.LocalDate;
 public class RosterController implements MVCController {
 
     @Autowired
-    private RosterService rosterService;
+    private RosterFactory rosterFactory;
 
     public MVCModel processRequest(HttpServletRequest req) {
 
-        return new MVCModel(rosterService
+        return new MVCModel(rosterFactory
                 .getRoster(new Roster(getDateFrom(req), getDateTill(req))), "/roster.jsp");
 
     }

@@ -26,7 +26,7 @@ import static lv.javaguru.java2.domain.roster.SingleShiftBuilder.createSingleShi
 import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 
 @Component
-public class RosterServiceImpl implements RosterService {
+public class RosterFactoryImpl implements RosterFactory {
 
     @Autowired
     private UserDAO userDAO;

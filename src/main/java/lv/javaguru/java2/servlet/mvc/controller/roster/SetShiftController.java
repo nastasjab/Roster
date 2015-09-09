@@ -2,7 +2,7 @@ package lv.javaguru.java2.servlet.mvc.controller.roster;
 
 import lv.javaguru.java2.core.NoShiftFoundException;
 import lv.javaguru.java2.core.roster.InvalidShiftException;
-import lv.javaguru.java2.core.roster.RosterService;
+import lv.javaguru.java2.core.roster.RosterFactory;
 import lv.javaguru.java2.core.user.UserFactory;
 import lv.javaguru.java2.domain.user.User;
 import lv.javaguru.java2.servlet.mvc.*;
@@ -21,7 +21,7 @@ public class SetShiftController implements MVCController {
     private UserFactory userFactory;
 
     @Autowired
-    private RosterService rosterService;
+    private RosterFactory rosterFactory;
 
     public MVCModel processRequest(HttpServletRequest req) {
 
@@ -38,10 +38,10 @@ public class SetShiftController implements MVCController {
             e.printStackTrace();
         }
 
-        result.setShifts(rosterService.getAvailableShifts(getDate(req), getUserId(req)));
+        result.setShifts(rosterFactory.getAvailableShifts(getDate(req), getUserId(req)));
 
         try {
-            result.setCurrentShiftId(rosterService.getShift(getDate(req), getUserId(req)).getId());
+            result.setCurrentShiftId(rosterFactory.getShift(getDate(req), getUserId(req)).getId());
         } catch (NoShiftFoundException e) {
             result.setCurrentShiftId(0);
         }
@@ -65,7 +65,7 @@ public class SetShiftController implements MVCController {
     protected MVCModel update(HttpServletRequest req) {
 
         try {
-            rosterService.setShift(getDate(req), getUserId(req), getShift(req));
+            rosterFactory.setShift(getDate(req), getUserId(req), getShift(req));
         } catch (InvalidShiftException e) {
             return new MVCModel(
                     new MessageContents(
