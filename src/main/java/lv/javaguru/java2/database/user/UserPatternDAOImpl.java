@@ -42,6 +42,7 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
                         Restrictions.le("startDay", date),
                         Restrictions.ge("endDay", date)))
                 .list().get(0);
+
     }
 
     @Transactional
