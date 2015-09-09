@@ -6,6 +6,8 @@ import lv.javaguru.java2.domain.pattern.Pattern;
 import javax.persistence.*;
 import java.sql.Date;
 
+import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
+
 @Entity
 @Table(name = "user_patterns")
 public class UserPattern extends Generic {
@@ -79,7 +81,7 @@ public class UserPattern extends Generic {
 
     public Pattern getPattern() {
         if (pattern == null)
-            pattern =  new Pattern();
+            pattern =  createPattern().build();
 
         return pattern;
     }

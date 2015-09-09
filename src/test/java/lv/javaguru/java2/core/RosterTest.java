@@ -161,13 +161,9 @@ public class RosterTest extends GenericSpringTest{
     /*
     @Test
     public void setShiftTest() {
-        Shift shift1 = new Shift();
-        Shift shift2 = new Shift();
-        Shift shift3 = new Shift();
-
-        shift1.setName("test1");
-        shift2.setName("test2");
-        shift3.setName("test3");
+        Shift shift1 = createShift().withName("test1").build();
+        Shift shift2 = createShift().withName("test2").build();
+        Shift shift3 = createShift().withName("test3").build();
 
         List<Shift> shifts = shiftDAO.getAll();
         int shiftsCount = shifts == null ? 0 : shifts.size();
@@ -202,12 +198,14 @@ public class RosterTest extends GenericSpringTest{
         assertEquals(pattern, patternDAO.getById(pattern.getId()));
 
 
-        UserPattern userPattern = new UserPattern();
-        userPattern.setPatternStartDay(1);
-        userPattern.setPattern(pattern);
-        userPattern.setStartDay(Dates.toSqlDate(1));
-        userPattern.setEndDay(Dates.toSqlDate(15));
-        userPattern.setUserId(99);
+        UserPattern userPattern =
+        createUserPattern()
+                .withUserId(99)
+                .withPattern(pattern)
+                .withStartDay(Dates.toSqlDate(1))
+                .withEndDay(Dates.toSqlDate(15))
+                .withPatternStartDay(1)
+                .build();
 
         userPatternDAO.create(userPattern);
         assertEquals(userPattern, userPatternDAO.getById(userPattern.getId()));
@@ -224,7 +222,7 @@ public class RosterTest extends GenericSpringTest{
                 for (Shift shiftInSingleShifts : shiftList) {
 
                     Shift expectedShift = shiftToSet;
-                    SingleShift singleShift = new SingleShift();
+                    SingleShift singleShift = createSingleShift().build();
 
                     if (shiftInSingleShifts.getId() != 0) {
                         singleShift.setUserId(99);
