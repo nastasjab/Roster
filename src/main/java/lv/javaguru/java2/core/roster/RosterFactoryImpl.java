@@ -187,7 +187,6 @@ public class RosterFactoryImpl implements RosterFactory {
                 getShiftsFromPattern(userPattern, shiftInPattern);
 
                 int patternSize = shiftInPattern.size();
-                patternSize = userPattern.getPattern().getSize();
                 int seqNo = (int) (patternOffset % (long)patternSize);
 
                 for (long day = epochDayFrom; day <= epochDayTill; day++) {
