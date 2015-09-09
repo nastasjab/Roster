@@ -41,7 +41,6 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
                 .add(Restrictions.and(
                         Restrictions.le("startDay", date),
                         Restrictions.ge("endDay", date)))
-                .setMaxResults(1)
                 .list().get(0);
     }
 
