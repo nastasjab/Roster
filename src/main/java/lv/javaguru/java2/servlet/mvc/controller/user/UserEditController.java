@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
 import lv.javaguru.java2.core.GenericService;
-import lv.javaguru.java2.core.user.UserService;
+import lv.javaguru.java2.core.user.UserFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
@@ -16,11 +16,11 @@ import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
 public class UserEditController extends GenericEditMVCController implements MVCController {
 
     @Autowired
-    private UserService userService;
+    private UserFactory userFactory;
 
     @Override
     protected GenericService getService() {
-        return userService;
+        return userFactory;
     }
 
     @Override

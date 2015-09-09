@@ -26,7 +26,7 @@ import static lv.javaguru.java2.domain.roster.SingleShiftBuilder.createSingleShi
 import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 
 @Component
-public class RosterServiceImpl implements RosterService {
+public class RosterFactoryImpl implements RosterFactory {
 
     @Autowired
     private UserDAO userDAO;
@@ -51,7 +51,7 @@ public class RosterServiceImpl implements RosterService {
 
     public Roster getRoster(Roster roster) {
         try {
-            roster = getRoster(roster, userDAO.getAll());
+            roster = getRoster(roster, userDAO.getAllSorted());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,6 +191,7 @@ public class RosterServiceImpl implements RosterService {
                 getShiftsFromPattern(userPattern, shiftInPattern);
 
                 int patternSize = shiftInPattern.size();
+                patternSize = userPattern.getPattern().getSize();
                 int seqNo = (int) (patternOffset % (long)patternSize);
 
                 for (long day = epochDayFrom; day <= epochDayTill; day++) {

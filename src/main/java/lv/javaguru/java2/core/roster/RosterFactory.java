@@ -8,7 +8,7 @@ import lv.javaguru.java2.domain.user.User;
 import java.sql.Date;
 import java.util.List;
 
-public interface RosterService {
+public interface RosterFactory {
     Roster getRoster(Roster roster);
     Roster getRoster(Roster roster, List<User> forUsers);
     Shift getShift(Date date, long userId) throws NoShiftFoundException;

@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
 import lv.javaguru.java2.core.GenericService;
-import lv.javaguru.java2.core.userpattern.UserPatternService;
+import lv.javaguru.java2.core.userpattern.UserPatternFactory;
 import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.domain.Generic;
@@ -26,7 +26,7 @@ public class UserPatternEditController extends GenericEditMVCController implemen
     private UserDAO userDAO;
 
     @Autowired
-    private UserPatternService userPatternService;
+    private UserPatternFactory userPatternFactory;
 
     @Autowired
     private PatternDAO patternDAO;
@@ -35,7 +35,7 @@ public class UserPatternEditController extends GenericEditMVCController implemen
     protected MVCModel listObject(HttpServletRequest req) throws Exception {
         UserPatternEditControllerData result = new UserPatternEditControllerData();
         if (getId(req) != 0) {
-            result.setUserPattern((UserPattern) userPatternService.getObject(getId(req)));
+            result.setUserPattern((UserPattern) userPatternFactory.getObject(getId(req)));
         } else {
             result.getUserPattern().setPatternStartDay(1);
         }
@@ -62,7 +62,7 @@ public class UserPatternEditController extends GenericEditMVCController implemen
 
     @Override
     protected GenericService getService() {
-        return userPatternService;
+        return userPatternFactory;
     }
 
     @Override
