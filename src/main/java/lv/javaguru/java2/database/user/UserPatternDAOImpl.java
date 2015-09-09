@@ -19,7 +19,7 @@ public class UserPatternDAOImpl extends GenericHibernateDAOImpl<UserPattern> imp
 
     @Transactional
     public List<UserPattern> getAll()  throws JDBCException {
-        return sessionFactory.getCurrentSession().createCriteria(Pattern.class)
+        return sessionFactory.getCurrentSession().createCriteria(UserPattern.class)
                 .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .list();
     }

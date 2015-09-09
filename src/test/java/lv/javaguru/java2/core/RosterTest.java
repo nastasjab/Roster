@@ -60,7 +60,7 @@ public class RosterTest extends GenericSpringTest{
 
         pattern = createPattern().withName("test").build();
 
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 3; i++) {
             Shift shift = createShift().withName("T" + i).build();
             shiftList.add(shift);
             shiftDAO.create(shift);
@@ -75,7 +75,7 @@ public class RosterTest extends GenericSpringTest{
         userPattern = createUserPattern()
                 .withUserId(userId)
                 .withStartDay(Date.valueOf("1970-01-03"))
-                .withEndDay(Date.valueOf("1970-01-05"))
+                .withEndDay(Date.valueOf("1970-01-11"))
                 .withPatternStartDay(1)
                 .withPattern(pattern)
                 .build();
@@ -91,69 +91,56 @@ public class RosterTest extends GenericSpringTest{
 
         SingleShift singleShift2 = createSingleShift()
                 .withUserId(userId)
-                .withDate(Date.valueOf("1970-01-05"))
-                .withShift(shiftList.get(0))
+                .withDate(Date.valueOf("1970-01-06"))
+                .withShift(shiftList.get(2))
                 .build();
         singleShiftDAO.create(singleShift2);
 
     }
 
-    @Test
-    public void getEmptyShiftTest() {
-
-        boolean exceptionThrown = false;
-
-        try {
+    @Test(expected = NoShiftFoundException.class)
+    public void getEmptyShiftTest() throws NoShiftFoundException {
             rosterService.getShift(Date.valueOf("1970-01-01"), userId);
-        } catch (NoShiftFoundException e) {
-            exceptionThrown = true;
-        }
-
-        assertTrue(exceptionThrown);
-
     }
 
     @Test
-    public void getShiftFromUserPatternTest() {
-
-        Shift shiftFromUserPattern = null;
-
-        try {
-            shiftFromUserPattern = rosterService.getShift(Date.valueOf("1970-01-04"), userId);
-        } catch (NoShiftFoundException e) {
-            fail();
-        }
-
-        assertEquals(shiftList.get(1), shiftFromUserPattern);
-
+    public void getShiftFromUserPatternTestSeqNo1() throws NoShiftFoundException {
+        assertEquals(shiftList.get(0).getName(), rosterService.getShift(Date.valueOf("1970-01-03"), userId).getName());
     }
 
     @Test
-    public void getShiftFromSingleShifts() {
-
-        Shift shiftFromSingleShifts = null;
-
-        try {
-            shiftFromSingleShifts = rosterService.getShift(Date.valueOf("1970-01-02"), userId);
-        } catch (NoShiftFoundException e) {
-            fail();
-        }
-
-        assertEquals(shiftList.get(2), shiftFromSingleShifts);
+    public void getShiftFromUserPatternTestSeqNo2() throws NoShiftFoundException {
+        assertEquals(shiftList.get(1).getName(), rosterService.getShift(Date.valueOf("1970-01-04"), userId).getName());
     }
 
     @Test
-    public void getShiftFromBoth() {
+    public void getShiftFromUserPatternTestSeqNo3() throws NoShiftFoundException {
+        assertEquals(shiftList.get(2).getName(), rosterService.getShift(Date.valueOf("1970-01-05"), userId).getName());
+    }
 
-        Shift shiftFromSingleShifts = null;
+    @Test
+    public void getShiftFromUserPatternTestSeqNo1And6DaysLater() throws NoShiftFoundException {
+        assertEquals(shiftList.get(0).getName(), rosterService.getShift(Date.valueOf("1970-01-09"), userId).getName());
+    }
 
-        try {
-            shiftFromSingleShifts = rosterService.getShift(Date.valueOf("1970-01-05"), userId);
-        } catch (NoShiftFoundException e) {
-            fail();
-        }
+    @Test
+    public void getShiftFromUserPatternTestSeqNo2And6DaysLater() throws NoShiftFoundException {
+        assertEquals(shiftList.get(1).getName(), rosterService.getShift(Date.valueOf("1970-01-10"), userId).getName());
+    }
 
-        assertEquals(shiftList.get(0), shiftFromSingleShifts);
+    @Test
+    public void getShiftFromUserPatternTestSeqNo3And6DaysLater() throws NoShiftFoundException {
+        assertEquals(shiftList.get(2).getName(), rosterService.getShift(Date.valueOf("1970-01-11"), userId).getName());
+    }
+
+    @Test
+    public void getShiftFromSingleShifts() throws NoShiftFoundException {
+        assertEquals(shiftList.get(2).getName(), rosterService.getShift(Date.valueOf("1970-01-02"), userId).getName());
+    }
+
+    @Test
+    public void getShiftFromBoth() throws NoShiftFoundException {
+        assertEquals(shiftList.get(2).getName(), rosterService.getShift(Date.valueOf("1970-01-06"), userId).getName());
     }
 
     /*

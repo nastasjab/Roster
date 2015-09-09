@@ -12,7 +12,7 @@ import java.util.List;
 import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
 
 @Component
-public class UserServiceImpl extends GenericServiceImpl<UserDAO, User> implements UserService {
+public class UserFactoryImpl extends GenericServiceImpl<UserDAO, User> implements UserFactory {
 
     @Autowired
     private UserValidator userValidator;

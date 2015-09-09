@@ -3,10 +3,7 @@ package lv.javaguru.java2.servlet.mvc.controller.roster;
 import lv.javaguru.java2.core.NoShiftFoundException;
 import lv.javaguru.java2.core.roster.InvalidShiftException;
 import lv.javaguru.java2.core.roster.RosterService;
-import lv.javaguru.java2.core.shift.ShiftFactory;
-import lv.javaguru.java2.core.user.UserService;
-import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.shift.Shift;
+import lv.javaguru.java2.core.user.UserFactory;
 import lv.javaguru.java2.domain.user.User;
 import lv.javaguru.java2.servlet.mvc.*;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
@@ -16,19 +13,12 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 
 @Component
 public class SetShiftController implements MVCController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
-    private ShiftFactory shiftFactory;
+    private UserFactory userFactory;
 
     @Autowired
     private RosterService rosterService;
@@ -43,7 +33,7 @@ public class SetShiftController implements MVCController {
         result.setDate(getDate(req));
 
         try {
-            result.setUser((User) userService.getObject(getUserId(req)));
+            result.setUser((User) userFactory.getObject(getUserId(req)));
         } catch (Exception e) {
             e.printStackTrace();
         }

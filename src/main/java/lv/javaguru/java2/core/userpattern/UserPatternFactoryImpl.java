@@ -16,9 +16,9 @@ import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern
 
 
 @Component
-public class UserPatternsServiceImpl
+public class UserPatternFactoryImpl
         extends GenericServiceImpl<UserPatternDAO, UserPattern>
-        implements UserPatternService{
+        implements UserPatternFactory {
 
     @Autowired
     private UserPatternDAO userPatternDAO;

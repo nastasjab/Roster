@@ -19,14 +19,6 @@ public class SetShiftControllerData {
     public SetShiftControllerData() {
     }
 
-    public long getCurrentShiftId() {
-        return currentShiftId;
-    }
-
-    public void setCurrentShiftId(long currentShiftId) {
-        this.currentShiftId = currentShiftId;
-    }
-
     public User getUser() {
         return user;
     }
@@ -43,18 +35,19 @@ public class SetShiftControllerData {
         this.shifts = shifts;
     }
 
+    public long getCurrentShiftId() {
+        return currentShiftId;
+    }
+
+    public void setCurrentShiftId(long currentShiftId) {
+        this.currentShiftId = currentShiftId;
+    }
+
     public Date getDate() {
         return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Shift getShiftById(long id) throws Exception {
-        for (Shift shift : shifts)
-            if (shift.getId() == id)
-                return shift;
-        throw new Exception("Shift not found");
     }
 }

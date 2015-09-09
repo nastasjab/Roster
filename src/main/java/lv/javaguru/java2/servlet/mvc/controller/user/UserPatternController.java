@@ -1,7 +1,7 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
 import lv.javaguru.java2.core.GenericService;
-import lv.javaguru.java2.core.userpattern.UserPatternService;
+import lv.javaguru.java2.core.userpattern.UserPatternFactory;
 import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.servlet.mvc.GenericMVCController;
@@ -23,7 +23,7 @@ public class UserPatternController extends GenericMVCController implements MVCCo
     private PatternDAO patternDAO;
 
     @Autowired
-    private UserPatternService userPatternService;
+    private UserPatternFactory userPatternFactory;
 
     @Override
     public MVCModel processRequest(HttpServletRequest req)  {
@@ -31,7 +31,7 @@ public class UserPatternController extends GenericMVCController implements MVCCo
         try {
             result = new UserPatternControllerData();
             result.setUser(userDAO.getById(getUserId(req)));
-            result.setUserPatterns(userPatternService.getByUserId(getUserId(req)));
+            result.setUserPatterns(userPatternFactory.getByUserId(getUserId(req)));
         } catch (NullPointerException e) {
             result = new UserPatternControllerData();
         }
@@ -63,7 +63,7 @@ public class UserPatternController extends GenericMVCController implements MVCCo
 
     @Override
     protected GenericService getService() {
-        return userPatternService;
+        return userPatternFactory;
     }
 
 }

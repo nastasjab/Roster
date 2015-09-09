@@ -51,7 +51,7 @@ public class RosterServiceImpl implements RosterService {
 
     public Roster getRoster(Roster roster) {
         try {
-            roster = getRoster(roster, userDAO.getAll());
+            roster = getRoster(roster, userDAO.getAllSorted());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -191,6 +191,7 @@ public class RosterServiceImpl implements RosterService {
                 getShiftsFromPattern(userPattern, shiftInPattern);
 
                 int patternSize = shiftInPattern.size();
+                patternSize = userPattern.getPattern().getSize();
                 int seqNo = (int) (patternOffset % (long)patternSize);
 
                 for (long day = epochDayFrom; day <= epochDayTill; day++) {
