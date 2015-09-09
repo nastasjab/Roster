@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.database.GenericDAO;
+import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
 import org.hibernate.JDBCException;
@@ -8,10 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 
-public abstract class GenericEditMVCController<T extends GenericDAO, R extends Generic> {
-
-    @Autowired
-    private T dao;
+public abstract class GenericEditMVCController {
 
     public MVCModel processRequest(HttpServletRequest req)  {
         PageAction action = getPageAction(req);
@@ -31,7 +28,7 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                             e.getSQLException().getMessage(),
                             e.getSQLException().getMessage(),
                             "javascript:history.back()",
-                            "Back"), "/message.jsp");
+                            "Back"), "/error.jsp");
         }
         catch (Exception e){
             return new MVCModel(
@@ -39,33 +36,22 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                             e.getMessage(),
                             e.getMessage(),
                             "javascript:history.back()",
-                            "Back"), "/message.jsp");
+                            "Back"), "/error.jsp");
         }
     }
 
+    protected abstract GenericService getService();
     protected abstract String getObjectName();
     protected abstract String getEditPageAddressJSP();
     protected abstract String getListPageAddress(HttpServletRequest req);
-    protected abstract R getNewInstance();
-    protected abstract void fillParameters(HttpServletRequest req, R object) throws Exception;
+    protected abstract Generic fillParameters(HttpServletRequest req) throws Exception;
 
     protected MVCModel listObject(HttpServletRequest req) throws Exception {
-        R result = null;
-        try {
-            long id = getId(req);
-            result = (R)dao.getById(id);
-        } catch (NullPointerException e) {
-            result = getNewInstance();
-        }
-
-        return new MVCModel(result, getEditPageAddressJSP());
+        return new MVCModel(getService().getObject(getId(req)), getEditPageAddressJSP());
     }
 
     protected MVCModel addObject(HttpServletRequest req) throws Exception {
-        R object = getNewInstance();
-        fillParameters(req, object);
-
-        dao.create(object);
+        getService().addObject(fillParameters(req));
 
         return new MVCModel(
                 new MessageContents(
@@ -76,11 +62,9 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
     }
 
     protected MVCModel updateObject(HttpServletRequest req) throws Exception {
-        R object = getNewInstance();
+        Generic object = fillParameters(req);
         object.setId(getId(req));
-        fillParameters(req, object);
-
-        dao.update(object);
+        getService().updateObject(object);
 
         return new MVCModel(
                 new MessageContents(
@@ -91,8 +75,7 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
     }
 
     protected MVCModel deleteObject(HttpServletRequest req) throws Exception {
-        deleteChildObjects(req);
-        dao.delete(getId(req));
+        getService().deleteObject(getId(req));
 
         return new MVCModel(
                 new MessageContents(
@@ -102,16 +85,13 @@ public abstract class GenericEditMVCController<T extends GenericDAO, R extends G
                         "Back to "+getObjectName()+"s List"), "/message.jsp");
     }
 
-    protected void deleteChildObjects(HttpServletRequest req) throws Exception {
-        // override if additional cascade delete is required
-    }
-
-    protected long getId(HttpServletRequest req) throws NullPointerException {
+    protected long getId(HttpServletRequest req)  {
         long result = 0;
         try {
             result = Long.decode(req.getParameter("id"));
         } catch (NumberFormatException e){
             e.printStackTrace();
+        }catch (NullPointerException e){
         }
         return result;
     }

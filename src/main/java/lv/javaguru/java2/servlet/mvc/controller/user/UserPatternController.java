@@ -4,7 +4,7 @@ import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.core.userpattern.UserPatternService;
 import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.user.UserDAO;
-import lv.javaguru.java2.servlet.mvc.GenericNewMVCController;
+import lv.javaguru.java2.servlet.mvc.GenericMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 import lv.javaguru.java2.servlet.mvc.data.UserPatternControllerData;
@@ -12,10 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Component
-public class UserPatternController extends GenericNewMVCController implements MVCController {
+public class UserPatternController extends GenericMVCController implements MVCController {
 
     @Autowired
     private UserDAO userDAO;

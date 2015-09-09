@@ -4,7 +4,7 @@ import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.core.pattern.PatternShiftFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.pattern.PatternShift;
-import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
+import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import static lv.javaguru.java2.domain.pattern.PatternShiftBuilder.createPattern
 
 @Component
 public class PatternShiftEditController extends
-        GenericNewEditMVCController implements MVCController {
+        GenericEditMVCController implements MVCController {
 
     @Autowired
     private PatternShiftFactory patternShiftFactory;

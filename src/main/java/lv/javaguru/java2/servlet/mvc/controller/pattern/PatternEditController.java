@@ -3,7 +3,7 @@ package lv.javaguru.java2.servlet.mvc.controller.pattern;
 import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.core.pattern.PatternFactory;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
+import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
 
 @Component
 public class PatternEditController
-        extends GenericNewEditMVCController implements MVCController {
+        extends GenericEditMVCController implements MVCController {
 
     @Autowired
     PatternFactory patternFactory;

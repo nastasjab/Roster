@@ -3,7 +3,7 @@ package lv.javaguru.java2.servlet.mvc.controller.shift;
 import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.core.shift.ShiftFactory;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
+import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 
 @Component
 public class ShiftEditController
-        extends GenericNewEditMVCController implements MVCController  {
+        extends GenericEditMVCController implements MVCController  {
     @Autowired
     ShiftFactory shiftFactory;
 

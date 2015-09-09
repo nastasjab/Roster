@@ -6,7 +6,7 @@ import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.user.UserPattern;
-import lv.javaguru.java2.servlet.mvc.GenericNewEditMVCController;
+import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
 import lv.javaguru.java2.servlet.mvc.MVCController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 import lv.javaguru.java2.servlet.mvc.data.UserPatternEditControllerData;
@@ -20,7 +20,7 @@ import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
 import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern;
 
 @Component
-public class UserPatternEditController extends GenericNewEditMVCController implements MVCController {
+public class UserPatternEditController extends GenericEditMVCController implements MVCController {
 
     @Autowired
     private UserDAO userDAO;

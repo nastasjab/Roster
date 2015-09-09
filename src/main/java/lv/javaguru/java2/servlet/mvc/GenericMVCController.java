@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.database.GenericDAO;
+import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
 import org.hibernate.JDBCException;
@@ -9,24 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public abstract class GenericMVCController <T extends GenericDAO, R extends Generic> {
+public abstract class GenericMVCController {
+    public MVCModel processRequest(HttpServletRequest req)  {
 
-    @Autowired
-    private T dao;
-
-    public MVCModel processRequest(HttpServletRequest req) {
-
-        List<R> list;
+        List<Generic> list;
 
         try {
-            list = dao.getAll();
+            list = getService().getAll();
         } catch (JDBCException e){
             return new MVCModel(
                     new MessageContents(
                             e.getSQLException().getMessage(),
                             e.getSQLException().getMessage(),
                             getListPageAddress(),
-                            "Back"), "/message.jsp");
+                            "Back"), "/error.jsp");
         }
 
         catch (Exception e){
@@ -35,11 +31,12 @@ public abstract class GenericMVCController <T extends GenericDAO, R extends Gene
                             e.getMessage(),
                             e.getMessage(),
                             getListPageAddress(),
-                            "Back"), "/message.jsp");
+                            "Back"), "/error.jsp");
         }
 
         return new MVCModel(list, getListPageAddress());
     }
 
     protected abstract String getListPageAddress();
+    protected abstract GenericService getService();
 }
