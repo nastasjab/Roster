@@ -46,8 +46,6 @@ public class RosterFactoryImpl implements RosterFactory {
     @Autowired
     private ShiftDAO shiftDAO;
 
-    private Roster roster;
-
 
     public Roster getRoster(Roster roster) {
         try {
@@ -60,11 +58,9 @@ public class RosterFactoryImpl implements RosterFactory {
 
     public Roster getRoster(Roster roster, List<User> forUsers) {
 
-        this.roster = roster;
-
-        fillWithUsers(forUsers);
-        fillWithUserPatterns();
-        fillWithSingleShifts();
+        fillWithUsers(roster, forUsers);
+        fillWithUserPatterns(roster);
+        fillWithSingleShifts(roster);
 
         return roster;
 
@@ -153,7 +149,7 @@ public class RosterFactoryImpl implements RosterFactory {
         return userPatternDAO.get(date, userId);
     }
 
-    private void fillWithUsers(List<User> users) {
+    private void fillWithUsers(Roster roster, List<User> users) {
         for (User user : users)
             roster.setUserMap(user, new RosterUserShiftMap());
     }
@@ -178,14 +174,14 @@ public class RosterFactoryImpl implements RosterFactory {
         return true;
     }
 
-    private void fillWithUserPatterns() {
+    private void fillWithUserPatterns(Roster roster) {
         try {
 
-            for (UserPattern userPattern : getUserPatternsByDatesFromTill()) {
+            for (UserPattern userPattern : getUserPatternsByDatesFromTill(roster)) {
 
-                long epochDayFrom = getEpochDayFrom(userPattern);
+                long epochDayFrom = getEpochDayFrom(roster, userPattern);
                 long patternOffset = getPatternOffset(userPattern, epochDayFrom);
-                long epochDayTill = getEpochDayTill(userPattern);
+                long epochDayTill = getEpochDayTill(roster, userPattern);
 
                 List<Shift> shiftInPattern = new ArrayList<Shift>();
                 getShiftsFromPattern(userPattern, shiftInPattern);
@@ -196,7 +192,7 @@ public class RosterFactoryImpl implements RosterFactory {
 
                 for (long day = epochDayFrom; day <= epochDayTill; day++) {
 
-                    setShift(userPattern.getUserId(), shiftInPattern.get(seqNo), day);
+                    setShift(roster, userPattern.getUserId(), shiftInPattern.get(seqNo), day);
 
                     if (seqNo >= patternSize - 1)
                         seqNo = 0;
@@ -219,11 +215,11 @@ public class RosterFactoryImpl implements RosterFactory {
         return getPatternOffset(userPattern, Dates.toEpochDay(date));
     }
 
-    private List<UserPattern> getUserPatternsByDatesFromTill()  {
+    private List<UserPattern> getUserPatternsByDatesFromTill(Roster roster)  {
         return userPatternDAO.getByDateFrame(roster.getFrom(), roster.getTill());
     }
 
-    private long getEpochDayFrom(UserPattern userPattern) {
+    private long getEpochDayFrom(Roster roster, UserPattern userPattern) {
         long epochDayFrom;
         if (Dates.toEpochDay(userPattern.getStartDay()) < Dates.toEpochDay(roster.getFrom()))
             epochDayFrom = Dates.toEpochDay(roster.getFrom());
@@ -232,7 +228,7 @@ public class RosterFactoryImpl implements RosterFactory {
         return epochDayFrom;
     }
 
-    private long getEpochDayTill(UserPattern userPattern) {
+    private long getEpochDayTill(Roster roster, UserPattern userPattern) {
         long epochDayTill;
         if (Dates.toEpochDay(userPattern.getEndDay()) > Dates.toEpochDay(roster.getTill()))
             epochDayTill = Dates.toEpochDay(roster.getTill());
@@ -247,7 +243,7 @@ public class RosterFactoryImpl implements RosterFactory {
         }
     }
 
-    private void setShift(long userId, Shift shift, long day) {
+    private void setShift(Roster roster, long userId, Shift shift, long day) {
 
         try {
             roster.getUserShifts(userId).setShift(Dates.toSqlDate(day), shift);
@@ -257,12 +253,12 @@ public class RosterFactoryImpl implements RosterFactory {
 
     }
 
-    private void fillWithSingleShifts() {
+    private void fillWithSingleShifts(Roster roster) {
 
         List<SingleShift> shiftsOnExactDay = singleShiftDAO.getSingleShift(roster.getFrom(), roster.getTill());
 
         for (SingleShift singleShift : shiftsOnExactDay) {
-            setShift(singleShift.getUserId(), singleShift.getShift(), Dates.toEpochDay(singleShift.getDate()));
+            setShift(roster, singleShift.getUserId(), singleShift.getShift(), Dates.toEpochDay(singleShift.getDate()));
         }
 
     }
