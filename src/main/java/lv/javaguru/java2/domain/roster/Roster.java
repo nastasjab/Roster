@@ -11,7 +11,7 @@ public class Roster extends Generic {
     private Date from;
     private Date till;
 
-    private Map<User, RosterUserShiftMap> shiftMap = new HashMap<User, RosterUserShiftMap>();
+    private Map<User, RosterUserShiftMap> shiftMap = new LinkedHashMap<User, RosterUserShiftMap>();
 
     public Roster() {
     }
