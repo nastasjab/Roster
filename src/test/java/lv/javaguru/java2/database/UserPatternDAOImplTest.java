@@ -148,4 +148,18 @@ public class UserPatternDAOImplTest extends GenericSpringTest {
         userPatterns = userPatternDAO.getByDateFrame(Date.valueOf("2015-06-01"), Date.valueOf("2015-06-30"));
         assertEquals(0, userPatterns.size()-userPatternsCount3);
     }
+
+    @Test
+    public void testGet()  {
+        userPatternDAO.create(userPattern);
+
+        UserPattern found = userPatternDAO.get(Date.valueOf("2015-07-02"), userPattern.getUserId());
+        assertEquals(this.userPattern.getId(), found.getId());
+
+        found = userPatternDAO.get(Date.valueOf("2015-07-01"), userPattern.getUserId());
+        assertEquals(this.userPattern.getId(), found.getId());
+
+        found = userPatternDAO.get(Date.valueOf("2015-07-31"), userPattern.getUserId());
+        assertEquals(this.userPattern.getId(), found.getId());
+    }
 }
