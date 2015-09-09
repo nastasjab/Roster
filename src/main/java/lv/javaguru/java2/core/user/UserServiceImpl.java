@@ -7,6 +7,8 @@ import lv.javaguru.java2.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
 
 @Component
@@ -29,5 +31,9 @@ public class UserServiceImpl extends GenericServiceImpl<UserDAO, User> implement
     @Override
     public User getNewInstance() {
         return createUser().build();
+    }
+
+    public List<User> getAllSorted() throws Exception {
+        return dao.getAllSorted();
     }
 }

@@ -12,5 +12,6 @@ public interface RosterService {
     Roster getRoster(Roster roster);
     Roster getRoster(Roster roster, List<User> forUsers);
     Shift getShift(Date date, long userId) throws NoShiftFoundException;
+    List<Shift> getAvailableShifts(Date date, long userId);
     void setShift(Date date, long userId, long shiftId) throws InvalidShiftException;
 }

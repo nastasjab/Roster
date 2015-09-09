@@ -9,14 +9,14 @@ import lv.javaguru.java2.domain.user.User;
 import java.sql.Date;
 import java.util.List;
 
-public class SingleShiftsControllerData {
+public class SetShiftControllerData {
 
     User user;
     List<Shift> shifts;
     long currentShiftId;
     Date date;
 
-    public SingleShiftsControllerData() {
+    public SetShiftControllerData() {
     }
 
     public long getCurrentShiftId() {

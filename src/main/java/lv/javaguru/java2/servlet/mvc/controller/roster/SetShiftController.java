@@ -1,18 +1,16 @@
 package lv.javaguru.java2.servlet.mvc.controller.roster;
 
-import lv.javaguru.java2.core.GenericService;
 import lv.javaguru.java2.core.NoShiftFoundException;
 import lv.javaguru.java2.core.roster.InvalidShiftException;
 import lv.javaguru.java2.core.roster.RosterService;
 import lv.javaguru.java2.core.shift.ShiftFactory;
 import lv.javaguru.java2.core.user.UserService;
 import lv.javaguru.java2.domain.Generic;
-import lv.javaguru.java2.domain.roster.SingleShift;
 import lv.javaguru.java2.domain.shift.Shift;
 import lv.javaguru.java2.domain.user.User;
 import lv.javaguru.java2.servlet.mvc.*;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
-import lv.javaguru.java2.servlet.mvc.data.SingleShiftsControllerData;
+import lv.javaguru.java2.servlet.mvc.data.SetShiftControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,11 +19,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import static lv.javaguru.java2.domain.roster.SingleShiftBuilder.createSingleShift;
 import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 
 @Component
-public class SingleShiftController implements MVCController {
+public class SetShiftController implements MVCController {
 
     @Autowired
     private UserService userService;
@@ -39,9 +36,9 @@ public class SingleShiftController implements MVCController {
     public MVCModel processRequest(HttpServletRequest req) {
 
         if (req.getParameter("act_update") != null)
-            update(req);
+            return update(req);
 
-        SingleShiftsControllerData result = new SingleShiftsControllerData();
+        SetShiftControllerData result = new SetShiftControllerData();
 
         result.setDate(getDate(req));
 
@@ -51,17 +48,7 @@ public class SingleShiftController implements MVCController {
             e.printStackTrace();
         }
 
-        List<Shift> shifts = new ArrayList<Shift>();
-        shifts.add(createShift()
-                .withId(0L)
-                .withName("Empty Shift")
-                .build());
-        try {
-            for (Generic g : shiftFactory.getAll())
-                shifts.add((Shift) g);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        result.setShifts(rosterService.getAvailableShifts(getDate(req), getUserId(req)));
 
         try {
             result.setCurrentShiftId(rosterService.getShift(getDate(req), getUserId(req)).getId());

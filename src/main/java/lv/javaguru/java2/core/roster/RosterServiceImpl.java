@@ -1,8 +1,10 @@
 package lv.javaguru.java2.core.roster;
 
 import lv.javaguru.java2.core.NoShiftFoundException;
+import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.pattern.PatternShiftDAO;
 import lv.javaguru.java2.database.roster.SingleShiftDAO;
+import lv.javaguru.java2.database.shift.ShiftDAO;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.database.user.UserPatternDAO;
 import lv.javaguru.java2.domain.*;
@@ -33,10 +35,16 @@ public class RosterServiceImpl implements RosterService {
     private SingleShiftDAO singleShiftDAO;
 
     @Autowired
+    private PatternDAO patternDAO;
+
+    @Autowired
     private PatternShiftDAO patternShiftDAO;
 
     @Autowired
     private UserPatternDAO userPatternDAO;
+
+    @Autowired
+    private ShiftDAO shiftDAO;
 
     private Roster roster;
 
@@ -55,9 +63,7 @@ public class RosterServiceImpl implements RosterService {
         this.roster = roster;
 
         fillWithUsers(forUsers);
-
         fillWithUserPatterns();
-
         fillWithSingleShifts();
 
         return roster;
@@ -74,15 +80,6 @@ public class RosterServiceImpl implements RosterService {
                 throw new NoShiftFoundException();
             }
         }
-    }
-
-    private Shift getShiftFromUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
-        return getUserPattern(date, userId).getPattern().getPatternShifts()
-                .get((int) getPatternOffset(getUserPattern(date, userId), date)).getShift();
-    }
-
-    private UserPattern getUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
-        return userPatternDAO.get(date, userId);
     }
 
     private SingleShift getSingleShift(Date date, long userId) throws NoShiftFoundException{
@@ -115,10 +112,12 @@ public class RosterServiceImpl implements RosterService {
             else if (singleShift.getId() != 0)
                 singleShiftDAO.delete(singleShift.getId());
         } else if (shiftId != shiftFromUserPattern.getId() && shiftId != singleShift.getShift().getId()) {
-            SingleShift newSingleShift = createSingleShift().build();
-            newSingleShift.setDate(date);
-            newSingleShift.getShift().setId(shiftId);
-            newSingleShift.setUserId(userId);
+            SingleShift newSingleShift = createSingleShift()
+                    .withId(singleShift.getId())
+                    .withDate(date)
+                    .withShift(createShift().withId(shiftId).build())
+                    .withUserId(userId)
+                    .build();
             if (singleShift.getShift().getId() == 0)
                 singleShiftDAO.create(newSingleShift);
             else
@@ -129,9 +128,54 @@ public class RosterServiceImpl implements RosterService {
 
     }
 
+    public List<Shift> getAvailableShifts(Date date, long userId) {
+        List<Shift> shiftList = shiftDAO.getAll();
+
+        if (! (!isShiftInSingleShifts(date, userId) && isShiftInUserPattern(date, userId)))
+            shiftList.add(0, createShift().withId(0L).withName("No Shift Set").build());
+
+        return shiftList;
+    }
+
+    private Shift getShiftFromUserPattern2(Date date, long userId) throws IndexOutOfBoundsException {
+        return patternDAO.getById(getUserPattern(date, userId).getPattern().getId())
+                .getPatternShifts()
+                .get((int) getPatternOffset(getUserPattern(date, userId), date))
+                .getShift();
+    }
+
+    private Shift getShiftFromUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
+        return getUserPattern(date, userId).getPattern().getPatternShifts()
+                .get((int) getPatternOffset(getUserPattern(date, userId), date)).getShift();
+    }
+
+    private UserPattern getUserPattern(Date date, long userId) throws IndexOutOfBoundsException {
+        return userPatternDAO.get(date, userId);
+    }
+
     private void fillWithUsers(List<User> users) {
         for (User user : users)
             roster.setUserMap(user, new RosterUserShiftMap());
+    }
+
+    private boolean isShiftInUserPattern(Date date, long userid) {
+        try {
+            getUserPattern(date, userid);
+        } catch (IndexOutOfBoundsException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean isShiftInSingleShifts(Date date, long userid) {
+        try {
+            getSingleShift(date, userid);
+        } catch (NoShiftFoundException e) {
+            return false;
+        }
+
+        return true;
     }
 
     private void fillWithUserPatterns() {
@@ -217,9 +261,7 @@ public class RosterServiceImpl implements RosterService {
         List<SingleShift> shiftsOnExactDay = singleShiftDAO.getSingleShift(roster.getFrom(), roster.getTill());
 
         for (SingleShift singleShift : shiftsOnExactDay) {
-
             setShift(singleShift.getUserId(), singleShift.getShift(), Dates.toEpochDay(singleShift.getDate()));
-
         }
 
     }

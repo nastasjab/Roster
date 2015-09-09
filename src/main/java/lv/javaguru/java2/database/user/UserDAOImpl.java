@@ -5,6 +5,7 @@ import lv.javaguru.java2.domain.shift.Shift;
 import lv.javaguru.java2.domain.user.User;
 import org.hibernate.JDBCException;
 import org.hibernate.Query;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,15 @@ import java.util.List;
 
 @Component
 public class UserDAOImpl extends GenericHibernateDAOImpl<User> implements UserDAO {
+
+    @Transactional
+    public List<User> getAllSorted()  throws JDBCException {
+        return sessionFactory.getCurrentSession().createCriteria(User.class)
+                .addOrder(Order.asc("lastName"))
+                .addOrder(Order.asc("firstName"))
+                .list();
+    }
+
     @Transactional
     public User getByObjectName(String objectName)  throws JDBCException {
         List<User> list = sessionFactory.getCurrentSession().createCriteria(User.class)

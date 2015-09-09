@@ -2,9 +2,9 @@
 <%@ page import="java.sql.Date" %>
 <%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page import="java.util.List" %>
-<%@ page import="lv.javaguru.java2.servlet.mvc.data.SingleShiftsControllerData" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.SetShiftControllerData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%  SingleShiftsControllerData data = (SingleShiftsControllerData) request.getAttribute("model");
+<%  SetShiftControllerData data = (SetShiftControllerData) request.getAttribute("model");
     User user = data.getUser();
     Date date = data.getDate();
     long currentShiftId = data.getCurrentShiftId();
@@ -19,7 +19,7 @@
 <div align="center">
     <a href="/roster/roster">back to Roster without saving changes</a><br>
 <form method="post">
-    <select name="shift_new">
+    <select name="shift">
         <% for (Shift shift : shifts) { %>
         <option <% if (shift.getId() == currentShiftId) { %> selected <% } %> value = "<%= shift.getId()%>">
             <%= shift.getName()%>
