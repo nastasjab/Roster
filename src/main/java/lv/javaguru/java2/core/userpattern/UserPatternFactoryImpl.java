@@ -58,10 +58,10 @@ public class UserPatternFactoryImpl
         if (add && userPatternDAO.getById(userPattern.getId()) != null)
             throw new ObjectExistException("User Pattern");
 
-        validator.validateUserId(userPattern);
+        validator.validateUserId(userPattern.getUserId());
         validator.validateDates(userPattern, add);
         validator.validatePatternsStartDay(userPattern);
-        validator.validatePatternId(userPattern);
+        validator.validatePatternId(userPattern.getPattern().getId());
     }
 
     @Override

@@ -8,8 +8,8 @@ import lv.javaguru.java2.domain.user.UserPattern;
 import java.sql.Date;
 
 public interface UserPatternValidator {
-    void validateUserId(UserPattern userPattern) throws Exception;
+    void validateUserId(long userId) throws Exception;
     void validateDates(UserPattern userPattern, boolean add) throws Exception;
     void validatePatternsStartDay(UserPattern userPattern) throws Exception;
-    void validatePatternId(UserPattern userPattern) throws Exception;
+    void validatePatternId(long patternId) throws Exception;
 }

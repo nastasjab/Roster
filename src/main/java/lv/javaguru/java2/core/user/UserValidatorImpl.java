@@ -1,6 +1,7 @@
 package lv.javaguru.java2.core.user;
 
 
+import lv.javaguru.java2.core.EmptyObjectNameException;
 import lv.javaguru.java2.core.ObjectExistException;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.domain.user.User;
@@ -13,46 +14,57 @@ public class UserValidatorImpl implements UserValidator {
     @Autowired
     private UserDAO userDAO;
 
-    public void validateLogin(String userName, boolean add) throws Exception {
+    public void validateLogin(User user) throws Exception {
 
-        if (userName == null)
-            throw new Exception("Login cannot be empty");
+        if (user.getLogin() == null || user.getLogin().length() < 1)
+            throw new EmptyObjectNameException("user login");
 
-        if (add)
-            for (User user : userDAO.getAll())
-                if (userName.equals(user.getLogin()))
-                    throw new ObjectExistException("user with such login");
+        for (User userFromDB : userDAO.getAll())
+            if (user.getId() != userFromDB.getId()
+                    && user.getLogin().equals(userFromDB.getLogin()))
+                throw new ObjectExistException("user with such login");
 
     }
 
-    public void validateFirstAndLastNames(String firtsName, String lastName, boolean add) throws Exception {
+    public void validateFirstAndLastNames(User user) throws Exception {
 
-        if (firtsName == null || firtsName.length() < 1)
-            throw new Exception("First name cannot be empty");
+        if (user.getFirstName() == null || user.getFirstName().length() < 1)
+            throw new EmptyObjectNameException("user first");
 
-        if (lastName == null || lastName.length() < 1)
-            throw new Exception("Last name cannot be empty");
+        if (user.getLastName() == null || user.getLastName().length() < 1)
+            throw new EmptyObjectNameException("user last");
 
-        if (add)
-            for (User user : userDAO.getAll())
-                if (firtsName.equals(user.getFirstName()) && lastName.equals(user.getLastName()))
-                    throw new ObjectExistException("user with such first and last name");
+        for (User userFromDB : userDAO.getAll())
+            if (user.getId() != userFromDB.getId()
+                    && user.getFirstName().equals(userFromDB.getFirstName())
+                    && user.getLastName().equals(userFromDB.getLastName()))
+                throw new ObjectExistException("user with such first and last name");
     }
 
-    public void validatePhone(String phone) throws InvalidPhoneException {
+    public void validatePhone(User user) throws Exception {
         String ePattern = "^[0-9 +#-]+$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(phone);
-        if (phone.length() != 0 && m.matches() == false)
+        java.util.regex.Matcher m = p.matcher(user.getPhone());
+        if (user.getPhone().length() != 0 && !m.matches())
             throw new InvalidPhoneException();
+
+        for (User userFromDB : userDAO.getAll())
+            if (user.getId() != userFromDB.getId()
+                    && user.getPhone().equals(userFromDB.getPhone()))
+                throw new ObjectExistException("user with such phone");
     }
 
-    public void validateEmail(String email) throws InvalidEmailException {
+    public void validateEmail(User user) throws Exception {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-        java.util.regex.Matcher m = p.matcher(email);
-        if (email.length() !=0 && m.matches() == false)
+        java.util.regex.Matcher m = p.matcher(user.getEmail());
+        if (user.getEmail().length() !=0 && !m.matches())
             throw new InvalidEmailException();
+
+        for (User userFromDB : userDAO.getAll())
+            if (user.getId() != userFromDB.getId()
+                    && user.getEmail().equals(userFromDB.getEmail()))
+                throw new ObjectExistException("user with such email");
     }
 
 }

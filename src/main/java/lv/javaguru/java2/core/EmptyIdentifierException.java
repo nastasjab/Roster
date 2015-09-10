@@ -1,11 +1,11 @@
 package lv.javaguru.java2.core;
 
-public class EmptyIdentifierException extends  Exception {
+public class EmptyIdentifierException extends Exception{
     public EmptyIdentifierException() {
-        super("Empty object name!");
+        super("Empty object id!");
     }
 
-    public EmptyIdentifierException(String message) {
-        super(String.format("Empty %s name!", message));
+    public EmptyIdentifierException(String objectName) {
+        super(String.format("Empty %s id!", objectName));
     }
 }

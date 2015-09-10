@@ -1,6 +1,6 @@
 package lv.javaguru.java2.core.shift;
 
-import lv.javaguru.java2.core.EmptyIdentifierException;
+import lv.javaguru.java2.core.EmptyObjectNameException;
 import lv.javaguru.java2.core.ObjectExistException;
 import lv.javaguru.java2.database.shift.ShiftDAO;
 import lv.javaguru.java2.domain.shift.Shift;
@@ -32,7 +32,7 @@ public class ShiftValidatorImpl implements ShiftValidator {
 
     public void validateName(String name, long id, boolean add) throws Exception {
         if (name==null || name.isEmpty())
-            throw new EmptyIdentifierException("shift");
+            throw new EmptyObjectNameException("shift");
 
         Shift shiftFromDb = shiftDAO.getByObjectName(name);
 

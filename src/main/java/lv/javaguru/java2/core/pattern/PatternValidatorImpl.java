@@ -1,6 +1,6 @@
 package lv.javaguru.java2.core.pattern;
 
-import lv.javaguru.java2.core.EmptyIdentifierException;
+import lv.javaguru.java2.core.EmptyObjectNameException;
 import lv.javaguru.java2.core.ObjectExistException;
 import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.domain.pattern.Pattern;
@@ -15,7 +15,7 @@ public class PatternValidatorImpl implements  PatternValidator {
 
     public void validateName(String name, long id, boolean add) throws Exception {
         if (name==null || name.isEmpty())
-            throw new EmptyIdentifierException("pattern");
+            throw new EmptyObjectNameException("pattern");
 
         Pattern patternFromDb = patternDAO.getByObjectName(name);
 

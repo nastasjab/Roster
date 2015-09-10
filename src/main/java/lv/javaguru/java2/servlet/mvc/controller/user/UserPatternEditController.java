@@ -77,14 +77,26 @@ public class UserPatternEditController extends GenericEditMVCController implemen
 
     @Override
     protected Generic fillParameters(HttpServletRequest req) throws Exception {
+        Date startDay;
+        try {
+            startDay = Date.valueOf(req.getParameter("startday"));
+        } catch (Exception e) {
+            startDay = null;
+        }
+        Date endDay;
+        try {
+            endDay = Date.valueOf(req.getParameter("endday"));
+        } catch (Exception e) {
+            endDay = null;
+        }
         return createUserPattern()
                 .withUserId(Long.valueOf(req.getParameter("user")))
                 .withPatternStartDay(Integer.valueOf(req.getParameter("patternstartday")))
                 .withPattern(createPattern()
                         .withId(Long.valueOf(req.getParameter("pattern")))
                         .build())
-                .withStartDay(Date.valueOf(req.getParameter("startday")))
-                .withEndDay(Date.valueOf(req.getParameter("endday")))
+                .withStartDay(startDay)
+                .withEndDay(endDay)
                 .build();
     }
 

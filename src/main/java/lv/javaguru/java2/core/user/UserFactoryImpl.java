@@ -21,10 +21,10 @@ public class UserFactoryImpl extends GenericFactoryImpl<UserDAO, User> implement
     public void validate(Generic object, boolean add) throws Exception {
         User user = (User) object;
 
-        userValidator.validateLogin(user.getLogin(), add);
-        userValidator.validateFirstAndLastNames(user.getFirstName(), user.getLastName(), add);
-        userValidator.validatePhone(user.getPhone());
-        userValidator.validateEmail(user.getEmail());
+        userValidator.validateLogin(user);
+        userValidator.validateFirstAndLastNames(user);
+        userValidator.validatePhone(user);
+        userValidator.validateEmail(user);
 
     }
 
