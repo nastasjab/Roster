@@ -124,7 +124,7 @@ public class RosterFactoryImpl implements RosterFactory {
     public List<Shift> getAvailableShifts(Date date, long userId) {
         List<Shift> shiftList = shiftDAO.getAll();
 
-        if (! (!isShiftInSingleShifts(date, userId) && isShiftInUserPattern(date, userId)))
+        if (!isShiftInUserPattern(date, userId))
             shiftList.add(0, createShift().withId(0L).withName("No Shift Set").build());
 
         return shiftList;
