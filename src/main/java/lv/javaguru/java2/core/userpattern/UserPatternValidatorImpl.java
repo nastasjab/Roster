@@ -58,8 +58,8 @@ public class UserPatternValidatorImpl implements UserPatternValidator{
     }
 
     public void validatePatternsStartDay(UserPattern userPattern) throws Exception {
-        if (userPattern.getPatternStartDay() < 1 || userPattern.getPatternStartDay() > userPattern.getPattern().getSize())
-            throw new ValueOutOfBoundsException("Pattern start day", "1 - " + userPattern.getPattern().getSize());
+        if (userPattern.getPatternStartDay() < 1 || userPattern.getPatternStartDay() > patternDAO.getById(userPattern.getPattern().getId()).getSize())
+            throw new ValueOutOfBoundsException("Pattern start day", "1 - " + patternDAO.getById(userPattern.getPattern().getId()).getSize());
     }
 
     public void validatePatternId(long patternId) throws Exception {
