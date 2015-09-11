@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MVCFilter implements Filter{
+public class MVCFilter {
 
     private final Map<String, MVCController> controllers = new HashMap<String, MVCController>();
 
