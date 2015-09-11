@@ -68,7 +68,7 @@ public class UserPatternValidatorTest extends GenericSpringTest{
     public void testValidateZeroUserId() throws Exception {
         userPatternValidator.validateUserId(0);
     }
-
+/*
     @Test (expected = ValueOutOfBoundsException.class)
     public void testValidateNegativePatternsStartDay() throws Exception {
         List<PatternShift> patternShifts = new ArrayList<PatternShift>();
@@ -112,7 +112,7 @@ public class UserPatternValidatorTest extends GenericSpringTest{
                 .build();
         userPatternValidator.validatePatternsStartDay(userPattern);
     }
-
+*/
     @Test
     public void testValidateDatesOk(){
         userPatternDAO.create(createUserPattern()
@@ -186,7 +186,7 @@ public class UserPatternValidatorTest extends GenericSpringTest{
                 , true);
     }
 
-
+/*
     @Test
     public void testValidatePatternsStartDay5() throws Exception {
         List<PatternShift> patternShifts = new ArrayList<PatternShift>();
@@ -253,7 +253,7 @@ public class UserPatternValidatorTest extends GenericSpringTest{
                 )
                 .build();
         userPatternValidator.validatePatternsStartDay(userPattern);
-    }
+    }*/
 
     @Test
     public void testValidateCorrectPatternId() {
