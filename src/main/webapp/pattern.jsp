@@ -1,6 +1,6 @@
-<%@ page import="lv.javaguru.java2.domain.pattern.Pattern" %>
-<%@ page import="lv.javaguru.java2.domain.pattern.PatternShift" %>
 <%@ page import="java.util.List" %>
+<%@ page import="lv.javaguru.java2.domain.pattern.PatternShift" %>
+<%@ page import="lv.javaguru.java2.domain.pattern.Pattern" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  Pattern pattern;
   boolean editPattern = true;

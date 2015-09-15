@@ -3,15 +3,13 @@ package lv.javaguru.java2.database;
 import lv.javaguru.java2.GenericSpringTest;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.domain.user.User;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
-
 import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class UserDAOImplTest extends GenericSpringTest {
     @Autowired

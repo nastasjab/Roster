@@ -1,7 +1,7 @@
 <%@ page import="lv.javaguru.java2.domain.user.User" %>
+<%@ page import="java.util.List" %>
 <%@ page import="lv.javaguru.java2.domain.user.UserPattern" %>
 <%@ page import="lv.javaguru.java2.servlet.mvc.data.UserPatternControllerData" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  UserPatternControllerData data = (UserPatternControllerData) request.getAttribute("model");
     User user = data.getUser();

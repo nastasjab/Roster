@@ -1,6 +1,6 @@
 <%@ page import="lv.javaguru.java2.domain.user.User" %>
-<%@ page import="lv.javaguru.java2.domain.user.UserTypes" %>
 <%@ page import="java.util.List" %>
+<%@ page import="lv.javaguru.java2.domain.user.UserTypes" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>

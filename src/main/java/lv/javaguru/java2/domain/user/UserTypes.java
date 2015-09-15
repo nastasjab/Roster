@@ -1,9 +1,7 @@
 package lv.javaguru.java2.domain.user;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class UserTypes {
 

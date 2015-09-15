@@ -1,12 +1,13 @@
 package lv.javaguru.java2.core.roster;
 
 import lv.javaguru.java2.core.NoShiftFoundException;
+import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.pattern.PatternShiftDAO;
 import lv.javaguru.java2.database.roster.SingleShiftDAO;
 import lv.javaguru.java2.database.shift.ShiftDAO;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.database.user.UserPatternDAO;
-import lv.javaguru.java2.domain.Dates;
+import lv.javaguru.java2.domain.*;
 import lv.javaguru.java2.domain.pattern.PatternShift;
 import lv.javaguru.java2.domain.roster.Roster;
 import lv.javaguru.java2.domain.roster.RosterUserShiftMap;

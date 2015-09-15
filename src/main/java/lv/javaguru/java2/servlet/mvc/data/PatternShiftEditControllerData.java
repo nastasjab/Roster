@@ -1,8 +1,8 @@
 package lv.javaguru.java2.servlet.mvc.data;
 
 
-import lv.javaguru.java2.domain.pattern.PatternShift;
 import lv.javaguru.java2.domain.shift.Shift;
+import lv.javaguru.java2.domain.pattern.PatternShift;
 
 import java.util.ArrayList;
 import java.util.List;

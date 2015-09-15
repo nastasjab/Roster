@@ -3,6 +3,7 @@ package lv.javaguru.java2.core.userpattern;
 import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.domain.user.UserPattern;
 
+
 import java.sql.Date;
 import java.util.List;
 

@@ -1,7 +1,9 @@
 package lv.javaguru.java2.servlet.mvc.data;
 
 
+import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.shift.Shift;
+import lv.javaguru.java2.domain.roster.SingleShift;
 import lv.javaguru.java2.domain.user.User;
 
 import java.sql.Date;

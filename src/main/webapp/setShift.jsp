@@ -1,8 +1,8 @@
-<%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page import="lv.javaguru.java2.domain.user.User" %>
-<%@ page import="lv.javaguru.java2.servlet.mvc.data.SetShiftControllerData" %>
 <%@ page import="java.sql.Date" %>
+<%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page import="java.util.List" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.SetShiftControllerData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  SetShiftControllerData data = (SetShiftControllerData) request.getAttribute("model");
     User user = data.getUser();

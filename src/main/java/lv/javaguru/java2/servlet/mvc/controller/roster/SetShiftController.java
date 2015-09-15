@@ -5,6 +5,7 @@ import lv.javaguru.java2.core.roster.InvalidShiftException;
 import lv.javaguru.java2.core.roster.RosterFactory;
 import lv.javaguru.java2.core.user.UserFactory;
 import lv.javaguru.java2.domain.user.User;
+import lv.javaguru.java2.servlet.mvc.*;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
 import lv.javaguru.java2.servlet.mvc.data.SetShiftControllerData;
 import org.springframework.beans.factory.annotation.Autowired;

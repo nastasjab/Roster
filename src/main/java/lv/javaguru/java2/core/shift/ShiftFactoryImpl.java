@@ -1,6 +1,6 @@
 package lv.javaguru.java2.core.shift;
 
-import lv.javaguru.java2.core.GenericFactoryImpl;
+import lv.javaguru.java2.core.*;
 import lv.javaguru.java2.database.shift.ShiftDAO;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.shift.Shift;
