@@ -10,22 +10,16 @@ import lv.javaguru.java2.database.pattern.PatternDAO;
 import lv.javaguru.java2.database.user.UserDAO;
 import lv.javaguru.java2.database.user.UserPatternDAO;
 import lv.javaguru.java2.domain.pattern.Pattern;
-import lv.javaguru.java2.domain.pattern.PatternShift;
 import lv.javaguru.java2.domain.user.User;
 import lv.javaguru.java2.domain.user.UserPattern;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
-import static lv.javaguru.java2.domain.pattern.PatternShiftBuilder.createPatternShift;
-import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 import static lv.javaguru.java2.domain.user.UserBuilder.createUser;
 import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern;
 

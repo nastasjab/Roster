@@ -3,25 +3,27 @@ package lv.javaguru.java2.servlet.mvc.controller.roster;
 
 import lv.javaguru.java2.core.roster.RosterFactory;
 import lv.javaguru.java2.domain.roster.Roster;
-import lv.javaguru.java2.servlet.mvc.MVCController;
-import lv.javaguru.java2.servlet.mvc.MVCModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.time.LocalDate;
 
+@Controller
 @Component
-public class RosterController implements MVCController {
+public class RosterController {
 
     @Autowired
     private RosterFactory rosterFactory;
 
-    public MVCModel processRequest(HttpServletRequest req) {
+    @RequestMapping(value = "/roster")
+    public ModelAndView processRequest(HttpServletRequest req) {
 
-        return new MVCModel(rosterFactory
-                .getRoster(new Roster(getDateFrom(req), getDateTill(req))), "/roster.jsp");
+        return new ModelAndView("/roster.jsp", "model", rosterFactory.getRoster(new Roster(getDateFrom(req), getDateTill(req))));
 
     }
 

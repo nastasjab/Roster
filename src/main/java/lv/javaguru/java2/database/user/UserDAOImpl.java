@@ -1,7 +1,6 @@
 package lv.javaguru.java2.database.user;
 
 import lv.javaguru.java2.database.GenericHibernateDAOImpl;
-import lv.javaguru.java2.domain.shift.Shift;
 import lv.javaguru.java2.domain.user.User;
 import org.hibernate.JDBCException;
 import org.hibernate.Query;

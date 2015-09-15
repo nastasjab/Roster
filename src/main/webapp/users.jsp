@@ -1,6 +1,6 @@
 <%@ page import="lv.javaguru.java2.domain.user.User" %>
-<%@ page import="java.util.List" %>
 <%@ page import="lv.javaguru.java2.domain.user.UserTypes" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -9,7 +9,7 @@
 <body>
 <h2 align="center">Users</h2>
 <div align="center"><a href="/roster">Main Menu</a></div>
-<div align="center"><a href="/roster/user">Add new user</a></div>
+<div align="center"><a href="/roster/users?id=new">Add new user</a></div>
 <form method="get" name="users">
     <table border = 1 cellpadding = 5 align="center">
         <th>No</th>
@@ -23,7 +23,7 @@
             UserTypes userTypes = new UserTypes();
             for (User user : users) { %>
         <tr>
-            <td><a href="/roster/user?id=<%= user.getId()%>"><%= user.getId()%></a></td>
+            <td><a href="/roster/users?id=<%= user.getId()%>"><%= user.getId()%></a></td>
             <td><%= user.getLogin() %></td>
             <td><%= user.getFirstName() %></td>
             <td><%= user.getLastName() %></td>

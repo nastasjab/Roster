@@ -1,6 +1,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%@ page import="lv.javaguru.java2.servlet.mvc.data.MenuItem" %>
 <%@ page import="lv.javaguru.java2.servlet.mvc.data.Menu" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.MenuItem" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% Menu menu = (Menu) request.getAttribute("model"); %>
 <html>

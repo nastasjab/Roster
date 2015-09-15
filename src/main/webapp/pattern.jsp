@@ -1,6 +1,6 @@
-<%@ page import="java.util.List" %>
-<%@ page import="lv.javaguru.java2.domain.pattern.PatternShift" %>
 <%@ page import="lv.javaguru.java2.domain.pattern.Pattern" %>
+<%@ page import="lv.javaguru.java2.domain.pattern.PatternShift" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  Pattern pattern;
   boolean editPattern = true;
@@ -58,7 +58,7 @@
     <%  List<PatternShift> patternShifts = pattern.getPatternShifts();
       for (PatternShift patternShift : patternShifts) { %>
     <tr>
-      <td><a href="/roster/patternshift?pattern_id=<%= patternShift.getPattern().getId()%>&amp;id=<%= patternShift.getId()%>">
+      <td><a href="/roster/patternshift?pattern=<%= patternShift.getPattern().getId()%>&amp;id=<%= patternShift.getId()%>">
         <%= patternShift.getId()%></a></td>
       <td><%= patternShift.getSeqNo() %>  </td>
       <td>  <%= patternShift.getShift().getName() %>
@@ -66,7 +66,7 @@
     </tr>
     <% } %>
   </table>
-  <div align="center"><a href="/roster/patternshift?pattern_id=<%= pattern.getId()%>">Add shift to pattern</a></div>
+  <div align="center"><a href="/roster/patternshift?pattern=<%= pattern.getId()%>&id=new">Add shift to pattern</a></div>
 </form>
 <% } %>
 

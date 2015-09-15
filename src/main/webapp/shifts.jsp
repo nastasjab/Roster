@@ -8,7 +8,7 @@
 <body>
 <h2 align="center">Shifts</h2>
 <div align="center"><a href="/roster">Main Menu</a></div>
-<div align="center"><a href="/roster/shift">Add new shift</a></div>
+<div align="center"><a href="/roster/shifts?id=new">Add new shift</a></div>
 <form method="get" name="shifts">
   <table border = 1 cellpadding = 5 align="center">
     <th>No</th>
@@ -18,7 +18,7 @@
     <%  List<Shift> shifts = (List<Shift>) request.getAttribute("model");
       for (Shift shift : shifts) { %>
     <tr>
-      <td><a href="/roster/shift?id=<%= shift.getId()%>"><%= shift.getId()%></a></td>
+      <td><a href="/roster/shifts?id=<%= shift.getId()%>"><%= shift.getId()%></a></td>
       <td><%= shift.getName() %></td>
       <td><%= shift.getShiftStarts() %></td>
       <td><%= shift.getShiftEnds() %></td>

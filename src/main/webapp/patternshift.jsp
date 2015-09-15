@@ -1,5 +1,5 @@
-<%@ page import="lv.javaguru.java2.servlet.mvc.data.PatternShiftEditControllerData" %>
 <%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.PatternShiftEditControllerData" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% PatternShiftEditControllerData data = (PatternShiftEditControllerData) request.getAttribute("model");
   boolean edit = true;
@@ -23,7 +23,7 @@
   <% } %>
   <%=data.getPattern().getId() %>
 </h2>
-<div align="center"><a href="/roster/pattern?pattern_id=<%= data.getPattern().getId()%>">back to pattern definition</a></div>
+<div align="center"><a href="/roster/patterns?id=<%= data.getPattern().getId()%>">back to pattern definition</a></div>
 <form method="post">
   <table align="center" cellpadding="5">
     <tr>

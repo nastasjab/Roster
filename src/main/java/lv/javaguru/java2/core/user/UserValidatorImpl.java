@@ -48,10 +48,11 @@ public class UserValidatorImpl implements UserValidator {
         if (user.getPhone().length() != 0 && !m.matches())
             throw new InvalidPhoneException();
 
-        for (User userFromDB : userDAO.getAll())
-            if (user.getId() != userFromDB.getId()
-                    && user.getPhone().equals(userFromDB.getPhone()))
-                throw new ObjectExistException("user with such phone");
+        if (!user.getPhone().isEmpty())
+            for (User userFromDB : userDAO.getAll())
+                if (user.getId() != userFromDB.getId()
+                        && user.getPhone().equals(userFromDB.getPhone()))
+                    throw new ObjectExistException("user with such phone");
     }
 
     public void validateEmail(User user) throws Exception {
@@ -61,10 +62,11 @@ public class UserValidatorImpl implements UserValidator {
         if (user.getEmail().length() !=0 && !m.matches())
             throw new InvalidEmailException();
 
-        for (User userFromDB : userDAO.getAll())
-            if (user.getId() != userFromDB.getId()
-                    && user.getEmail().equals(userFromDB.getEmail()))
-                throw new ObjectExistException("user with such email");
+        if (!user.getEmail().isEmpty())
+            for (User userFromDB : userDAO.getAll())
+                if (user.getId() != userFromDB.getId()
+                        && user.getEmail().equals(userFromDB.getEmail()))
+                    throw new ObjectExistException("user with such email");
     }
 
 }

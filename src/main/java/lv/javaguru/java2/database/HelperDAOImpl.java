@@ -1,6 +1,5 @@
 package lv.javaguru.java2.database;
 
-import lv.javaguru.java2.database.HelperDAO;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

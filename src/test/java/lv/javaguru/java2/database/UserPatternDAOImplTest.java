@@ -6,12 +6,14 @@ import lv.javaguru.java2.domain.user.UserPattern;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.sql.Date;
 import java.util.List;
 
 import static lv.javaguru.java2.domain.pattern.PatternBuilder.createPattern;
 import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class UserPatternDAOImplTest extends GenericSpringTest {
     @Autowired

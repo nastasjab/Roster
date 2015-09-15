@@ -2,7 +2,6 @@ package lv.javaguru.java2.database.user;
 
 
 import lv.javaguru.java2.database.GenericHibernateDAOImpl;
-import lv.javaguru.java2.domain.pattern.Pattern;
 import lv.javaguru.java2.domain.user.UserPattern;
 import org.hibernate.Criteria;
 import org.hibernate.JDBCException;

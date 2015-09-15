@@ -1,7 +1,6 @@
 package lv.javaguru.java2.core.userpattern;
 
 import lv.javaguru.java2.core.EmptyIdentifierException;
-import lv.javaguru.java2.core.EmptyObjectNameException;
 import lv.javaguru.java2.core.ObjectNotExistException;
 import lv.javaguru.java2.core.ValueOutOfBoundsException;
 import lv.javaguru.java2.database.pattern.PatternDAO;

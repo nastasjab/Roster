@@ -4,28 +4,33 @@ import lv.javaguru.java2.core.GenericFactory;
 import lv.javaguru.java2.core.pattern.PatternShiftFactory;
 import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.pattern.PatternShift;
-import lv.javaguru.java2.servlet.mvc.GenericEditMVCController;
-import lv.javaguru.java2.servlet.mvc.MVCController;
-import lv.javaguru.java2.servlet.mvc.MVCModel;
+import lv.javaguru.java2.servlet.mvc.GenericMVCController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
 import static lv.javaguru.java2.domain.pattern.PatternShiftBuilder.createPatternShift;
 
+@Controller
 @Component
-public class PatternShiftEditController extends
-        GenericEditMVCController implements MVCController {
+public class PatternShiftController extends GenericMVCController {
 
     @Autowired
     private PatternShiftFactory patternShiftFactory;
 
-    @Override
-    public MVCModel listObject(HttpServletRequest req) throws Exception{
+    @RequestMapping (value = "/patternshift")
+    public ModelAndView processRequest(HttpServletRequest req) {
+        return super.processRequest(req);
+    }
 
-        return new MVCModel(patternShiftFactory.getObject(getId(req), getPatternId(req)),
-                getEditPageAddressJSP());
+    @Override
+    public ModelAndView listObject(HttpServletRequest req) throws Exception{
+        return new ModelAndView(getEditPageAddressJSP(req), "model",
+                patternShiftFactory.getObject(getId(req), getPatternId(req)));
     }
 
     @Override
@@ -40,14 +45,12 @@ public class PatternShiftEditController extends
         return  object;
     }
 
-    private long getPatternId(HttpServletRequest req) throws NullPointerException {
-        long result = 0;
+    private long getPatternId(HttpServletRequest req) throws Exception {
         try {
-            result = Long.decode(req.getParameter("pattern_id"));
+            return Long.decode(req.getParameter("pattern"));
         } catch (NumberFormatException e){
-            e.printStackTrace();
+            throw new Exception("Missing patternId");
         }
-        return result;
     }
 
     @Override
@@ -61,13 +64,18 @@ public class PatternShiftEditController extends
     }
 
     @Override
-    protected String getEditPageAddressJSP() {
-        return "/patternshift.jsp";
+    protected String getListPageAddress(HttpServletRequest req) throws Exception {
+        return "/roster/patterns?id="+getPatternId(req);
     }
 
     @Override
-    protected String getListPageAddress(HttpServletRequest req) {
-        return "/roster/pattern?id="+getPatternId(req);
+    protected String getListPageAddressJSP(HttpServletRequest req) {
+        return null;
+    }
+
+    @Override
+    protected String getEditPageAddressJSP(HttpServletRequest req) {
+        return "/patternshift.jsp";
     }
 
 }

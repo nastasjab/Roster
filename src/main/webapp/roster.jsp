@@ -1,7 +1,7 @@
-<%@ page import="lv.javaguru.java2.domain.roster.Roster" %>
-<%@ page import="lv.javaguru.java2.domain.user.User" %>
-<%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page import="lv.javaguru.java2.domain.Dates" %>
+<%@ page import="lv.javaguru.java2.domain.roster.Roster" %>
+<%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
+<%@ page import="lv.javaguru.java2.domain.user.User" %>
 <%@ page import="static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -35,7 +35,7 @@
             shift.setName("&nbsp");
             if (roster.getUserShifts(user).getShift(Dates.toSqlDate(epochDay)) != null)
             shift = roster.getUserShifts(user).getShift(Dates.toSqlDate(epochDay)); %>
-        <td><a href="/roster/shiftonexactday?user=<%= user.getId()%>&date=<%= Dates.toSqlDate(epochDay)%>">
+        <td><a href="/roster/setshift?user=<%= user.getId()%>&date=<%= Dates.toSqlDate(epochDay)%>">
             <%= shift.getName() %></a></td>
         <% } %>
     </tr><% } %>

@@ -4,7 +4,9 @@ import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.user.User;
 
 import java.sql.Date;
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 public class Roster extends Generic {
 

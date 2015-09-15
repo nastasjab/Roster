@@ -2,7 +2,6 @@ package lv.javaguru.java2.database.shift;
 
 import lv.javaguru.java2.database.GenericHibernateDAOImpl;
 import lv.javaguru.java2.domain.shift.Shift;
-
 import org.hibernate.JDBCException;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Component;

@@ -5,17 +5,20 @@ import lv.javaguru.java2.core.roster.InvalidShiftException;
 import lv.javaguru.java2.core.roster.RosterFactory;
 import lv.javaguru.java2.core.user.UserFactory;
 import lv.javaguru.java2.domain.user.User;
-import lv.javaguru.java2.servlet.mvc.*;
 import lv.javaguru.java2.servlet.mvc.data.MessageContents;
 import lv.javaguru.java2.servlet.mvc.data.SetShiftControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 
+@Controller
 @Component
-public class SetShiftController implements MVCController {
+public class SetShiftController {
 
     @Autowired
     private UserFactory userFactory;
@@ -23,7 +26,8 @@ public class SetShiftController implements MVCController {
     @Autowired
     private RosterFactory rosterFactory;
 
-    public MVCModel processRequest(HttpServletRequest req) {
+    @RequestMapping(value = "/setshift")
+    public ModelAndView processRequest(HttpServletRequest req) {
 
         if (req.getParameter("act_update") != null)
             return update(req);
@@ -46,7 +50,7 @@ public class SetShiftController implements MVCController {
             result.setCurrentShiftId(0);
         }
 
-        return new MVCModel(result, "/setShift.jsp");
+        return new ModelAndView("/setShift.jsp", "model", result);
 
     }
 
@@ -62,25 +66,25 @@ public class SetShiftController implements MVCController {
         return Long.decode(req.getParameter("user"));
     }
 
-    protected MVCModel update(HttpServletRequest req) {
+    protected ModelAndView update(HttpServletRequest req) {
 
         try {
             rosterFactory.setShift(getDate(req), getUserId(req), getShift(req));
         } catch (InvalidShiftException e) {
-            return new MVCModel(
+            return new ModelAndView("/error.jsp", "model",
                     new MessageContents(
                             "Invalid Shift",
                             "Invalid Shift",
                             "/roster/roster",
-                            "Back to Roster"), "/error.jsp");
+                            "Back to Roster"));
         }
 
-        return new MVCModel(
+        return new ModelAndView("/message.jsp", "model",
                 new MessageContents(
                         "Shift changed",
                         "Shift changed",
                         "/roster/roster",
-                        "Back to Roster"), "/message.jsp");
+                        "Back to Roster"));
     }
 
 }

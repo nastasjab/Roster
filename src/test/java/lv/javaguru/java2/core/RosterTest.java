@@ -25,8 +25,6 @@ import static lv.javaguru.java2.domain.roster.SingleShiftBuilder.createSingleShi
 import static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift;
 import static lv.javaguru.java2.domain.user.UserPatternBuilder.createUserPattern;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 public class RosterTest extends GenericSpringTest{
 
