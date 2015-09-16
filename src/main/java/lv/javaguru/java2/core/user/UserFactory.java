@@ -9,4 +9,5 @@ public interface UserFactory extends GenericFactory {
 
     List<User> getAllSorted()  throws Exception;
 
+    User getByLogin(String login);
 }

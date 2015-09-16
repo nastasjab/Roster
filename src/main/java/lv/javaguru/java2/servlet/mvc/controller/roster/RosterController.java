@@ -2,7 +2,9 @@ package lv.javaguru.java2.servlet.mvc.controller.roster;
 
 
 import lv.javaguru.java2.core.roster.RosterFactory;
+import lv.javaguru.java2.core.user.UserFactory;
 import lv.javaguru.java2.domain.roster.Roster;
+import lv.javaguru.java2.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -20,32 +22,59 @@ public class RosterController {
     @Autowired
     private RosterFactory rosterFactory;
 
+    @Autowired
+    private UserFactory userFactory;
+
     @RequestMapping(value = "/roster")
     public ModelAndView processRequest(HttpServletRequest req) {
 
-        return new ModelAndView("/roster.jsp", "model", rosterFactory.getRoster(new Roster(getDateFrom(req), getDateTill(req))));
+        if (req.getParameter("roster_date_from") != null
+                && req.getParameter("roster_date_till") != null) {
+            User user = userFactory.getByLogin(req.getUserPrincipal().getName());
+            user.setRosterShowStartDate(Date.valueOf(req.getParameter("roster_date_from")));
+            user.setRosterShowEndDate(Date.valueOf(req.getParameter("roster_date_till")));
+            try {
+                userFactory.updateObject(user);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new ModelAndView("/roster.jsp", "model", rosterFactory.getRoster(new Roster(getStartDate(req), getEndDate(req))));
 
     }
 
-    private Date getDateFrom(HttpServletRequest req) {
+    private Date getStartDate(HttpServletRequest req) {
         Date result;
         try {
             result = Date.valueOf(req.getParameter("roster_date_from"));
         } catch (IllegalArgumentException e){
-            result = Date.valueOf(LocalDate.now().getYear() + "-"
-                    + LocalDate.now().getMonthValue() + "-01");
+            try {
+                result = userFactory.getByLogin(req.getUserPrincipal().getName()).getRosterShowStartDate();
+                if (result == null)
+                    throw new Exception();
+            } catch (Exception e1) {
+                result = Date.valueOf(LocalDate.now().getYear() + "-"
+                        + LocalDate.now().getMonthValue() + "-01");
+            }
         }
         return result;
     }
 
-    private Date getDateTill(HttpServletRequest req) {
+    private Date getEndDate(HttpServletRequest req) {
         Date result;
         try {
             result = Date.valueOf(req.getParameter("roster_date_till"));
         } catch (IllegalArgumentException e){
-            result = Date.valueOf(LocalDate.now().getYear() + "-"
-                    + LocalDate.now().getMonthValue() + "-"
-                    + LocalDate.now().lengthOfMonth());
+            try {
+                result = userFactory.getByLogin(req.getUserPrincipal().getName()).getRosterShowEndDate();
+                if (result == null)
+                    throw new Exception();
+            } catch (Exception e1) {
+                result = Date.valueOf(LocalDate.now().getYear() + "-"
+                        + LocalDate.now().getMonthValue() + "-"
+                        + LocalDate.now().lengthOfMonth());
+            }
         }
         return result;
     }

@@ -36,4 +36,8 @@ public class UserFactoryImpl extends GenericFactoryImpl<UserDAO, User> implement
     public List<User> getAllSorted() throws Exception {
         return dao.getAllSorted();
     }
+
+    public User getByLogin(String login) {
+        return dao.getByObjectName(login);
+    }
 }
