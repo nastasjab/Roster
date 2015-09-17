@@ -28,55 +28,88 @@ public class RosterController {
     @RequestMapping(value = "/roster")
     public ModelAndView processRequest(HttpServletRequest req) {
 
-        if (req.getParameter("roster_date_from") != null
-                && req.getParameter("roster_date_till") != null) {
-            User user = userFactory.getByLogin(req.getUserPrincipal().getName());
-            user.setRosterShowStartDate(Date.valueOf(req.getParameter("roster_date_from")));
-            user.setRosterShowEndDate(Date.valueOf(req.getParameter("roster_date_till")));
-            try {
-                userFactory.updateObject(user);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        tryToUpdateStartEndDatesInDB(req);
 
         return new ModelAndView("/roster.jsp", "model", rosterFactory.getRoster(new Roster(getStartDate(req), getEndDate(req))));
 
     }
 
+    private void tryToUpdateStartEndDatesInDB(HttpServletRequest req) {
+        Date start;
+        Date end;
+        try {
+            start = getStartDateFromHttpRequest(req);
+            end = getEndDateFromHttpRequest(req);
+        } catch (Exception e) {
+            return;
+        }
+        User user = userFactory.getByLogin(req.getUserPrincipal().getName());
+        user.setRosterShowStartDate(start);
+        user.setRosterShowEndDate(end);
+        try {
+            userFactory.updateObject(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private Date getStartDate(HttpServletRequest req) {
         Date result;
         try {
-            result = Date.valueOf(req.getParameter("roster_date_from"));
-        } catch (IllegalArgumentException e){
+            result = getStartDateFromHttpRequest(req);
+        } catch (Exception e){
             try {
-                result = userFactory.getByLogin(req.getUserPrincipal().getName()).getRosterShowStartDate();
+                result = getStartDateFromDB(req);
                 if (result == null)
                     throw new Exception();
             } catch (Exception e1) {
-                result = Date.valueOf(LocalDate.now().getYear() + "-"
-                        + LocalDate.now().getMonthValue() + "-01");
+                result = getStartDateAsFirstDayOfMonth();
             }
         }
         return result;
     }
 
+    private Date getStartDateAsFirstDayOfMonth() {
+        return Date.valueOf(LocalDate.now().getYear() + "-"
+                + LocalDate.now().getMonthValue() + "-01");
+    }
+
+    private Date getStartDateFromDB(HttpServletRequest req) {
+        return userFactory.getByLogin(req.getUserPrincipal().getName()).getRosterShowStartDate();
+    }
+
+    private Date getStartDateFromHttpRequest(HttpServletRequest req) throws Exception {
+        return Date.valueOf(req.getParameter("roster_date_from"));
+    }
+
     private Date getEndDate(HttpServletRequest req) {
         Date result;
         try {
-            result = Date.valueOf(req.getParameter("roster_date_till"));
-        } catch (IllegalArgumentException e){
+            result = getEndDateFromHttpRequest(req);
+        } catch (Exception e){
             try {
-                result = userFactory.getByLogin(req.getUserPrincipal().getName()).getRosterShowEndDate();
+                result = getEndDateFromDB(req);
                 if (result == null)
                     throw new Exception();
             } catch (Exception e1) {
-                result = Date.valueOf(LocalDate.now().getYear() + "-"
-                        + LocalDate.now().getMonthValue() + "-"
-                        + LocalDate.now().lengthOfMonth());
+                result = getEndDateAsLastDayOfMonth();
             }
         }
         return result;
+    }
+
+    private Date getEndDateFromHttpRequest(HttpServletRequest req) throws Exception {
+        return Date.valueOf(req.getParameter("roster_date_till"));
+    }
+
+    private Date getEndDateFromDB(HttpServletRequest req) {
+        return userFactory.getByLogin(req.getUserPrincipal().getName()).getRosterShowEndDate();
+    }
+
+    private Date getEndDateAsLastDayOfMonth() {
+        return Date.valueOf(LocalDate.now().getYear() + "-"
+                + LocalDate.now().getMonthValue() + "-"
+                + LocalDate.now().lengthOfMonth());
     }
 
 }
