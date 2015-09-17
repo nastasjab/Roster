@@ -1,6 +1,7 @@
 package lv.javaguru.java2.servlet.mvc.controller.user;
 
 import lv.javaguru.java2.core.GenericFactory;
+import lv.javaguru.java2.core.pattern.PatternFactory;
 import lv.javaguru.java2.core.user.UserFactory;
 import lv.javaguru.java2.core.userpattern.UserPatternFactory;
 import lv.javaguru.java2.database.pattern.PatternDAO;
@@ -33,6 +34,9 @@ public class UserPatternController extends GenericMVCController {
     private PatternDAO patternDAO;
 
     @Autowired
+    private PatternFactory patternFactory;
+
+    @Autowired
     private UserPatternFactory userPatternFactory;
 
     @Override
@@ -50,7 +54,7 @@ public class UserPatternController extends GenericMVCController {
             result.getUserPattern().setPatternStartDay(1);
         }
         result.setUser((User) userFactory.getObject(getUserId(req)));
-        result.setPatterns(patternDAO.getAll());
+        result.setPatterns(patternFactory.getAll());
         return new ModelAndView(getEditPageAddressJSP(req), "model", result);
     }
 

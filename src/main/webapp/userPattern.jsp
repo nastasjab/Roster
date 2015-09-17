@@ -3,11 +3,12 @@
 <%@ page import="lv.javaguru.java2.domain.user.UserPattern" %>
 <%@ page import="java.util.List" %>
 <%@ page import="lv.javaguru.java2.domain.pattern.Pattern" %>
+<%@ page import="lv.javaguru.java2.domain.Generic" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% UserPatternEditControllerData data = (UserPatternEditControllerData) request.getAttribute("model");
     User user = data.getUser();
     UserPattern userPattern = data.getUserPattern();
-    List<Pattern> shiftPatterns = data.getPatterns();
+    List<Generic> shiftPatterns = data.getPatterns();
   boolean edit = true;
   if (userPattern.getId() == 0) {
     edit = false;
@@ -45,7 +46,7 @@
       <td>Pattern</td>
       <td><select name="pattern">
         <%
-          for (Pattern pattern : shiftPatterns) { %>
+          for (Generic pattern2 : shiftPatterns) { Pattern pattern = (Pattern) pattern2;%>
         <option value="<%= pattern.getId()%>"
                 <%  if (pattern.getId() == userPattern.getPattern().getId()) { %>
                 selected

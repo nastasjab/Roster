@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servlet.mvc.data;
 
+import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.pattern.Pattern;
 import lv.javaguru.java2.domain.user.User;
 import lv.javaguru.java2.domain.user.UserPattern;
@@ -14,12 +15,12 @@ public class UserPatternEditControllerData {
 
     private User user;
     private UserPattern userPattern;
-    private List<Pattern> patterns;
+    private List<Generic> patterns;
 
     public UserPatternEditControllerData() {
         this.user = createUser().build();
         this.userPattern = createUserPattern().build();
-        this.patterns = new ArrayList<Pattern>();
+        this.patterns = new ArrayList<Generic>();
     }
 
     public User getUser() {
@@ -38,11 +39,11 @@ public class UserPatternEditControllerData {
         this.userPattern = userPattern;
     }
 
-    public List<Pattern> getPatterns() {
+    public List<Generic> getPatterns() {
         return patterns;
     }
 
-    public void setPatterns(List<Pattern> patterns) {
+    public void setPatterns(List<Generic> patterns) {
         this.patterns = patterns;
     }
 }
