@@ -3,9 +3,13 @@
 <%@ page import="lv.javaguru.java2.domain.shift.Shift" %>
 <%@ page import="lv.javaguru.java2.domain.Dates" %>
 <%@ page import="static lv.javaguru.java2.domain.shift.ShiftBuilder.createShift" %>
-
+<%@ page import="lv.javaguru.java2.servlet.mvc.data.RosterControllerData" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% Roster roster = (Roster) request.getAttribute("model"); %>
+<%  RosterControllerData data = (RosterControllerData) request.getAttribute("model");
+    Roster roster = data.getRoster();
+    List<Shift> workingShifts = data.getShifts();
+%>
 <html>
 <head>
     <title>Roster</title>
@@ -26,8 +30,15 @@
     <%  for(long epochDay = Dates.toEpochDay(roster.getFrom());
             epochDay <= Dates.toEpochDay(roster.getTill()); epochDay++) { %>
     <th><%= Dates.getDayOfMonth(epochDay) %></th>
-    <% }
-    for (User user : roster.getUserList()) { %>
+    <% } %>
+    <%  for(Shift workingShift : workingShifts) {
+        %><tr><th>Staff in shift <%= workingShift.getName()%></th><%
+            for(long epochDay = Dates.toEpochDay(roster.getFrom());
+                epochDay <= Dates.toEpochDay(roster.getTill()); epochDay++) { %>
+    <td><%= roster.getStaffInShift(Dates.toSqlDate(epochDay), workingShift) %></td>
+    <%      }
+        } %></tr>
+    <% for (User user : roster.getUserList()) { %>
     <tr><th><a href="/roster/userpatterns?user=<%= user.getId()%>"><%= user.getLastName() + " " + user.getFirstName() %></a></th>
         <%  for(long epochDay = Dates.toEpochDay(roster.getFrom());
                 epochDay <= Dates.toEpochDay(roster.getTill()); epochDay++) {

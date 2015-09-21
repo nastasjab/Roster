@@ -2,9 +2,13 @@ package lv.javaguru.java2.servlet.mvc.controller.roster;
 
 
 import lv.javaguru.java2.core.roster.RosterFactory;
+import lv.javaguru.java2.core.shift.ShiftFactory;
 import lv.javaguru.java2.core.user.UserFactory;
+import lv.javaguru.java2.domain.Generic;
 import lv.javaguru.java2.domain.roster.Roster;
+import lv.javaguru.java2.domain.shift.Shift;
 import lv.javaguru.java2.domain.user.User;
+import lv.javaguru.java2.servlet.mvc.data.RosterControllerData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
@@ -14,6 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @Component
@@ -25,12 +31,21 @@ public class RosterController {
     @Autowired
     private UserFactory userFactory;
 
+    @Autowired
+    private ShiftFactory shiftFactory;
+
     @RequestMapping(value = "/roster")
     public ModelAndView processRequest(HttpServletRequest req) {
 
         tryToUpdateStartEndDatesInDB(req);
 
-        return new ModelAndView("/roster.jsp", "model", rosterFactory.getRoster(new Roster(getStartDate(req), getEndDate(req))));
+        RosterControllerData data = new RosterControllerData();
+
+        data.setRoster(rosterFactory.getRoster(new Roster(getStartDate(req), getEndDate(req))));
+
+        data.setShifts(shiftFactory.getWorkingShifts());
+
+        return new ModelAndView("/roster.jsp", "model", data);
 
     }
 
